@@ -1,0 +1,24 @@
+﻿#wrapper { text-shadow: none; }
+br, br:after, br::before, .break { display: inline; }
+.control__indicator span:before { *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1db;'); }
+.control input:checked ~ .control__indicator span:before { *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf111;'); }
+
+@media only screen and (max-width: 605px), (min-device-width: 768px) and (max-device-width: 1024px) {    
+    .matrixtable td:first-child:before { content: ""; }
+    .matrixtable td:first-child + td:before { content: "1 - Уопште се не слажем"; }
+    .matrixtable td:first-child + td + td:before { content: "2 - Не слажем се"; }
+    .matrixtable td:first-child + td + td + td:before { content: "3 - Неодлучан/Неодлучна"; }
+    .matrixtable td:first-child + td + td + td + td:before { content: "4 - Слажем се"; }
+    .matrixtable td:first-child + td + td + td + td + td:before { content: "5 - Потпуно се слажем"; }    
+
+    #deo2Odgovori.matrixtable td:first-child:before { content: ""; }
+    #deo2Odgovori.matrixtable td:first-child + td:before { content: "1 - Уопште се не слажем"; }
+    #deo2Odgovori.matrixtable td:first-child + td + td:before { content: "2 - Не слажем се"; }
+    #deo2Odgovori.matrixtable td:first-child + td + td + td:before { content: "3 - Неодлучан/Неодлучна"; }
+    #deo2Odgovori.matrixtable td:first-child + td + td + td + td:before { content: "4 - Слажем се"; }
+    #deo2Odgovori.matrixtable td:first-child + td + td + td + td + td:before { content: "5 - Потпуно се слажем"; }
+    #deo2Odgovori.matrixtable td:first-child + td + td + td + td + td + td:before { content: "9 - Не примењује се"; }
+}
+.LogInForma {
+  border: 1px solid #AAB2BD; filter: progid:DXImageTransform.Microsoft.Shadow(color=#CCD1D9,direction=135);
+}

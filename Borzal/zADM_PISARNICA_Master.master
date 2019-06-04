@@ -1,0 +1,221 @@
+﻿<%@ Master Language="VB" CodeFile="zADM_PISARNICA_Master.master.vb" Inherits="zADM_PISARNICA_Master" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>ПИСАРНИЦА РЗС - Вођење деловодника, интерне доставне књиге, књиге рачуна, одлазне и пријемне поште</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, Chrome=1" />
+    
+    
+    <!-- core CSS files -->
+    <link href="Content/font/icomoon/styles.css" rel="stylesheet" />
+    <link href="Content/font/NataM/NataM.css" rel="stylesheet" />
+    <link href="Content/font/Roboto/Roboto.css" rel="stylesheet" />
+    <link href="Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="Content/css/GeneralStyle.css" rel="stylesheet" />
+    <link href="Content/css/GeneralElements.css" rel="stylesheet" />
+    <link href="Content/css/Colors.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+        <style type="text/css">
+            .bg-hover { -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1, StartColorStr='#19000000', EndColorStr='#19000000')";
+                        filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr='#19000000', EndColorStr='#19000000');
+                        zoom: 1!important; }
+        </style>
+    <![endif]-->
+    <!-- /core CSS files -->
+    <%-- JS --%>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="Content/js/core/selectivizr.js"></script>
+        <script src="Content/js/core/html5.js"></script>
+        <script src="Content/js/core/respond.js"></script>
+    <![endif]-->
+    
+     <!-- core JS files -->
+    <script src="Content/js/jquery/jquery-2.1.4.js"></script>
+    <script src="Content/js/jquery/jquery-ui-1.12.1.min.js"></script>
+    <script src="Content/js/bootstrap/bootstrap.min.js"></script>
+    <script src="Content/js/jquery/jquery.validate.min.js"></script>
+    <script src="Content/js/jquery/jquery.ui.touch-punch.js"></script>
+
+    <link href="Content/images/favicon/favicon_slate.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <asp:ContentPlaceHolder id="cphHead" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="SPRLJ_ADM_Form" runat="server" class="navbar-top">
+        <!-- main navbar -->
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar-header">
+                <span class="navbar-brand pt-5 pb-5 no-padding-left">
+                    <span class="text-semibold"><img src="Content/images/logo/SPR_Logo_FIN_Slate.svg" width="70" height="40" alt="SPR Logo" /> ПИСАРНИЦА РЗС</span>
+                </span>
+                <ul class="nav navbar-nav pull-right visible-xs-block">
+                    <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                    <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-mobile">
+                <ul class="nav navbar-nav navbar-right">                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-file-text2 position-left"></i>Документи<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="Izvestaji/OmotSpisa.docx" target="_blank"><i class="icon text-size-18 icon-file-word position-left"></i>Омот списа</a></li>
+                            <li><a href="Content/doc/Uputstva/KorisnickoUputstvo.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Упутство за коришћење апликације</a></li>
+                            <li><a href="Content/doc/Sifarnici/Lista popisa akata.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Листа пописа аката</a></li>
+                        </ul>
+                    </li>
+                    <%--<li id="Prijava" runat="server"><a href="LogIn.aspx"><i class="icon-switch2 position-left"></i>Пријава</a></li>--%>
+                    <li id="Odjava" runat="server"><a href="LogOut.aspx"><i class="icon-switch2 position-left"></i>Одјава</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /main navbar -->
+    <!-- /multiple navbars wrapper -->
+    <!-- Page container -->
+        <div class="page-container">
+            <!-- Page content -->
+            <div class="page-content border-grey">
+                  <!-- Main sidebar -->
+			<div class="sidebar sidebar-main sidebar-fixed sidebar-default">
+				<div class="sidebar-content">
+					<!-- User menu -->
+					<div class="sidebar-user bg-purple-300 img-bg">
+						<div class="category-content">
+							<div class="media">
+								<div class="media-left"></div>
+								<div class="media-body">
+									<span class="media-heading text-semibold" id="logovaniKorisnik" runat="server"></span>
+
+  
+        <%--  ****      KSENIJA LOGOVANJE!!!!  *****          --%>          
+             <table>
+            
+            
+                   <tr >  <asp:Label ID="lblKorisnikIme" runat="server"  Text=""   Visible="true"/> </tr><br />
+                 <%--<tr >   <asp:Label ID="lblKorisnikemail" runat="server"  Text=""   Visible="true"/> </tr><br />--%>
+                   <tr >   <asp:Label ID="lblPodOd3" runat="server"  Text=""   Visible="true"/> </tr><br />
+                   <tr >   <asp:Label ID="lblOj" runat="server"  Text=""   Visible="true"/> </tr><br />
+                 <tr >   <asp:Label ID="lblZaposleniID" runat="server"  Text=""   Visible="true"/> </tr><br />
+                 <tr >   <asp:Label ID="lbllokacija" runat="server" Text="" Visible="true"/> </tr><br />
+                <%-- <tr >   <asp:Label ID="lblKorisnikIP" runat="server"  Text=""  Visible="true"/> </tr><br />--%>
+                <asp:HiddenField ID="hkorisnikID" runat="server" Visible="true" />
+                    <asp:HiddenField ID="hKorisnikIP" runat="server" Visible="true"/>
+                    <asp:HiddenField ID="hKorisnikemail" runat="server" Visible="true"/>
+                    <asp:HiddenField ID="hlokacija" runat="server" Visible="true"/>     
+                    <asp:HiddenField ID="hPodOd3" runat="server" Visible="true"/>  
+                    <asp:HiddenField ID="hgodina" runat="server" Visible="true"/>   
+                    <asp:HiddenField ID="hgrupa" runat="server" Visible="true"/>  
+                    <asp:HiddenField ID="hoj" runat="server" Visible="true"/> 
+                    <asp:HiddenField ID="hKbroj" runat="server" Visible="true"/>
+                    <asp:HiddenField ID="hPredmet" runat="server" Visible="true"/>
+                    <asp:HiddenField ID="hknjiga" runat="server" Visible="true"/>
+                    <asp:HiddenField ID="hpreuzimaID" runat="server" Visible="true"/>
+                    <asp:HiddenField ID="hImePrezime" runat="server" Visible="true"/>
+            
+       </table>
+
+<%--  ****      KSENIJA LOGOVANJE!!!!  *****          --%>
+
+
+
+<%--									<div class="text-size-mini text-grey-100">
+										<i class="icon-users2 text-size-small"></i> &nbsp;АДМИНИСТРАТОР
+									</div>--%>
+								</div>
+
+								<%--<div class="media-right media-middle">
+									<ul class="icons-list">
+										<li>
+											<a href="ADM_Home.aspx"><i class="icon-cog3"></i></a>
+										</li>
+									</ul>
+								</div>--%>
+							</div>
+						</div>
+					</div>
+					<!-- /User menu -->
+					<!-- Main navigation -->
+					<div class="sidebar-category sidebar-category-visible">
+						<div class="category-content no-padding">
+                            <ul id="mainMenu" runat="server" clientid="static" class="navigation navigation-main navigation-accordion">
+								<!-- Main -->
+
+								<!-- /Main -->
+							</ul>
+						</div>
+					</div>
+					<!-- /main navigation -->
+				</div>
+			</div>
+			<!-- /main sidebar -->
+                <!-- Main content -->
+                <div class="content-wrapper">
+                    <!-- Page header -->
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title pt-10 pb-10"><h6 class="text-semibold"><i class="icon-tree7 position-left text-slate-300"></i><span>ПИСАРНИЦА РЗС - </span><span class="text-slate-300">деловодник, одлазнa и пријемнa поштa, путни налози</span></h6></div>
+                            <div class="heading-elements">
+                                <div class="heading-form">
+                                    <div class="form-group">
+                                        <div class="date">
+                                            <div class="date-display">
+                                                <span class="pr-10" id="DanNaziv" runat="server"></span><i><%: DateTime.Now.Day %></i><b><i><%: DateTime.Now.Month %></i> <i><%: DateTime.Now.Year %></i></b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Breadcrumb -->
+                                <asp:ContentPlaceHolder ID="cphPOLista" runat="server"></asp:ContentPlaceHolder>
+                        <%--<div class="breadcrumb-line">
+                            <ul id="Menu" class="breadcrumb">
+                                
+                            </ul>
+                            <ul class="breadcrumb-elements">
+                                <asp:ContentPlaceHolder ID="cphPOLista" runat="server"></asp:ContentPlaceHolder>
+                            </ul>
+                        </div>--%>
+                        <!-- /Breadcrumb -->
+                    </div>
+                    <!-- /page header -->
+                    <!-- Content area -->
+                    <asp:ContentPlaceHolder ID="cphBody" runat="server"></asp:ContentPlaceHolder>
+                    
+                    <div class="content">
+                        <!-- footer -->
+                        <div class="footer text-slate text-center">
+                            <div class="logoRZS">
+                                <a href="http://www.stat.gov.rs/" target="_blank">
+                                    <span class="text-size-24 nmicon-RZSLogo position-left">
+                                        <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span></span>
+                                </a>
+                            </div>
+                            <div class="copyright">Републички завод за статистику &copy; <%: DateTime.Now.Year %>  - Писарница РЗС</div>
+                        </div>
+                        <!-- /footer -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+        <asp:TextBox ID="txtID_Korisnika" runat="server" CssClass="hidden"></asp:TextBox>
+        <asp:SqlDataSource ID="SDSlog" runat="server" ConnectionString='<%$ ConnectionStrings:PisarnicaConnectionString %>'/>
+    </form>
+    <!-- JS files -->
+    <script src="Content/js/bootstrap/bootstrap_multiselect.js"></script>
+    <script src="Content/js/core/uniform.min.js"></script>
+    <script src="Content/js/core/select2.min.js"></script>
+    <script src="Content/js/core/general.js"></script>
+    <script src="Content/js/core/easing.js"></script>
+    <script src="Content/js/core/moveToTop.js"></script>
+    <!-- JS files -->
+    <a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"></span></a> 
+    <!--[if lt IE 8]><link href="Content/font/NataM/ie7/ie7.css" rel="stylesheet" /><script src="Content/font/NataM/ie7/ie7.js"></script><![endif]-->
+</body>
+</html>
