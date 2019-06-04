@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_PISARNICA_Master.master" AutoEventWireup="false" CodeFile="Delovodnik_Pretraga.aspx.vb" Inherits="Delovodnik_Pretraga" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Delovodnik_Pretraga.aspx.vb" Inherits="Delovodnik_Pretraga" %>
 
 <asp:Content ID="cHead" ContentPlaceHolderID="cphHead" Runat="Server">
 </asp:Content>

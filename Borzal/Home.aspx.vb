@@ -1,5 +1,4 @@
-﻿
-Imports System.Data
+﻿Imports System.Data
 
 Partial Class Home
     Inherits System.Web.UI.Page
@@ -19,7 +18,7 @@ Partial Class Home
         Dim UpitMB As String = ""
         Dim odsMB As New DataSet
 
-        UpitMB = "SELECT rbr, opis,klasifikacionibrojID,klasifikacionibroj FROM vPopisAkata ORDER BY rbr"
+        UpitMB = "SELECT id,broj,rbr,naziv,jm,kolicina,datum FROM vTrebovanje ORDER BY broj,rbr"
         odsMB = b.DajDS_IzUpita_Lokal(UpitMB, BORZALConnectionString)
 
         Me.gvMB.EmptyDataText = "Без података"

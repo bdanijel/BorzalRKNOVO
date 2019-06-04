@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_PISARNICA_Master.master" AutoEventWireup="false" CodeFile="Home.aspx.vb" Inherits="Home" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Home.aspx.vb" Inherits="Home" %>
 
 <asp:Content ID="cHead" ContentPlaceHolderID="cphHead" Runat="Server"></asp:Content>
 <asp:Content ID="cPOLista" ContentPlaceHolderID="cphPOLista" Runat="Server">
@@ -16,15 +16,6 @@
                         </table>
                     </div>
                 </div>
-                <div id="UputstvaLista" class="panel panel-collapse collapse">
-                    <div class="panel-body p-10">
-                        <ul class="list-feed" id="Uputstva">
-                            <li class="border-purple-300"><a href="Content/doc/Uputstva/MetodoloskoUputstvo.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Методолошко упутство</a></li>
-                            <li class="border-purple-300"><a href="Content/doc/Uputstva/KorisnickoUputstvo.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Упутство за коришћење апликације</a></li>
-                            <li class="border-purple-300"><a href="Content/doc/Sifarnici/Lista popisa akata.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Листа пописа аката</a></li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>     
 
@@ -38,12 +29,14 @@
                                             AllowSorting="True" AutoGenerateColumns="False" AllowPaging="True"
                                             DataSourceID="odsMB"
                                             PagerStyle-CssClass="pagination-nm"
-                                            DataKeyNames="rbr" BorderWidth="0px" HeaderStyle-CssClass="alpha-grey img-bg" PagerSettings-Mode="NumericFirstLast" PagerStyle-Wrap="False">
+                                            DataKeyNames="id" BorderWidth="0px" HeaderStyle-CssClass="alpha-grey img-bg" PagerSettings-Mode="NumericFirstLast" PagerStyle-Wrap="False">
                                     <Columns>
-                                         <asp:BoundField DataField="rbr" HeaderText="Редни број" SortExpression="rbr" />
-                                         <asp:BoundField DataField="opis" HeaderText="Опис" SortExpression="opis" />
-                                        <asp:BoundField DataField="KlasifikacioniBrojID" HeaderText="Класификациони број ИД" SortExpression="KlasifikacioniBrojID" />
-                                        <asp:BoundField DataField="KlasifikacioniBroj" HeaderText="Класификација опис" SortExpression="KlasifikacioniBroj" />
+                                         <asp:BoundField DataField="broj" HeaderText="Редни број" SortExpression="rbr" />
+                                         <asp:BoundField DataField="rbr" HeaderText="Опис" SortExpression="opis" />
+                                        <asp:BoundField DataField="naziv" HeaderText="Класификациони број ИД" SortExpression="KlasifikacioniBrojID" />
+                                        <asp:BoundField DataField="jm" HeaderText="Класификација опис" SortExpression="KlasifikacioniBroj" />
+                                        <asp:BoundField DataField="kolicina" HeaderText="Класификација опис" SortExpression="KlasifikacioniBroj" />
+                                        <asp:BoundField DataField="datum" HeaderText="Класификација опис" SortExpression="KlasifikacioniBroj" />
                                     </Columns>
                                 </asp:GridView>
                             </div>
@@ -67,9 +60,9 @@
         </div>
     </div>
 
-<asp:ObjectDataSource ID="odsMB" runat="server" SelectMethod="DajDS_IzUpita" TypeName="ADM_MM">
+<asp:ObjectDataSource ID="odsMB" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
         <SelectParameters>
-            <asp:SessionParameter Name="Upit" DefaultValue="SELECT * FROM vPopisAkata order by rbr" SessionField="UpitMB" Type="String" />
+            <asp:SessionParameter Name="Upit" DefaultValue="SELECT * FROM vTrebovanje order by broj,rbr" SessionField="UpitMB" Type="String" />
             <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
         </SelectParameters>
     </asp:ObjectDataSource>

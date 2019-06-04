@@ -1,5 +1,5 @@
 ﻿Imports System.Data
-Partial Class zADM_PISARNICA_Master
+Partial Class zADM_BORZAL_Master
     Inherits System.Web.UI.MasterPage
     Dim Dani() As String = {"Недеља", "Понедељак", "Уторак", "Среда", "Четвртак", "Петак", "Субота"}
     Dim Mesec() As String = {"јануар", "фебруар", "март", "април", "мај", "јун", "јул", "август", "септембар", "октобар", "новембар", "децембар"}
@@ -10,116 +10,9 @@ Partial Class zADM_PISARNICA_Master
     Dim danas As New Date
     Dim Dat As String
     Dim b As New ADM_MM()
-    Dim PISARNICAConnectionString As String = b.ConnString_PISARNICA
+    Dim PISARNICAConnectionString As String = b.ConnString_BORZAL
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Page.MaintainScrollPositionOnPostBack = True
-
-
-
-        '******* KSENIJA LOGOVANJE KORISNIKA ******
-        If Not (Page.IsPostBack) Then
-            If (Page.User.Identity.IsAuthenticated) Then
-                Try
-
-                    If Me.hkorisnikID.Value = "" Then
-                        Me.hkorisnikID.Value = b.KoJe_AD(Page.User.Identity.Name.ToString)
-                    End If
-
-                    'Iz AD dobijamo kompletne podatke za nalog sa kojim se logovao korisnik
-
-                    Me.SDSlog.SelectCommand = "SELECT ImeCIR, PrezimeCIR, ImePrezime, lokacija, PodOd3, grupa, oj from [dbo].[v_AdresarZaposlenih] where [idenr]='" & Trim(Me.hkorisnikID.Value) & "'"
-                    'Ime korisnika
-                    Dim dv As DataView = DirectCast(SDSlog.Select(DataSourceSelectArguments.Empty), DataView)
-                    For Each drv As DataRowView In dv
-                        'Me.lblKorisnikIme.Text = Trim(drv("imeCIR").ToString()) & " " & Trim(drv("PrezimeCIR").ToString())
-                        'Me.hKorisnikemail.Value = Trim(drv("email").ToString())
-                        Me.hlokacija.Value = Trim(drv("lokacija").ToString())
-                        Me.hPodOd3.Value = Trim(drv("PodOd3").ToString())
-                        Me.hgrupa.Value = Trim(drv("grupa").ToString())
-                        Me.hoj.Value = Trim(drv("oj").ToString())
-                        Me.hImePrezime.Value = Trim(drv("ImePrezime").ToString())
-
-                        'ISPIS NA EKRAN
-                        Me.lblKorisnikIme.Text = Trim(drv("ImePrezime").ToString())
-                        Me.lblPodOd3.Text = Trim(drv("PodOd3").ToString())
-                        Me.lblOj.Text = Trim(drv("oj").ToString())
-                        Me.lblZaposleniID.Text = hkorisnikID.Value
-                        Me.lbllokacija.Text = Trim(drv("lokacija").ToString())
-                    Next
-                    Me.hKorisnikIP.Value = Request.ServerVariables("remote_addr")
-                    Me.hgodina.Value = Date.Today.Year
-                    If Me.hPodOd3.Value = "201" Or Me.hPodOd3.Value = "202" Then
-                        Me.hPodOd3.Value = "200"
-                    End If
-
-                Catch ex As Exception
-                    Me.lblKorisnikIme.Text = "neuspela identifikacija korisnika"
-                End Try
-
-
-            Else
-                'ovo se koristi samo u testu, jer IIS nije podesen na razvojnoj stanici
-
-                Me.lblKorisnikIme.Text = "IME PREZIME"
-                Me.lblPodOd3.Text = "PODOD"
-                Me.lblOj.Text = "OJ"
-                Me.lbllokacija.Text = "lokacija"
-
-
-                'podrucno odeljenje - nacelnik
-                Me.hkorisnikID.Value = "1040"
-                Me.hlokacija.Value = "Beograd"
-                Me.lbllokacija.Text = hlokacija.Value
-                Me.hPodOd3.Value = "200"
-                Me.hgrupa.Value = "1"
-                Me.hoj.Value = "25"
-
-
-
-
-
-
-                Me.hKorisnikIP.Value = Request.ServerVariables("remote_addr")
-                'Me.lblKorisnikIP.Text = hKorisnikIP.Value
-                Me.hgodina.Value = Session("P_PO_godina")
-                If (Me.hgodina.Value) = "" Then
-                    Me.hgodina.Value = Date.Today.Year
-                End If
-
-
-            End If
-
-            'korisnik lokaciju na kojoj radi menja samo odabirom iz ponudjene liste (?!)
-
-            Session("korisnik_ime") = Me.lblKorisnikIme.Text
-            Session("korisnik_ID") = Me.hkorisnikID.Value
-            Session("lokacija") = Me.hlokacija.Value
-            Session("PodOd3") = Me.hPodOd3.Value
-            Session("user_email") = Me.hKorisnikemail.Value
-            Session("grupa") = Me.hgrupa.Value
-            Session("oj") = Me.hoj.Value
-            ' ??????
-            Session("godina") = Me.hgodina.Value
-
-
-
-        End If
-
-
-
-        Me.lblKorisnikIme.Text = Session("korisnik_ime")
-        Me.hkorisnikID.Value = Session("korisnik_ID")
-        Me.hlokacija.Value = Session("lokacija")
-        Me.hPodOd3.Value = Session("PodOd3")
-        Me.hKorisnikemail.Value = Session("user_email")
-        Me.hgrupa.Value = Session("grupa")
-        Me.hoj.Value = Session("oj")
-        ' ????
-        Me.hgodina.Value = Session("godina")
-
-
-        '******* KSENIJA LOGOVANJE KORISNIKA ******
-
 
 
         If Not Page.IsPostBack Then

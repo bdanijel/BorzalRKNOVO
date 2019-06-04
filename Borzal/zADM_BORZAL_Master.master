@@ -1,10 +1,10 @@
-﻿<%@ Master Language="VB" CodeFile="zADM_PISARNICA_Master.master.vb" Inherits="zADM_PISARNICA_Master" %>
+﻿<%@ Master Language="VB" CodeFile="zADM_BORZAL_Master.master.vb" Inherits="zADM_BORZAL_Master" %>
 
 <!DOCTYPE html>
 
 <html>
 <head runat="server">
-    <title>ПИСАРНИЦА РЗС - Вођење деловодника, интерне доставне књиге, књиге рачуна, одлазне и пријемне поште</title>
+    <title>BORZAL</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge, Chrome=1" />
@@ -91,51 +91,7 @@
 								<div class="media-left"></div>
 								<div class="media-body">
 									<span class="media-heading text-semibold" id="logovaniKorisnik" runat="server"></span>
-
-  
-        <%--  ****      KSENIJA LOGOVANJE!!!!  *****          --%>          
-             <table>
-            
-            
-                   <tr >  <asp:Label ID="lblKorisnikIme" runat="server"  Text=""   Visible="true"/> </tr><br />
-                 <%--<tr >   <asp:Label ID="lblKorisnikemail" runat="server"  Text=""   Visible="true"/> </tr><br />--%>
-                   <tr >   <asp:Label ID="lblPodOd3" runat="server"  Text=""   Visible="true"/> </tr><br />
-                   <tr >   <asp:Label ID="lblOj" runat="server"  Text=""   Visible="true"/> </tr><br />
-                 <tr >   <asp:Label ID="lblZaposleniID" runat="server"  Text=""   Visible="true"/> </tr><br />
-                 <tr >   <asp:Label ID="lbllokacija" runat="server" Text="" Visible="true"/> </tr><br />
-                <%-- <tr >   <asp:Label ID="lblKorisnikIP" runat="server"  Text=""  Visible="true"/> </tr><br />--%>
-                <asp:HiddenField ID="hkorisnikID" runat="server" Visible="true" />
-                    <asp:HiddenField ID="hKorisnikIP" runat="server" Visible="true"/>
-                    <asp:HiddenField ID="hKorisnikemail" runat="server" Visible="true"/>
-                    <asp:HiddenField ID="hlokacija" runat="server" Visible="true"/>     
-                    <asp:HiddenField ID="hPodOd3" runat="server" Visible="true"/>  
-                    <asp:HiddenField ID="hgodina" runat="server" Visible="true"/>   
-                    <asp:HiddenField ID="hgrupa" runat="server" Visible="true"/>  
-                    <asp:HiddenField ID="hoj" runat="server" Visible="true"/> 
-                    <asp:HiddenField ID="hKbroj" runat="server" Visible="true"/>
-                    <asp:HiddenField ID="hPredmet" runat="server" Visible="true"/>
-                    <asp:HiddenField ID="hknjiga" runat="server" Visible="true"/>
-                    <asp:HiddenField ID="hpreuzimaID" runat="server" Visible="true"/>
-                    <asp:HiddenField ID="hImePrezime" runat="server" Visible="true"/>
-            
-       </table>
-
-<%--  ****      KSENIJA LOGOVANJE!!!!  *****          --%>
-
-
-
-<%--									<div class="text-size-mini text-grey-100">
-										<i class="icon-users2 text-size-small"></i> &nbsp;АДМИНИСТРАТОР
-									</div>--%>
 								</div>
-
-								<%--<div class="media-right media-middle">
-									<ul class="icons-list">
-										<li>
-											<a href="ADM_Home.aspx"><i class="icon-cog3"></i></a>
-										</li>
-									</ul>
-								</div>--%>
 							</div>
 						</div>
 					</div>
@@ -174,15 +130,7 @@
                         </div>
                         <!-- Breadcrumb -->
                                 <asp:ContentPlaceHolder ID="cphPOLista" runat="server"></asp:ContentPlaceHolder>
-                        <%--<div class="breadcrumb-line">
-                            <ul id="Menu" class="breadcrumb">
-                                
-                            </ul>
-                            <ul class="breadcrumb-elements">
-                                <asp:ContentPlaceHolder ID="cphPOLista" runat="server"></asp:ContentPlaceHolder>
-                            </ul>
-                        </div>--%>
-                        <!-- /Breadcrumb -->
+ 
                     </div>
                     <!-- /page header -->
                     <!-- Content area -->
@@ -197,7 +145,7 @@
                                         <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span></span>
                                 </a>
                             </div>
-                            <div class="copyright">Републички завод за статистику &copy; <%: DateTime.Now.Year %>  - Писарница РЗС</div>
+                            <div class="copyright">BORZAL &copy; <%: DateTime.Now.Year %>  - stanje u magacinu</div>
                         </div>
                         <!-- /footer -->
                     </div>
@@ -205,7 +153,7 @@
             </div>
         </div>
         <asp:TextBox ID="txtID_Korisnika" runat="server" CssClass="hidden"></asp:TextBox>
-        <asp:SqlDataSource ID="SDSlog" runat="server" ConnectionString='<%$ ConnectionStrings:PisarnicaConnectionString %>'/>
+        <asp:SqlDataSource ID="SDSlog" runat="server" ConnectionString='<%$ ConnectionStrings:BORZALConnectionString %>'/>
     </form>
     <!-- JS files -->
     <script src="Content/js/bootstrap/bootstrap_multiselect.js"></script>

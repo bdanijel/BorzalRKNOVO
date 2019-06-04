@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_PISARNICA_Master.master" AutoEventWireup="false" CodeFile="rDelovodnik.aspx.vb" Inherits="rDelovodnik" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="rDelovodnik.aspx.vb" Inherits="rDelovodnik" %>
 
 <%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 
@@ -34,7 +34,7 @@
             <asp:ObjectDataSource ID="dsDelovodnik" runat="server" SelectMethod="DajDS_IzUpita" TypeName="ADM_MM">
                 <SelectParameters>
                     <asp:SessionParameter Name="Upit" DefaultValue="SELECT [godina],[rbr],[podbroj],[PodOd3],[korisnik],[datumPrijema],[DelovodniBroj],[tekst],[datumRazvoda] FROM [dbo].[vDelovodnik]" SessionField="UpitDelovodnik" Type="String" />
-                    <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:PISARNICAConnectionString %>" />
+                    <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
                 </SelectParameters>
             </asp:ObjectDataSource>
                <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt" Width="100%" Height="100%" AsyncRendering="False" SizeToReportContent="True">
