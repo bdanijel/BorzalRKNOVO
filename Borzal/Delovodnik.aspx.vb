@@ -173,12 +173,12 @@ Partial Class DELOVODNIK
         Dim dsDelovodnik As New DataSet
         Dim UpitDelovodnik As String = ""
         'polja koja su podvučena se ne prikazuju prilikom razvođenja
-        Dim KlasifikacioniBrojID, DelovodniBroj, tekst, primedba, posiljaoc, KlasaDokumentaID, korisnik, datumPrijema, datumRazvoda, OrgJedID, iznos, PopisAkata, AktivanPopisAkata, LinkZaDokument, INDLinkZaDokument, preuzeoKO, DatumPreuzeo, preuzeo, namenjeno, smer As String
 
         Dim sbDelovodnik As New StringBuilder
         'Samo ona polja koja se nalaze u podbroju 1 i koja ostaju dalje pri razvođenju
         UpitDelovodnik = "select  KlasifikacioniBrojID, DelovodniBroj,dbo.ufnSrediDatumPrikaz(datumPrijema) as datumPrijema, KlasaDokumentaID, tekst, PopisAkata, AktivanPopisAkata, korisnik from delovodnik  where (godina = '" & godina & "') and (rbr = '" & rbr & "') and (podbroj = '" & podbroj & "') and (podod3 = '" & PodOd3 & "')"
 
+        Dim korisnik, klasifikacionibrojid, delovodnibroj, datumprijema, klasadokumentaid, tekst As String
 
         dsDelovodnik = b.DajDS_IzUpita_Lokal(UpitDelovodnik, PISARNICAConnectionString)
         'Me.godina.Text = godina
@@ -1872,143 +1872,7 @@ Partial Class DELOVODNIK
 
     'End Sub
 
-    Public Sub OmotSpisaStampa_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnOmotSpisaStampa.Click
 
-        Dim ImePrezime As String = DajImePrezime(txtKorisnik.Text)
-        Dim dt As Date = Date.Today
-        Dim DatumPrijema As String
-
-        If (Me.txtDATUMPRIJEMA.Text = Nothing) Then
-            DatumPrijema = dt.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)
-        Else
-            DatumPrijema = Me.txtDATUMPRIJEMA.Text
-        End If
-
-        Dim rp1 As ReportParameter = New ReportParameter("ReportParameterKlasifikacioniBrojID", lblKlasifikacioniBroj.Text.ToString())
-        Dim rp2 As ReportParameter = New ReportParameter("ReportParameterTekst", txtTekst.Text.ToString())
-        Dim rp3 As ReportParameter = New ReportParameter("ReportParameterDatumPrijema", DatumPrijema)
-        Dim rp4 As ReportParameter = New ReportParameter("ReportParameterObradio", ImePrezime)
-
-        rwOmotSpisa.LocalReport.DataSources.Clear()
-        rwOmotSpisa.LocalReport.ReportPath = "Izvestaji\rOmotSpisa.rdlc"
-        rwOmotSpisa.LocalReport.SetParameters(New ReportParameter() {rp1, rp2, rp3, rp4})
-        'rwOmotSpisa.LocalReport.DataSources.Add(rds)
-        rwOmotSpisa.LocalReport.Refresh()
-
-
-
-    End Sub
-    Sub CreatePDF2()
-
-
-        ' Variables
-        Dim warnings As Warning() = Nothing
-        Dim streamids As String() = Nothing
-        Dim mimeType As String = Nothing
-        Dim encoding As String = Nothing
-        Dim extension As String = Nothing
-        Dim tabela As New DataTable
-
-
-
-        Try
-            ' Setup the report viewer object and get the array of bytes
-
-            'Dim viewer As New ReportViewer()
-            rwOmotSpisa.ProcessingMode = ProcessingMode.Local
-            Dim rp1 As ReportParameter = New ReportParameter("ReportParameterKlasifikacioniBrojID", lblKlasifikacioniBroj.Text.ToString())
-            Dim rp2 As ReportParameter = New ReportParameter("ReportParameterTekst", txtTekst.Text.ToString())
-
-            rwOmotSpisa.LocalReport.DataSources.Clear()
-            rwOmotSpisa.LocalReport.ReportPath = "Izvestaji\rOmotSpisa.rdlc"
-            rwOmotSpisa.LocalReport.SetParameters(New ReportParameter() {rp1, rp2})
-
-
-            rwOmotSpisa.LocalReport.DataSources.Clear()
-            'viewer.LocalReport.DataSources.Add(rds)
-            rwOmotSpisa.LocalReport.Refresh()
-            Dim bytes As Byte() = rwOmotSpisa.LocalReport.Render("PDF", Nothing, mimeType, encoding, extension, streamids, warnings)
-            'rwOmotSpisa.ProcessingMode = ProcessingMode.Local
-            'rwOmotSpisa.LocalReport.ReportPath = "Izvestaji\rOmotSpisa.rdlc"
-            'rwOmotSpisa.LocalReport.DataSources.Add(rds)
-            'Dim bytes As Byte() = rwOmotSpisa.LocalReport.Render("PDF", Nothing, mimeType, encoding, extension, streamids, warnings)
-
-            ' Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
-            Me.Response.Buffer = True
-            Me.Response.Clear()
-            Me.Response.ContentType = mimeType
-            Me.Response.AddHeader("content-disposition", ("attachment; filename = OmotSpisa.pdf"))
-            Me.Response.BinaryWrite(bytes)
-            ' create the file
-            ' send it to the client to download
-            Me.Response.Flush()
-        Catch ex As Exception
-            Throw New Exception("Error Creating PDF File: " + ex.InnerException.Message)
-        End Try
-
-    End Sub
-    Sub CreatePDF()
-        Dim dt As New DataTable
-        Dim ds As New DataSet
-        Dim UpitOmotSpisa As String
-
-        UpitOmotSpisa = "select KlasifikacioniBrojID, DelovodniBroj, tekst from vDelovodnik where godina = " & godina & " and rbr = " & txtRbr.Text & " and podbroj = " & txtPodBroj.Text & " and podod3 = " & PodOd3
-        ds = b.DajDS_IzUpita_Lokal(UpitOmotSpisa, PISARNICAConnectionString)
-
-        ' Variables
-        Dim warnings As Warning() = Nothing
-        Dim streamids As String() = Nothing
-        Dim mimeType As String = Nothing
-        Dim encoding As String = Nothing
-        Dim extension As String = Nothing
-        Dim tabela As New DataTable
-
-        ' Create Report DataSource
-        Dim rds As New ReportDataSource("dsOmotSpisa", ds.Tables(0))
-        dt.Clear()
-        ds.Tables.Add(dt)
-        Me.rwOmotSpisa.Reset()
-        Me.rwOmotSpisa.LocalReport.ReportPath = "Izvestaji\rOmotSpisa.rdlc"
-        Me.rwOmotSpisa.LocalReport.DataSources.Add(New Microsoft.Reporting.WebForms.ReportDataSource("dsOmotSpisa", ds.Tables(0)))
-
-
-        Try
-            ' Setup the report viewer object and get the array of bytes
-
-            Dim viewer As New ReportViewer()
-            viewer.ProcessingMode = ProcessingMode.Local
-            viewer.LocalReport.ReportPath = "Izvestaji\rOmotSpisa.rdlc"
-
-
-
-            'Dim rds As New ReportDataSource
-            'rds.Name = "dsOmotSpisa"
-            'rds.Value = tabela
-            'tabela.Rows.Add(ds)
-            'tabela.Rows.Add(Me.lblKlasifikacioniBroj.Text, Me.txtTekst.Text)
-            viewer.LocalReport.DataSources.Clear()
-            viewer.LocalReport.DataSources.Add(rds)
-            viewer.LocalReport.Refresh()
-            Dim bytes As Byte() = viewer.LocalReport.Render("PDF", Nothing, mimeType, Encoding, extension, streamids, warnings)
-            'rwOmotSpisa.ProcessingMode = ProcessingMode.Local
-            'rwOmotSpisa.LocalReport.ReportPath = "Izvestaji\rOmotSpisa.rdlc"
-            'rwOmotSpisa.LocalReport.DataSources.Add(rds)
-            'Dim bytes As Byte() = rwOmotSpisa.LocalReport.Render("PDF", Nothing, mimeType, encoding, extension, streamids, warnings)
-
-            ' Now that you have all the bytes representing the PDF report, buffer it and send it to the client.
-            Me.Response.Buffer = True
-            Me.Response.Clear()
-            Me.Response.ContentType = mimeType
-            Me.Response.AddHeader("content-disposition", ("attachment; filename = OmotSpisa.pdf"))
-            Me.Response.BinaryWrite(bytes)
-            ' create the file
-            ' send it to the client to download
-            Me.Response.Flush()
-        Catch ex As Exception
-            Throw New Exception("Error Creating PDF File: " + ex.InnerException.Message)
-        End Try
-
-    End Sub
 
     Private Function DajImePrezime(ByVal ID_Korisnika As String) As String
         Dim ImePrezime As String = ""

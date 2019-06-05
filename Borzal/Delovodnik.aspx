@@ -543,7 +543,7 @@
                 <!-- POTVRDI -->
                 <div class="row">
                     <div class="col-md-12 pt-10">
-                       <%-- <div class="row">
+                        <%-- <div class="row">
                             <div class="auto-style4">
                                 <div class="alert alert-warning alert-styled-left alert-arrow-left alert-component border-info-700">
                                     <span class="alert-heading no-margin-bottom text-info-800">По завршеном попуњавању података о зарадама и часовима рада за ову локалну јединицу, обавезно кликните на дугме <b>ПОТВРДИ</b>. Уколико има неправилности, појавиће се одговарајућа порука и списак грешака које треба исправити. Уколико је све у реду добићете поруку да сте успешно доставили податке и могућност да одштампате упитник. </span>
@@ -553,8 +553,7 @@
                         <div class="row mb-10">
                             <div class="col-md-12">
                                 <div class="input-group-btn text-center">
-                                    <asp:LinkButton ID="btnPotvrdiDELOVODNIK" runat="server" OnClick="btnPotvrdiDELOVODNIK_Click" CssClass="btn btn-info btn-xs bg-info-700" style="left: 0px; top: 6px">ПОТВРДИ <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
-                                    <asp:LinkButton ID="btnOmotSpisaStampa"  runat="server" OnClick="OmotSpisaStampa_Click" CssClass="btn btn-primary btn-xs bg-primary-400" style="left: 0px; top: 12px">ОМОТ СПИСА<i class="glyphicon glyphicon-print position-right"></i></asp:LinkButton>
+                                    <asp:LinkButton ID="btnPotvrdiDELOVODNIK" runat="server" OnClick="btnPotvrdiDELOVODNIK_Click" CssClass="btn btn-info btn-xs bg-info-700" Style="left: 0px; top: 6px">ПОТВРДИ <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
                                 </div>
                             </div>
                         </div>
@@ -615,12 +614,7 @@
     <asp:Button ID="btnCreate" runat="server" CssClass="hidden"></asp:Button>
     <asp:Button ID="btnPrint" runat="server" CssClass="hidden"></asp:Button>
     
-        <%-- IZVEŠTAJ - OMOT SPISA --%>
-   
-        <rsweb:ReportViewer ID="rwOmotSpisa" runat="server" Visible="true" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt" ExportContentDisposition="AlwaysInline" Height="11.69in" Width="8.27in" PageCountMode="Actual" InternalBorderColor="Black" InternalBorderWidth="2px" ShowBackButton="False" ShowCredentialPrompts="False" ShowDocumentMapButton="False" ShowParameterPrompts="False" ShowPromptAreaButton="False" ShowRefreshButton="false" ShowZoomControl="False">
-            <LocalReport ReportPath="Izvestaji\rOmotSpisa.rdlc">
-            </LocalReport>
-        </rsweb:ReportViewer>
+    
 
 
     <%-- JS --%>

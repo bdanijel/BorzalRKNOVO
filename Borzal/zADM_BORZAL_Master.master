@@ -51,7 +51,7 @@
         <div class="navbar navbar-default navbar-fixed-top">
             <div class="navbar-header">
                 <span class="navbar-brand pt-5 pb-5 no-padding-left">
-                    <span class="text-semibold"><img src="Content/images/logo/SPR_Logo_FIN_Slate.svg" width="70" height="40" alt="SPR Logo" /> ПИСАРНИЦА РЗС</span>
+                    <span class="text-semibold"><img src="Content/images/logo/SPR_Logo_FIN_Slate.svg" width="70" height="40" alt="SPR Logo" /> BORZAL</span>
                 </span>
                 <ul class="nav navbar-nav pull-right visible-xs-block">
                     <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
@@ -91,6 +91,9 @@
 								<div class="media-left"></div>
 								<div class="media-body">
 									<span class="media-heading text-semibold" id="logovaniKorisnik" runat="server"></span>
+                                    <table>
+                                        <tr><asp:Label ID="lblKorisnikIme" runat="server"  Text=""   Visible="true"/> </tr>
+                                    </table>
 								</div>
 							</div>
 						</div>
@@ -115,7 +118,7 @@
                     <!-- Page header -->
                     <div class="page-header page-header-default">
                         <div class="page-header-content">
-                            <div class="page-title pt-10 pb-10"><h6 class="text-semibold"><i class="icon-tree7 position-left text-slate-300"></i><span>ПИСАРНИЦА РЗС - </span><span class="text-slate-300">деловодник, одлазнa и пријемнa поштa, путни налози</span></h6></div>
+                            <div class="page-title pt-10 pb-10"><h6 class="text-semibold"><i class="icon-tree7 position-left text-slate-300"></i><span>BORZAL - </span><span class="text-slate-300">robno knjigovodstvo</span></h6></div>
                             <div class="heading-elements">
                                 <div class="heading-form">
                                     <div class="form-group">

@@ -51,7 +51,7 @@ Partial Class LogIn
                 Exit Sub
             End If
             If Me.Nalog.Value <> "" And Me.Lozinka.Value <> "" Then
-                ID_Korisnik = Me.DajIDSpoljnogKorisnika(Trim(Me.Nalog.Value), Trim(Me.Lozinka.Value))
+                ID_Korisnika = Me.DajIDSpoljnogKorisnika(Trim(Me.Nalog.Value), Trim(Me.Lozinka.Value))
             End If
 
             If ID_Korisnika = Nothing Then

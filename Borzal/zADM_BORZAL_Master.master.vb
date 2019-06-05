@@ -10,7 +10,7 @@ Partial Class zADM_BORZAL_Master
     Dim danas As New Date
     Dim Dat As String
     Dim b As New ADM_MM()
-    Dim PISARNICAConnectionString As String = b.ConnString_BORZAL
+    Dim BORZALConnectionString As String = b.ConnString_BORZAL
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Page.MaintainScrollPositionOnPostBack = True
 
@@ -28,16 +28,17 @@ Partial Class zADM_BORZAL_Master
     Private Sub PostaviMeni()
 
 
-        Dim Korisnik_ID As String = Session("korisnik_ID")
+        Dim Korisnik_ID As String = Session("ID_Korisnika")
+        Me.lblKorisnikIme.Text = Session("LogovaniKorisnik")
         Dim ProveraKorisnika As Integer = 0
 
-        'proverava se da li je korisnik admin, ako nije onda mu se čita posao SIGN (potpis) i pravi meni samo sa tim poslom. Ako jeste, ide meni po tekućim poslovima
-        ProveraKorisnika = b.ProveraAdminKorisnika(Korisnik_ID)
-        If ProveraKorisnika = 1 Then
-            Korisnik_ID = Session("korisnik_ID")
-        Else
-            Korisnik_ID = "SIGN"
-        End If
+        ''proverava se da li je korisnik admin, ako nije onda mu se čita posao SIGN (potpis) i pravi meni samo sa tim poslom. Ako jeste, ide meni po tekućim poslovima
+        'ProveraKorisnika = b.ProveraAdminKorisnika(Korisnik_ID)
+        'If ProveraKorisnika = 1 Then
+        '    Korisnik_ID = Session("ID_Korisnika")
+        'Else
+        '    Korisnik_ID = "SIGN"
+        'End If
         Dim Meni = DajGlavniMeni(Korisnik_ID)
         Me.mainMenu.InnerHtml = Meni
 
@@ -49,7 +50,7 @@ Partial Class zADM_BORZAL_Master
         Dim sbGlavniMeni As New StringBuilder
         Dim dsGlavniMeni As New DataSet()
         Dim UpitGlavniMeni As String = "SELECT DISTINCT OblastID, Oblast, OblastURL, Ikona, RedosledOblast, StatusOblast FROM ADM_Oblasti WHERE OblastID IN(SELECT OblastID FROM v_ADM_Veza_Korisnik_Posao WHERE (idenr ='" & korisnik_ID & "')) ORDER BY RedosledOblast"
-        dsGlavniMeni = b.DajDS_IzUpita_Lokal(UpitGlavniMeni, b.ConnString_PISARNICA)
+        dsGlavniMeni = b.DajDS_IzUpita_Lokal(UpitGlavniMeni, b.ConnString_BORZAL)
         If dsGlavniMeni.Tables.Count > 0 Then
             If dsGlavniMeni.Tables(0).Rows.Count > 0 Then
                 For i As Integer = 0 To dsGlavniMeni.Tables(0).Rows.Count - 1
@@ -63,7 +64,7 @@ Partial Class zADM_BORZAL_Master
                             sbGlavniMeni.Append("<li><a href=""" & OblastURL & """><i class=""" & Ikona & """></i> <span>" & Oblast & "</span></a></li>")
                         Case "#"
                             sbGlavniMeni.Append("<li><a href=""" & OblastURL & """><i class=""" & Ikona & """></i> <span>" & Oblast & "</span></a><ul>")
-                            sbGlavniMeni.Append(PostaviPodMeni(OblastID, Session("korisnik_ID")))
+                            sbGlavniMeni.Append(PostaviPodMeni(OblastID, Session("ID_Korisnika")))
                             sbGlavniMeni.Append("</ul></li>")
                     End Select
                 Next
@@ -74,7 +75,7 @@ Partial Class zADM_BORZAL_Master
     End Function
     Private Function PostaviPodMeni(ByVal OblastID As String, ByVal ID_AdminKorisnika As String) As String
         Dim PodMeni As String = ""
-        Dim UpitMeni As String = "SELECT * FROM v_ADM_Veza_Korisnik_Posao WHERE (OblastID = '" & OblastID & "') AND (StatusPosao = 1) AND idenr = ('" & Session("korisnik_ID") & "') ORDER BY RedosledPosao"
+        Dim UpitMeni As String = "SELECT * FROM v_ADM_Veza_Korisnik_Posao WHERE (OblastID = '" & OblastID & "') AND (StatusPosao = 1) AND idenr = ('" & Session("ID_Korisnika") & "') ORDER BY RedosledPosao"
         Dim dsMeni As New DataSet
         Dim sbMeni As New StringBuilder
         Dim PosaoID As String = ""
@@ -82,7 +83,7 @@ Partial Class zADM_BORZAL_Master
         Dim PosloviURL As String = ""
         Dim Ikona As String = ""
 
-        dsMeni = b.DajDS_IzUpita_Lokal(UpitMeni, PISARNICAConnectionString)
+        dsMeni = b.DajDS_IzUpita_Lokal(UpitMeni, BORZALConnectionString)
         If dsMeni.Tables.Count > 0 Then
             If dsMeni.Tables(0).Rows.Count > 0 Then
                 For i = 0 To dsMeni.Tables(0).Rows.Count - 1

@@ -21,7 +21,7 @@
 
      <div class="row">
                     <div class="col-md-12">
-                        <h6 class="m-10 content-group text-semibold"><i class="icon-list position-left text-primary-800"></i><span id="MBListaTitle" runat="server">Листа пописа аката</span></h6>
+                        <h6 class="m-10 content-group text-semibold"><i class="icon-list position-left text-primary-800"></i><span id="MBListaTitle" runat="server">Tabela sa trebovanjem</span></h6>
                         <h6 class="font-family-Roboto text-semibold validation-error-label" id="H1" runat="server"></h6>
                         <div class="panel no-border">
                             <div class="table-responsive">                        

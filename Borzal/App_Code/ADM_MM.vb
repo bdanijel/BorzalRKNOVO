@@ -121,23 +121,11 @@ Public Class ADM_MM
         Return (ID)
     End Function
 
-    Public Function ProveraAdminKorisnika(ByVal ID_Korisnika As String) As Integer
-        Dim ds As New DataSet
-        Dim ImaPrava As Integer = 0
-        Dim upit As String = "SELECT ID_Korisnika FROM v_ADM_PISARNICA_Admin WHERE (ID_Korisnika = '" & ID_Korisnika & "')"
-        ds = DajDS_IzUpita_Lokal(upit, ConnString_PISARNICA)
-        If ds.Tables.Count > 0 Then
-            If ds.Tables(0).Rows.Count > 0 Then
-                ImaPrava = ds.Tables(0).Rows.Count
-            End If
-        End If
-        Return ImaPrava
-    End Function
     Public Function ProveraKorisnikPosao(ByVal ID_Korisnika As String, ByVal PosaoURL As String) As Integer
         Dim ds As New DataSet
         Dim ImaPrava As Integer = 0
         Dim upit As String = "SELECT idenr FROM v_ADM_Veza_Korisnik_Posao WHERE (idenr = '" & ID_Korisnika & "') and (PosaoURL = '" & PosaoURL & "')"
-        ds = DajDS_IzUpita_Lokal(upit, ConnString_PISARNICA)
+        ds = DajDS_IzUpita_Lokal(upit, ConnString_BORZAL)
         If ds.Tables.Count > 0 Then
             If ds.Tables(0).Rows.Count > 0 Then
                 ImaPrava = ds.Tables(0).Rows.Count
@@ -149,7 +137,7 @@ Public Class ADM_MM
         Dim ds As New DataSet
         Dim ImaPrava As Integer = 0
         Dim upit As String = "SELECT ID_Korisnika FROM LISTA_SpoljniKorisnici WHERE (ID_Korisnika = '" & ID_Korisnika & "')"
-        ds = DajDS_IzUpita_Lokal(upit, ConnString_PISARNICA)
+        ds = DajDS_IzUpita_Lokal(upit, ConnString_BORZAL)
         If ds.Tables.Count > 0 Then
             If ds.Tables(0).Rows.Count > 0 Then
                 ImaPrava = ds.Tables(0).Rows.Count
@@ -1428,5 +1416,16 @@ Handler:
 
         Return IP4Address
     End Function
+    Public Function Duplikat(ByVal polje As String, ByVal tabela As String, ByVal podatak As String) As Boolean
+        Dim dsUpit As DataSet
+        Dim Upit As String = "SELECT * FROM " & tabela & " WHERE " & polje & "= '" & podatak & "'"
+        dsUpit = DajDS_IzUpita_Lokal(Upit, ConnString_BORZAL)
+        Dim broj As Integer = dsUpit.Tables(0).Rows.Count
+        If broj > 0 Then
+            Return True
+        Else Return False
+        End If
+    End Function
+
 
 End Class

@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge, Chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>СПР - Логовање</title>
+    <title>BORZAL - Логовање</title>
     
     <!-- core CSS files -->
     <link href="Content/font/icomoon/styles.css" rel="stylesheet" />
@@ -34,7 +34,7 @@
     <!-- Main navbar -->
     <div class="navbar navbar-inverse bg-primary-700">
         <div class="navbar-header">
-            <span class="navbar-brand bg-hover pt-5 pb-5 no-padding-left"><span class="text-semibold"><img src="Content/images/logo/SPR_Logo_FIN_White.svg" width="70" height="40" alt="SPR Logo" /> ПИСАРНИЦА РЗС</span></span>
+            <span class="navbar-brand bg-hover pt-5 pb-5 no-padding-left"><span class="text-semibold"><img src="Content/images/logo/SPR_Logo_FIN_White.svg" width="70" height="40" alt="SPR Logo" /> BORZAL</span></span>
             <ul class="nav navbar-nav pull-right visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
             </ul>
