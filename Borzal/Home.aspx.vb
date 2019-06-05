@@ -10,7 +10,7 @@ Partial Class Home
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         Page.MaintainScrollPositionOnPostBack = True
 
-        'PopuniTabeluMB()
+        PopuniTabeluMB()
 
     End Sub
 

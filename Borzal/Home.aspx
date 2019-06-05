@@ -31,12 +31,13 @@
                                             PagerStyle-CssClass="pagination-nm"
                                             DataKeyNames="id" BorderWidth="0px" HeaderStyle-CssClass="alpha-grey img-bg" PagerSettings-Mode="NumericFirstLast" PagerStyle-Wrap="False">
                                     <Columns>
-                                         <asp:BoundField DataField="broj" HeaderText="Редни број" SortExpression="rbr" />
-                                         <asp:BoundField DataField="rbr" HeaderText="Опис" SortExpression="opis" />
-                                        <asp:BoundField DataField="naziv" HeaderText="Класификациони број ИД" SortExpression="KlasifikacioniBrojID" />
-                                        <asp:BoundField DataField="jm" HeaderText="Класификација опис" SortExpression="KlasifikacioniBroj" />
-                                        <asp:BoundField DataField="kolicina" HeaderText="Класификација опис" SortExpression="KlasifikacioniBroj" />
-                                        <asp:BoundField DataField="datum" HeaderText="Класификација опис" SortExpression="KlasifikacioniBroj" />
+                                         <asp:BoundField DataField="id" HeaderText="Редни број" SortExpression="id" />
+                                        <asp:BoundField DataField="broj" HeaderText="Редни број" SortExpression="rbr" />
+                                         <asp:BoundField DataField="rbr" HeaderText="Опис" SortExpression="rbr" />
+                                        <asp:BoundField DataField="naziv" HeaderText="Класификациони број ИД" SortExpression="naziv" />
+                                        <asp:BoundField DataField="jm" HeaderText="Класификација опис" SortExpression="jm" />
+                                        <asp:BoundField DataField="kolicina" HeaderText="Класификација опис" SortExpression="kolicina" />
+                                        <asp:BoundField DataField="datum" HeaderText="Класификација опис" SortExpression="datum" />
                                     </Columns>
                                 </asp:GridView>
                             </div>

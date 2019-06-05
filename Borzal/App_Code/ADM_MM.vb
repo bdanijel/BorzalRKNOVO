@@ -1,15 +1,7 @@
-﻿Imports Microsoft.VisualBasic
-Imports System.Data
+﻿Imports System.Data
 Imports System.Data.SqlClient
-Imports System
-Imports System.Globalization
-Imports System.Web
 Imports System.Net
-Imports System.Net.Sockets
-Imports System.Text
 Imports System.DirectoryServices
-Imports System.Collections
-Imports System.Text.RegularExpressions
 
 Public Class ADM_MM
     Public ConnString_SPRLJ As String = getConnStr("SPRLJConnectionString")

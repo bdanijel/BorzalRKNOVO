@@ -41,10 +41,9 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-mobile">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="SPRLJ_Home.aspx"><span class="text-semibold"><i class="icon-home2 position-left"></i>Почетна</span></a></li>
                 <li><a href="Content/doc/Uputstva/UputstvoZaLogovanje.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Упутство за логовање</a></li>
                 <li>
-					<a href="mailTo:sprlj@stat.gov.rs">
+					<a href="mailTo:lejinad5@gmail.com">
 						<i class="icon-envelope"></i>
 						<span class="visible-xs-inline-block position-right">Контактирај администратора</span>
 					</a>						
@@ -94,11 +93,7 @@
                                 <button id="LoginButton" runat="server" onserverclick="LoginButton_Click" class="btn btn-xs bg-primary-800 btn-block">ЛОГУЈТЕ СЕ <i class="icon-circle-right2 position-right"></i></button>
 <%--                                <asp:LinkButton ID="LoginButton" runat="server" OnClick="LoginButton_Click"  CssClass="btn btn-xs btn-primary bg-primary-800 btn-block">ЛОГУЈТЕ СЕ<i class="icon-circle-right2 position-right"></i></asp:LinkButton>--%>
                             </div>
-                            <div class="content-divider text-muted form-group"><span>Немате налог?</span></div>
-                            <div class="form-group">
-                                <asp:LinkButton ID="IdiNaRegistracijuButton" runat="server" OnClick="IdiNaRegistracijuButton_Click" CssClass="btn btn-xs btn-default btn-block">КРЕИРАЊЕ НАЛОГА<i class="icon-plus3 position-right"></i></asp:LinkButton>
-                            </div>
-                        </div>
+                         </div>
                     </form>
                     <!-- /LogIn form --> 
                     <div class="content">
@@ -119,7 +114,7 @@
                                         <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span></span>
                                 </a>
                             </div>
-                            <div class="copyright">Републички завод за статистику &copy; <%: DateTime.Now.Year %>  - Статистички пословни регистар</div>
+                            <div class="copyright">Borzal &copy; <%: DateTime.Now.Year %>  - robno knjigovodstvo</div>
                         </div>
                         <!-- /footer -->
                     </div>

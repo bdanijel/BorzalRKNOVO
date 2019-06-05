@@ -37,7 +37,7 @@
                     <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
                 </SelectParameters>
             </asp:ObjectDataSource>
-               <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt" Width="100%" Height="100%" AsyncRendering="False" SizeToReportContent="True">
+               <rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="100%" Height="100%" AsyncRendering="False" SizeToReportContent="True">
                 <LocalReport ReportPath="Izvestaji\rDelovodnik.rdlc">
                     <DataSources>
                         <rsweb:ReportDataSource DataSourceId="dsDelovodnik" Name="dsDelovodnik" />

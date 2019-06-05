@@ -4,7 +4,7 @@ Imports System.Data
 Partial Class LogIn
     Inherits System.Web.UI.Page
     Dim b As New ADM_MM()
-    Dim SPRLJConnectionString As String = b.ConnString_SPRLJ
+    Dim BORZALConnectionString As String = b.ConnString_BORZAL
     Dim DatumVreme As String = b.srediDatumVreme
     Dim LoginClassHidden As String = "panel panel-body login-form hidden"
     Dim LoginClassVisible As String = "panel panel-body login-form"
@@ -35,7 +35,7 @@ Partial Class LogIn
 
         Dim ID_Korisnika As String = ""
         Dim ID_AdminKorisnika = ""
-        Dim ID_SpoljniKorisnik As String = ""
+        Dim ID_Korisnik As String = ""
 
         Dim IdiUProgram As Integer = 0
         Dim Status As Boolean = False
@@ -51,32 +51,16 @@ Partial Class LogIn
                 Exit Sub
             End If
             If Me.Nalog.Value <> "" And Me.Lozinka.Value <> "" Then
-
-
-                ID_SpoljniKorisnik = Me.DajIDSpoljnogKorisnika(Trim(Me.Nalog.Value), Trim(Me.Lozinka.Value))
-
-                If ID_AdminKorisnika <> "-1" Then
-                    If b.ProveraAdminKorisnika(ID_AdminKorisnika) = 1 Then
-                        ID_Korisnika = ID_AdminKorisnika
-                    Else
-                        Me.PorukaNeuspesno.InnerText = "Немате права приступа."
-                        Exit Sub
-                    End If
-                ElseIf b.ProveraSpoljnogKorisnika(ID_SpoljniKorisnik) = 1 Then
-                    ID_Korisnika = ID_SpoljniKorisnik
-                Else
-                    ID_Korisnika = "-1"
-                    Me.LogPoruke.Visible = True
-                    Me.PorukaNeuspesno.InnerText = "Погрешно корисничко име или лозинка."
-                    Exit Sub
-                End If
+                ID_Korisnik = Me.DajIDSpoljnogKorisnika(Trim(Me.Nalog.Value), Trim(Me.Lozinka.Value))
             End If
+
             If ID_Korisnika = Nothing Then
                 ID_Korisnika = "-1"
             End If
             If Trim(ID_Korisnika) = "" Then
                 ID_Korisnika = "-1"
             End If
+
 
             Select Case ID_Korisnika
                 Case Nothing, "-1"
@@ -89,54 +73,25 @@ Partial Class LogIn
                     Me.LogPoruke.Visible = True
                     IdiUProgram = 1
                     Status = True
-                    If ID_Korisnika = ID_AdminKorisnika Then
-                        PronadjiADMINKorisnika(ID_Korisnika)
-                    ElseIf ID_Korisnika = ID_SpoljniKorisnik Then
-                        PronadjiSpoljnogKorisnika(ID_Korisnika)
-                    End If
+                    PronadjiSpoljnogKorisnika(ID_Korisnika)
+                    Response.Redirect(ResolveClientUrl("~/Home.aspx"), True)
             End Select
 
-            If IdiUProgram = 1 Then
-                If ID_Korisnika = ID_AdminKorisnika Then
-                    Response.Redirect(ResolveClientUrl("~/ADM_Home.aspx"), True)
-                ElseIf ID_Korisnika = ID_SpoljniKorisnik Then
-                    Response.Redirect(ResolveClientUrl("~/Home.aspx"), True)
-                Else
-                    Response.Redirect(ResolveClientUrl("~/LogOut.aspx"), True)
-                End If
-            End If
         End If
     End Sub
 
-    Protected Sub IdiNaRegistracijuButton_Click(Source As Object, E As EventArgs)
-        Response.Redirect("~/ADM_Registracija.aspx", True)
-    End Sub
-    Protected Sub PromenaLozinkeButton_Click(Source As Object, E As EventArgs)
-    End Sub
     Protected Sub LozinkaMailButton_Click(Source As Object, E As EventArgs)
         Response.Redirect("~/Home.aspx", True)
     End Sub
-    Public Sub PronadjiADMINKorisnika(ID_Korisnika As String)
-        Dim Upit As String
-        Dim ds As New DataSet
-        Dim strLogovaniKorisnik As String
 
-        Upit = "SELECT ImePrezime FROM v_ADM_SPRLJ_Admin WHERE ID_Korisnika ='" & ID_Korisnika & "'"
-
-        ds = b.DajDS_IzUpita_Lokal(Upit, SPRLJConnectionString)
-        Dim dr As DataRow = ds.Tables(0).Rows(0)
-        strLogovaniKorisnik = dr("ImePrezime")
-
-        Session("LogovaniKorisnik") = strLogovaniKorisnik
-    End Sub
     Public Sub PronadjiSpoljnogKorisnika(ID_Korisnika As String)
         Dim Upit As String
         Dim ds As New DataSet
         Dim strLogovaniKorisnik As String
 
-        Upit = "SELECT (Ime + ' ' + Prezime) As ImePrezime FROM LISTA_SpoljniKorisnici WHERE ID_Korisnika ='" & ID_Korisnika & "'"
+        Upit = "SELECT (Ime + ' ' + Prezime) As ImePrezime FROM LISTA_Korisnici WHERE ID_Korisnika ='" & ID_Korisnika & "'"
 
-        ds = b.DajDS_IzUpita_Lokal(Upit, SPRLJConnectionString)
+        ds = b.DajDS_IzUpita_Lokal(Upit, BORZALConnectionString)
         Dim dr As DataRow = ds.Tables(0).Rows(0)
         strLogovaniKorisnik = dr("ImePrezime")
 
@@ -146,8 +101,8 @@ Partial Class LogIn
     Public Function DajIDSpoljnogKorisnika(ByVal Nalog As String, ByVal Lozinka As String) As String
         Dim ds As New DataSet
         Dim ID_Korisnika As String = ""
-        Dim Upit As String = "SELECT ID_Korisnika FROM LISTA_SpoljniKorisnici WHERE (Nalog = '" & Nalog & "') AND (Lozinka = '" & Lozinka & "')"
-        ds = b.DajDS_IzUpita_Lokal(Upit, SPRLJConnectionString)
+        Dim Upit As String = "SELECT ID_Korisnika FROM LISTA_Korisnici WHERE (Nalog = '" & Nalog & "') AND (Lozinka = '" & Lozinka & "')"
+        ds = b.DajDS_IzUpita_Lokal(Upit, BORZALConnectionString)
         If ds.Tables.Count > 0 Then
             If ds.Tables(0).Rows.Count = 1 Then
                 ID_Korisnika = ds.Tables(0).Rows(0).Item("ID_Korisnika")

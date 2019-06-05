@@ -5,7 +5,7 @@
 <script runat="server">
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session.Clear()
-        Response.Redirect(ResolveClientUrl("~/Home.aspx"), True)
+        Response.Redirect(ResolveClientUrl("~/LogIn.aspx"), True)
     End Sub
 </script>
 
