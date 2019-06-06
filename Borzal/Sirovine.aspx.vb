@@ -3,7 +3,7 @@ Imports System.IO
 Imports System.Drawing
 Imports System.Diagnostics
 
-Partial Class Proizvod
+Partial Class Sirovine
     Inherits System.Web.UI.Page
     Dim b As New ADM_MM()
     Dim BORZALConnectionString As String = b.ConnString_BORZAL
@@ -37,7 +37,7 @@ Partial Class Proizvod
         End If
     End Sub
 #Region "DUGMIĆI"
-    Protected Sub btnPotvrdiPROIZVOD_Click(sender As Object, e As EventArgs)
+    Protected Sub btnPotvrdiSIROVINA_Click(sender As Object, e As EventArgs)
         SetPorukaUspesnoInvisible()
         SetPorukaNeuspesnoInvisible()
         SetPorukaSpisakGresakaInvisible()
@@ -65,7 +65,7 @@ Partial Class Proizvod
 
 
 
-            If InsertUpdatePROIZVOD() = False Then
+            If InsertUpdateSIROVINA() = False Then
                 Me.PorukaInfoNeuspesno.InnerText = "Došlo je do greške prilikom upisa u bazu."
                 Exit Sub
             End If
@@ -73,9 +73,10 @@ Partial Class Proizvod
             SetPorukaUspesnoVisible()
             Me.PorukaInfoUspesno.InnerHtml = "Podatak je uspešno unet!"
 
-            IsprazniKontroleProizvoda()
+            IsprazniKontroleSirovina()
 
         End If
+
 
         SessionUpit()
 
@@ -116,40 +117,43 @@ Partial Class Proizvod
 
 
 
-    Protected Function InsertUpdatePROIZVOD() As Boolean
+    Protected Function InsertUpdateSIROVINA() As Boolean
 
-        Dim UpitInsertUpdatePROIZVOD As String = ""
+        Dim UpitInsertUpdateSIROVINA As String = ""
 
-        If ProveraPostojanjaZapisaPROIZVOD(Me.txtID.Text) = 1 Then
+        If ProveraPostojanjaZapisaSIROVINA(Me.txtID.Text) = 1 Then
 
-            UpitInsertUpdatePROIZVOD = "UPDATE PROIZVOD " _
+            UpitInsertUpdateSIROVINA = "UPDATE SIROVINE " _
 & " Set NAZIV = " & "N'" & Me.txtNaziv.Text & "' " _
+& " Set JM = " & "N'" & Me.txtJM.Text & "' " _
 & "  WHERE (id = " & Me.txtID.Text & ")"
         Else
 
-            UpitInsertUpdatePROIZVOD = "INSERT INTO PROIZVOD (Naziv) VALUES " _
-& "(" & "N'" & Me.txtNaziv.Text & "') "
+            UpitInsertUpdateSIROVINA = "INSERT INTO SIROVINE (Naziv, JM) VALUES " _
+& "(" & "N'" & Me.txtNaziv.Text & "'," _
+& "N'" & Me.txtJM.Text & "') "
 
         End If
 
-        Dim ret As Boolean = b.UpisPromenaBrisanje(UpitInsertUpdatePROIZVOD, BORZALConnectionString)
+        Dim ret As Boolean = b.UpisPromenaBrisanje(UpitInsertUpdateSIROVINA, BORZALConnectionString)
         Return ret
     End Function
 
-    Private Function ProveraPostojanjaZapisaPROIZVOD(ByVal ID As String) As Integer
-        Dim PROIZVODSelect As String = ""
-        Dim dsPROIZVODSelect As New DataSet
+    Private Function ProveraPostojanjaZapisaSIROVINA(ByVal ID As String) As Integer
+        Dim SIROVINASelect As String = ""
+        Dim dsSIROVINASelect As New DataSet
 
-        PROIZVODSelect = "Select * FROM PROIZVOD WHERE (ID = '" & ID & "')"
-        dsPROIZVODSelect = b.DajDS_IzUpita_Lokal(PROIZVODSelect, BORZALConnectionString)
+        SIROVINASelect = "Select * FROM SIROVINE WHERE (ID = '" & ID & "')"
+        dsSIROVINASelect = b.DajDS_IzUpita_Lokal(SIROVINASelect, BORZALConnectionString)
 
-        Dim ret As Integer = dsPROIZVODSelect.Tables(0).Rows.Count
+        Dim ret As Integer = dsSIROVINASelect.Tables(0).Rows.Count
         Return ret
     End Function
 
-    Private Sub IsprazniKontroleProizvoda()
+    Private Sub IsprazniKontroleSirovina()
 
         Me.txtNaziv.Text = ""
+        Me.txtJM.Text = ""
 
     End Sub
 #End Region
@@ -196,7 +200,7 @@ Partial Class Proizvod
 
         Me.lblPorukaGR.InnerHtml = poruka
 
-        ret = b.Duplikat("Naziv", "Proizvod", Trim(Me.txtNaziv.Text))
+        ret = b.Duplikat("Naziv", "Sirovine", Trim(Me.txtNaziv.Text))
 
         If ret = 0 Then
             rezultat = True
@@ -217,10 +221,10 @@ Partial Class Proizvod
     Private Sub PopuniTabeluMB()
         Dim SelectSQL, WhereSQL As String
         Dim UpitMB As String = ""
-        MBListaTitle.InnerHtml = "Spisak naziva proizvoda"
+        MBListaTitle.InnerHtml = "Spisak naziva sirovina"
 
         SessionUpit()
-        SelectSQL = Session("UpitPROIZVOD")
+        SelectSQL = Session("UpitSIROVINA")
         UslovWHERE()
 
         'lblPoruka1.text = "UslovWHERE = " & Session("WhereSQL")
@@ -230,23 +234,28 @@ Partial Class Proizvod
         End If
         WhereSQL = Session("WhereSQL")
 
-        Session("UpitPROIZVOD") = SelectSQL + WhereSQL
+        Session("UpitSIROVINA") = SelectSQL + WhereSQL
 
-        Me.gvPROIZVOD.EmptyDataText = "Без података"
-        Me.gvPROIZVOD.DataBind()
+        Me.gvSIROVINA.EmptyDataText = "Без података"
+        Me.gvSIROVINA.DataBind()
     End Sub
     Protected Sub SessionUpit()
         Dim SelectSQL As String
 
-        SelectSQL = "SELECT ID, NAZIV FROM PROIZVOD"
+        SelectSQL = "SELECT ID, NAZIV, JM FROM SIROVINE"
 
-        Session("UpitPROIZVOD") = SelectSQL
+        Session("UpitSIROVINA") = SelectSQL
 
     End Sub
     Protected Sub UslovWHERE()
         Dim WhereSQL As String = ""
 
+
+
+
         Session("WhereSQL") = ""
+
+
 
         If WhereSQL <> "" Then
             Session("WhereSQL") = " WHERE (" & WhereSQL & ")"
@@ -254,22 +263,24 @@ Partial Class Proizvod
             Session("WhereSQL") = ""
         End If
 
+
+
         'lblPoruka2.Text = "DatumOD = " & DatumPrijemaOD
         'lblPoruka3.Text = "DatumDO = " & DatumPrijemaDO
 
 
     End Sub
-    Protected Sub gvPROIZVOD_DataBound(sender As Object, e As EventArgs) Handles gvPROIZVOD.DataBound
-        If Me.gvPROIZVOD.Rows.Count > 0 Then
-            Me.gvPROIZVOD.HeaderRow.Cells(1).Visible = True
-            Me.gvPROIZVOD.HeaderRow.Cells(2).Visible = True
+    Protected Sub gvSIROVINA_DataBound(sender As Object, e As EventArgs) Handles gvSIROVINA.DataBound
+        If Me.gvSIROVINA.Rows.Count > 0 Then
+            Me.gvSIROVINA.HeaderRow.Cells(1).Visible = True
+            Me.gvSIROVINA.HeaderRow.Cells(2).Visible = True
             'Me.gvMB.HeaderRow.Cells(4).CssClass = "text-center width-30"
             'Me.gvMB.HeaderRow.Cells(5).CssClass = "text-center width-30"
             'Me.gvMB.HeaderRow.Cells(6).CssClass = "text-center width-30"
             'Me.gvMB.HeaderRow.Cells(7).CssClass = "text-center width-30"
         End If
     End Sub
-    Protected Sub gvPROIZVOD_RowDataBound(ByVal sender As Object, ByVal e As GridViewRowEventArgs) Handles gvPROIZVOD.RowDataBound
+    Protected Sub gvSIROVINA_RowDataBound(ByVal sender As Object, ByVal e As GridViewRowEventArgs) Handles gvSIROVINA.RowDataBound
         If e.Row.RowType = DataControlRowType.DataRow Then
 
             e.Row.Cells(1).Visible = True
@@ -300,15 +311,15 @@ Partial Class Proizvod
 
         End If
     End Sub
-    Protected Sub gvPROIZVOD_RowCommand(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewCommandEventArgs) Handles gvPROIZVOD.RowCommand
+    Protected Sub gvSIROVINA_RowCommand(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewCommandEventArgs) Handles gvSIROVINA.RowCommand
         Dim index As Integer
         Dim row As GridViewRow
-        If e.CommandName = "PROIZVODIzmena" Then
+        If e.CommandName = "SIROVINAIzmena" Then
             index = Convert.ToInt32(e.CommandArgument)
-            row = gvPROIZVOD.Rows(index)
+            row = gvSIROVINA.Rows(index)
 
-            Dim ID As String = Me.gvPROIZVOD.DataKeys(index).Value
-            Dim NAZIV As String = Me.gvPROIZVOD.DataKeys(index).Values(1)
+            Dim ID As String = Me.gvSIROVINA.DataKeys(index).Value
+            Dim NAZIV As String = Me.gvSIROVINA.DataKeys(index).Values(1)
             'Dim podbroj As String = Me.gvMB.DataKeys(index).Values(2)
             'Dim podod3 As Integer = Me.gvMB.DataKeys(index).Values(3)
 
@@ -318,10 +329,10 @@ Partial Class Proizvod
             'Response.Redirect("~/Delovodnik.aspx", True)
         ElseIf e.CommandName = "ExcelExport" Then
             index = Convert.ToInt32(e.CommandArgument)
-            row = gvPROIZVOD.Rows(index)
-            Me.gvPROIZVOD.SelectedIndex = index
+            row = gvSIROVINA.Rows(index)
+            Me.gvSIROVINA.SelectedIndex = index
 
-            Dim ID As String = Me.gvPROIZVOD.DataKeys(index).Value
+            Dim ID As String = Me.gvSIROVINA.DataKeys(index).Value
             'Dim rbr As String = Me.gvMB.DataKeys(index).Values(1)
             'Dim podbroj As String = Me.gvMB.DataKeys(index).Values(2)
             'Dim podod3 As Integer = Me.gvMB.DataKeys(index).Values(3)
@@ -343,8 +354,8 @@ Partial Class Proizvod
 
 
 
-        Dim IzvestajNaziv As String = "PROIZVOD_" & DateTime.Now.ToString("yyyyMMdd_HHmm") & ".xls"
-        Dim UpitExcel As String = "SELECT ID, NAZIV FROM PROIZVOD ORDER BY ID"
+        Dim IzvestajNaziv As String = "SIROVINE_" & DateTime.Now.ToString("yyyyMMdd_HHmm") & ".xls"
+        Dim UpitExcel As String = "SELECT ID, NAZIV, JM FROM SIROVINE ORDER BY ID"
 
         Dim dsExcel As DataSet = b.DajDS_IzUpita_Lokal(UpitExcel, BORZALConnectionString)
 
@@ -371,7 +382,7 @@ Partial Class Proizvod
                 Me.gvExcel.AllowPaging = False
                 Me.gvExcel.AllowSorting = False
                 Me.gvExcel.HeaderRow.Cells(0).Visible = True
-                Me.gvExcel.Caption = "<h4>" & "TABELA PROIZVOD_" & DateTime.Now.ToString("dd.MM.yyyy.") & "</h4>"
+                Me.gvExcel.Caption = "<h4>" & "TABELA SIROVINE_" & DateTime.Now.ToString("dd.MM.yyyy.") & "</h4>"
                 Me.gvExcel.CaptionAlign = TableCaptionAlign.Left
 
                 Me.gvExcel.DataBind()
@@ -445,8 +456,8 @@ Partial Class Proizvod
             End Using
         End If
     End Sub
-    'Public Overrides Sub VerifyRenderingInServerForm(ByVal control As System.Web.UI.Control)
-    'End Sub
+    Public Overrides Sub VerifyRenderingInServerForm(ByVal control As System.Web.UI.Control)
+    End Sub
     Protected Sub gvExcel_DataBound(sender As Object, e As EventArgs) Handles gvExcel.DataBound
         If Me.gvExcel.Rows.Count > 0 Then
             Me.gvExcel.HeaderRow.Cells(0).Visible = True

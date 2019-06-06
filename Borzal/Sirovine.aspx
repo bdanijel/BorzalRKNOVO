@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Proizvod.aspx.vb" Inherits="Proizvod" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Sirovine.aspx.vb" Inherits="Sirovine" %>
 
 <asp:Content ID="cHead" ContentPlaceHolderID="cphHead" Runat="Server">
 </asp:Content>
@@ -25,35 +25,34 @@
     <div class="Home content">
          <asp:UpdatePanel ID="upFilterTabela" runat="server">
             <ContentTemplate>
-                <!-- ZAGLAVLJE OBRASCA -->
+                  <!-- ZAGLAVLJE OBRASCA -->
                 <div class="row">
                     <div class="col-md-12">
-                        <h6 class="m-10 content-group text-semibold"><i class="icon-box position-left text-primary-800"></i>PROIZVOD</b> </h6>
+                        <h6 class="m-10 content-group text-semibold"><i class="icon-box position-left text-primary-800"></i>SIROVINE</b> </h6>
                     </div>
                 </div>
                 <!-- /ZAGLAVLJE OBRASCA -->
 
 
-
                 <asp:label ID="lblPoruka1" runat="server"></asp:label>
                 <asp:label ID="lblPoruka2" runat="server"></asp:label>
                 <asp:label ID="lblPoruka3" runat="server"></asp:label>
-              
+                
                     
                     <div class="col-md-12">
                         <div class="panel mb-10">
                             <div class="panel-heading pt-5 pb-5 alpha-GreyPurple img-bg">
-                                <h6 class="panel-title text-semibold"><span class="text-size-base">Naziv proizvoda</span></h6>
+                                <h6 class="panel-title text-semibold"><span class="text-size-base">Naziv sirovine</span></h6>
                             </div>
                             <div class="panel-body pt-15 pb-10">
-                                <!-- PROIZVOD - Naziv -->
+                                <!-- SIROVINA - Naziv -->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
                                         <div class="row">
-                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span14" runat="server">Naziv proizvoda:</span></label>
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span14" runat="server">Naziv sirovine:</span></label>
                                             <div class="col-md-8 text-left">
                                                 <div class="input-group col-md-8">
-                                                    <asp:TextBox ID="txtNaziv" runat="server" CssClass="form-control input-xs" placeholder="Naziv proizvoda"></asp:TextBox>
+                                                    <asp:TextBox ID="txtNaziv" runat="server" CssClass="form-control input-xs" placeholder="Naziv sirovine"></asp:TextBox>
                                             </div>
                                                 <span class="validation-error-label" id="ValidTekstPoruka" runat="server"></span>
                                             </div>
@@ -61,7 +60,26 @@
                                            </div>
                                     </div>
                                 </div>
-                                <!-- /PROIZVOD - Naziv -->
+                                <!-- /SIROVINA - Naziv -->
+ <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                         <!-- SIROVINA - JM -->
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-xs no-margin-bottom">
+                                        <div class="row">
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span1" runat="server">Jedinica mere:</span></label>
+                                            <div class="col-md-8 text-left">
+                                                <div class="input-group col-md-8">
+                                                    <asp:TextBox ID="txtJM" runat="server" CssClass="form-control input-xs" placeholder="JM"></asp:TextBox>
+                                            </div>
+                                                <span class="validation-error-label" id="Span2" runat="server"></span>
+                                            </div>
+                                            <label id="Label1" runat="server" class="col-md-1 control-label text-size-base text-semibold no-padding-right"><span id="Span3" runat="server"></span></label>
+                                           </div>
+                                    </div>
+                                </div>
+                                <!-- /SIROVINA - JM -->
+
+
                                                           </div>
                             </div>
                         </div>
@@ -71,7 +89,7 @@
                         <div class="row">
                              <div class="col-md-12">
                                 <div class="input-group-btn text-center">
-                                    <asp:LinkButton ID="btnPotvrdiPROIZVOD" runat="server" OnClick="btnPotvrdiPROIZVOD_Click" CssClass="btn btn-info btn-xs bg-info-700" style="left: 0px; top: 6px; margin-bottom:40px">POTVRDI <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
+                                    <asp:LinkButton ID="btnPotvrdiSIROVINA" runat="server" OnClick="btnPotvrdiSIROVINA_Click" CssClass="btn btn-info btn-xs bg-info-700" style="left: 0px; top: 6px; margin-bottom:40px">POTVRDI <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
                                      </div>
                             </div>
                    </div>
@@ -104,28 +122,29 @@
                         </div>
                     </div>
                 </div>
+                   
                 </div>
-
-                  <h6 class="m-10 content-group text-semibold"><i class="icon-fas fa-dolly-flatbed position-left text-primary-800"></i><span id="MBListaTitle" runat="server"></span></h6>
+                <h6 class="m-10 content-group text-semibold"><i class="icon-fas fa-dolly-flatbed position-left text-primary-800"></i><span id="MBListaTitle" runat="server"></span></h6>
                 <div id="filterTable" class="row no-border">
-
+                    
                 <div class="row">
                     <div class="col-md-12">
                         <h6 class="font-family-Roboto text-semibold validation-error-label" id="MBListaError" runat="server"></h6>
                         <div class="panel no-border">
                             <div class="table-responsive">                        
-                                <asp:GridView ID="gvPROIZVOD" runat="server" CssClass="table table-bordered table-xxs"
+                                <asp:GridView ID="gvSIROVINA" runat="server" CssClass="table table-bordered table-xxs"
                                             AllowSorting="True" AutoGenerateColumns="False" AllowPaging="True"
-                                            DataSourceID="odsPROIZVOD"
+                                            DataSourceID="odsSIROVINA"
                                             PagerStyle-CssClass="pagination-nm"
-                                            DataKeyNames="ID, NAZIV" BorderWidth="0px" HeaderStyle-CssClass="alpha-grey img-bg" PagerSettings-Mode="NumericFirstLast" PagerStyle-Wrap="False">
+                                            DataKeyNames="ID, NAZIV, JM" BorderWidth="0px" HeaderStyle-CssClass="alpha-grey img-bg" PagerSettings-Mode="NumericFirstLast" PagerStyle-Wrap="False">
                                     <Columns>
                                         <asp:TemplateField HeaderText="ID" HeaderStyle-Width="120" SortExpression="ID">
                                             <ItemTemplate>
-                                        <asp:LinkButton ID="btnPROZIVODIzmena" runat="server" CommandName="PROIZVODIzmena" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' Text='<%# Bind("ID") %>' CausesValidation="False"></asp:LinkButton>
+                                        <asp:LinkButton ID="btnSIROVINAIzmena" runat="server" CommandName="SIROVINAIzmena" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' Text='<%# Bind("ID") %>' CausesValidation="False"></asp:LinkButton>
                                                  </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="NAZIV" HeaderText="NAZIV PROIZVODA" SortExpression="NAZIV" />
+                                        <asp:BoundField DataField="NAZIV" HeaderText="NAZIV SIROVINE" SortExpression="NAZIV" />
+                                         <asp:BoundField DataField="JM" HeaderText="JEDINICA MERE" SortExpression="JM" />
                                         <asp:TemplateField HeaderText="EXCEL" HeaderStyle-Width="30" SortExpression="MB">
                                             <ItemTemplate>
                                                 <asp:LinkButton ID="btnExcelExport" runat="server" CommandName="ExcelExport" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' CausesValidation="False"><i class="icon-file-excel text-slate"></i></asp:LinkButton>
@@ -151,6 +170,7 @@
                                     <Columns>
                                         <asp:BoundField DataField="ID" HeaderText="ID" />
                                         <asp:BoundField DataField="NAZIV" HeaderText="NAZIV" />
+                                        <asp:BoundField DataField="JM" HeaderText="JM" />
                                      </Columns>
                                 </asp:GridView>
                             </div>
@@ -162,9 +182,9 @@
     </div>
     <!-- /CONTENT -->
 
-    <asp:ObjectDataSource ID="odsPROIZVOD" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
+    <asp:ObjectDataSource ID="odsSIROVINA" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
         <SelectParameters>
-            <asp:SessionParameter Name="Upit" DefaultValue="SELECT * FROM PROIZVOD" SessionField="UpitPROIZVOD" Type="String" />
+            <asp:SessionParameter Name="Upit" DefaultValue="SELECT * FROM SIROVINA" SessionField="UpitSIROVINA" Type="String" />
             <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
         </SelectParameters>
     </asp:ObjectDataSource>
@@ -298,9 +318,9 @@
         }, 1500);
 
 
-        history.pushState(null, null, 'Proizvod.aspx');
+        history.pushState(null, null, 'Sirovine.aspx');
         window.addEventListener('popstate', function (event) {
-            history.pushState(null, null, 'Proizvod.aspx');
+            history.pushState(null, null, 'Sirovine.aspx');
         });
     </script>
     <script type="text/javascript">
