@@ -7,7 +7,7 @@ Imports System.Globalization
 Imports Microsoft.Reporting.WebForms
 Imports System.Data.SqlClient
 
-Partial Class Sastavnica
+Partial Class Predatnica
     Inherits System.Web.UI.Page
 
     Dim b As New ADM_MM()
@@ -52,10 +52,10 @@ Partial Class Sastavnica
             PopuniCOMBO()
             SetPorukaSpisakGresakaInvisible()
             SetPorukaUspesnoInvisible()
-            If Session("broj_pretraga") = Nothing Then
+            If Session("broj_PREDATNICA_pretraga") = Nothing Then
 
             Else
-                Me.PodaciSastavnica(Me.txtBroj.Text(), Convert.ToInt32(Me.txtRBR.Text()))
+                Me.PodaciPredatnica(Me.txtBroj.Text(), Convert.ToInt32(Me.txtRBR.Text()))
 
             End If
 
@@ -67,7 +67,7 @@ Partial Class Sastavnica
 
 
 #Region "DUGMIĆI"
-    Protected Sub btnPotvrdiSASTAVNICA_Click(sender As Object, e As EventArgs)
+    Protected Sub btnPotvrdiPREDATNICA_Click(sender As Object, e As EventArgs)
         SetPorukaUspesnoInvisible()
         SetPorukaNeuspesnoInvisible()
         SetPorukaSpisakGresakaInvisible()
@@ -95,7 +95,7 @@ Partial Class Sastavnica
 
 
 
-            If InsertUpdateSASTAVNICA() = False Then
+            If InsertUpdatePREDATNICA() = False Then
                 Me.PorukaInfoNeuspesno.InnerText = "Došlo je do greške prilikom upisa podataka u bazu."
                 SetPorukaNeuspesnoVisible()
                 Exit Sub
@@ -105,7 +105,7 @@ Partial Class Sastavnica
             SetPorukaUspesnoVisible()
             Me.PorukaInfoUspesno.InnerHtml = "Uspešno ste uneli podatke!"
 
-            IsprazniKontroleSastavnice()
+            IsprazniKontrolePredatnice()
             DajSledeciRBR()
         End If
 
@@ -114,24 +114,24 @@ Partial Class Sastavnica
 
     End Sub
     Protected Sub btnOdustaniLJ_Click(sender As Object, e As EventArgs) Handles btnOdustaniLJ.Click
-        Response.Redirect(ResolveClientUrl("~/Sastavnica_Pretraga.aspx"), True)
+        Response.Redirect(ResolveClientUrl("~/Predatnica_Pretraga.aspx"), True)
     End Sub
     Protected Sub NoviBroj_Click(sender As Object, e As EventArgs) Handles btnNoviBroj.Click
 
         Session("broj_pretraga") = Nothing
         Session("rbr_pretraga") = Nothing
 
-        Me.ddlProizvodID.Enabled = True
+
         Me.txtBroj.Enabled = True
         Me.txtRBR.Enabled = True
 
         Me.ddlProizvodID.SelectedIndex = "0"
         Me.txtBroj.Text = ""
         Me.txtRBR.Text = ""
-        Me.ddlSirovinaID.SelectedIndex = "0"
         Me.lblJM.Text = ""
         Me.txtKolicina.Text = ""
-        'ddlProizvodID.Focus()
+        Me.txtDATUM.Text = ""
+
 
     End Sub
 #End Region
@@ -176,14 +176,10 @@ Partial Class Sastavnica
         PopuniDDL(ddlProizvodID, UpitProizvod, "NAZIV", "ID")
         ddlProizvodID.Items.Insert(0, New ListItem("- - Izaberite proizvod - -", "0"))
 
-        Dim UpitSirovina As String = "SELECT ID,NAZIV FROM SIROVINE ORDER BY NAZIV"
-        PopuniDDL(ddlSirovinaID, UpitSirovina, "NAZIV", "ID")
-        ddlSirovinaID.Items.Insert(0, New ListItem("- - Izaberite sirovinu - -", "0"))
-
     End Sub
 
-    Protected Sub ddlSirovinaID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlSirovinaID.SelectedIndexChanged
-        Me.lblJM.Text = DajJM(ddlSirovinaID.SelectedValue.Trim())
+    Protected Sub ddlProizvodID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlProizvodID.SelectedIndexChanged
+        Me.lblJM.Text = "KOM"
     End Sub
     Private Sub PopuniDDL(ddl As DropDownList, Upit As String, Tekst As String, Sifra As String)
         Dim dsDDL As DataSet = b.DajDS_IzUpita_Lokal(Upit, BORZALConnectionString)
@@ -212,7 +208,7 @@ Partial Class Sastavnica
     End Function
     Protected Sub DajSledeciRBR()
 
-        ddlProizvodID.Enabled = True
+
         txtBroj.Enabled = True
         txtRBR.Enabled = True
 
@@ -220,7 +216,7 @@ Partial Class Sastavnica
         Dim SledeciRbr As String = Nothing
         Dim dsSledeciRbr As New DataSet
 
-        UpitSledeciRBR = "SELECT max(rbr)+1 as MaxRbr from Sastavnica where Broj = '" & Me.txtBroj.Text & "'"
+        UpitSledeciRBR = "SELECT max(rbr)+1 as MaxRbr from Predatnica where Broj = '" & Me.txtBroj.Text & "'"
 
         dsSledeciRbr = b.DajDS_IzUpita_Lokal(UpitSledeciRBR, BORZALConnectionString)
 
@@ -242,7 +238,7 @@ Partial Class Sastavnica
 
         Me.txtRBR.Text = SledeciRbr
 
-        ddlProizvodID.Enabled = False
+
         txtRBR.Enabled = False
         txtBroj.Enabled = False
 
@@ -255,7 +251,7 @@ Partial Class Sastavnica
         Dim c As String = Replace(a, ",", ".")
 
         If Decimal.TryParse(c, b) Then
-            c = b.ToString("##.00000")
+            c = b.ToString("##.00")
             txtKolicina.Text = c
         Else
             txtKolicina.Text = ""
@@ -265,36 +261,27 @@ Partial Class Sastavnica
 #End Region
 
 #Region "SELECT"
-    Protected Sub PodaciSastavnica(ByVal Broj As String, ByVal rbr As Integer)
-        Dim UpitSastavnica As String = ""
-        Dim dsSastavnica As New DataSet
+    Protected Sub PodaciPredatnica(ByVal Broj As String, ByVal rbr As Integer)
+        Dim UpitPredatnica As String = ""
+        Dim dsPredatnica As New DataSet
 
-        Dim ID_PROIZVOD, ID_SIROVINA, JM, KOLICINA As String
+        Dim JM, KOLICINA As String
+        Dim datum As Date
+        Dim ID_PROIZVODA As Integer
 
-        UpitSastavnica = "SELECT ID_PROIZVOD, BROJ, RBR, ID_SIROVINA, JM, KOLICINA from Sastavnica  where (BROJ = '" & BROJ & "') and (rbr = '" & RBR & "')"
+        UpitPredatnica = "SELECT ID, BROJ, RBR, ID_PROIZVODA, JM, KOLICINA, DATUM from Predatnica  where (BROJ = '" & Broj & "') and (rbr = '" & rbr & "')"
 
-        dsSastavnica = b.DajDS_IzUpita_Lokal(UpitSastavnica, BORZALConnectionString)
+        dsPredatnica = b.DajDS_IzUpita_Lokal(UpitPredatnica, BORZALConnectionString)
 
-        If dsSastavnica.Tables.Count > 0 Then
-            If dsSastavnica.Tables(0).Rows.Count > 0 Then
-                For Each row As DataRow In dsSastavnica.Tables(0).Rows
-
-                    ''ID_PROIZVOD
-
-                    If Not IsDBNull(dsSastavnica.Tables(0).Rows(0).Item("ID_PROIZVOD")) Or dsSastavnica.Tables(0).Rows(0).Item("ID_PROIZVOD").ToString() <> "" Then
-                        ID_PROIZVOD = dsSastavnica.Tables(0).Rows(0).Item("ID_PROIZVOD").ToString()
-                    Else
-                        ID_PROIZVOD = ""
-                    End If
-                    Me.ddlProizvodID.Text = ID_PROIZVOD
-
+        If dsPredatnica.Tables.Count > 0 Then
+            If dsPredatnica.Tables(0).Rows.Count > 0 Then
+                For Each row As DataRow In dsPredatnica.Tables(0).Rows
 
                     ''Broj
 
 
-
-                    If Not IsDBNull(dsSastavnica.Tables(0).Rows(0).Item("BROJ")) Or dsSastavnica.Tables(0).Rows(0).Item("BROJ").ToString() <> "" Then
-                        Broj = dsSastavnica.Tables(0).Rows(0).Item("BROJ").ToString()
+                    If Not IsDBNull(dsPredatnica.Tables(0).Rows(0).Item("BROJ")) Or dsPredatnica.Tables(0).Rows(0).Item("BROJ").ToString() <> "" Then
+                        Broj = dsPredatnica.Tables(0).Rows(0).Item("BROJ").ToString()
                     Else
                         Broj = ""
                     End If
@@ -306,8 +293,8 @@ Partial Class Sastavnica
 
 
 
-                    If Not IsDBNull(dsSastavnica.Tables(0).Rows(0).Item("RBR")) Or dsSastavnica.Tables(0).Rows(0).Item("RBR").ToString() <> "" Then
-                        rbr = dsSastavnica.Tables(0).Rows(0).Item("RBR").ToString()
+                    If Not IsDBNull(dsPredatnica.Tables(0).Rows(0).Item("RBR")) Or dsPredatnica.Tables(0).Rows(0).Item("RBR").ToString() <> "" Then
+                        rbr = dsPredatnica.Tables(0).Rows(0).Item("RBR").ToString()
                     Else
                         rbr = ""
                     End If
@@ -315,23 +302,23 @@ Partial Class Sastavnica
 
 
 
-                    ''ID_SIROVINA
+                    ''ID_PROIZVODA
 
 
-                    If Not IsDBNull(dsSastavnica.Tables(0).Rows(0).Item("ID_SIROVINA")) Or dsSastavnica.Tables(0).Rows(0).Item("ID_SIROVINA").ToString() <> "" Then
-                        ID_SIROVINA = dsSastavnica.Tables(0).Rows(0).Item("ID_SIROVINA").ToString()
+                    If Not IsDBNull(dsPredatnica.Tables(0).Rows(0).Item("ID_PROIZVODA")) Or dsPredatnica.Tables(0).Rows(0).Item("ID_PROIZVODA").ToString() <> "" Then
+                        ID_PROIZVODA = dsPredatnica.Tables(0).Rows(0).Item("ID_PROIZVODA").ToString()
                     Else
-                        ID_SIROVINA = ""
+                        ID_PROIZVODA = ""
                     End If
-                    Me.ddlSirovinaID.Text = ID_SIROVINA
+                    Me.ddlProizvodID.Text = ID_PROIZVODA
 
 
                     ''JM
 
 
 
-                    If Not IsDBNull(dsSastavnica.Tables(0).Rows(0).Item("JM")) Or dsSastavnica.Tables(0).Rows(0).Item("JM").ToString() <> "" Then
-                        JM = dsSastavnica.Tables(0).Rows(0).Item("JM").ToString()
+                    If Not IsDBNull(dsPredatnica.Tables(0).Rows(0).Item("JM")) Or dsPredatnica.Tables(0).Rows(0).Item("JM").ToString() <> "" Then
+                        JM = dsPredatnica.Tables(0).Rows(0).Item("JM").ToString()
                     Else
                         JM = ""
                     End If
@@ -343,8 +330,8 @@ Partial Class Sastavnica
 
 
 
-                    If Not IsDBNull(dsSastavnica.Tables(0).Rows(0).Item("KOLICINA")) Or dsSastavnica.Tables(0).Rows(0).Item("KOLICINA").ToString() <> "" Then
-                        KOLICINA = dsSastavnica.Tables(0).Rows(0).Item("KOLICINA").ToString()
+                    If Not IsDBNull(dsPredatnica.Tables(0).Rows(0).Item("KOLICINA")) Or dsPredatnica.Tables(0).Rows(0).Item("KOLICINA").ToString() <> "" Then
+                        KOLICINA = dsPredatnica.Tables(0).Rows(0).Item("KOLICINA").ToString()
                     Else
                         KOLICINA = ""
                     End If
@@ -363,68 +350,72 @@ Partial Class Sastavnica
 
 
 
-    Protected Function InsertUpdateSASTAVNICA() As Boolean
+    Protected Function InsertUpdatePREDATNICA() As Boolean
 
-        Dim UpitInsertUpdateSASTAVNICA As String = ""
-        'Dim Kolicina As Decimal
-
-        'Kolicina
-        'Kolicina = txtKolicina.Text
-
-        'Decimal.Parse((Trim(Me.txtKolicina.Text)).ToString("0.00000"))
+        Dim UpitInsertUpdatePREDATNICA As String = ""
+        Dim Datum As String
 
 
-        If ProveraPostojanjaZapisaSASTAVNICA(Me.txtBroj.Text, Me.txtRBR.Text) = 1 Then
+        'DATUMI
+        If Me.txtDATUM.Text <> "" Then
+            Datum = "'" & b.DajDatumIzStringa(Trim(Me.txtDATUM.Text())) & "'"
+        Else
+            Datum = "NULL"
+        End If
 
 
-            UpitInsertUpdateSASTAVNICA = "UPDATE SASTAVNICA " _
-& " Set ID_PROIZVOD = " & "N'" & Me.ddlProizvodID.Text & "'," _
-& "Broj = " & "N'" & Me.txtBroj.Text & "'," _
+        If ProveraPostojanjaZapisaPREDATNICA(Me.txtBroj.Text, Me.txtRBR.Text) = 1 Then
+
+
+            UpitInsertUpdatePREDATNICA = "UPDATE PREDATNICA " _
+& "Set Broj = " & "N'" & Me.txtBroj.Text & "'," _
 & "RBR = " & "N'" & Me.txtRBR.Text & "'," _
-& "ID_SIROVINA = " & "N'" & Me.ddlSirovinaID.Text & "'," _
+& "ID_PROIZVODA = " & "N'" & Me.ddlProizvodID.Text & "'," _
 & "JM = " & "N'" & Me.lblJM.Text & "'," _
 & "Kolicina = " & "N'" & Me.txtKolicina.Text & "' " _
+& "Datum = " & Datum _
 & "  WHERE (Broj = " & Me.txtBroj.Text & ") And (rbr = " & Me.txtRBR.Text & ")"
         Else
 
 
 
-            UpitInsertUpdateSASTAVNICA = "INSERT INTO SASTAVNICA (ID_PROIZVOD, BROJ, RBR, ID_SIROVINA, JM, KOLICINA) VALUES " _
-& "(" & "N'" & Me.ddlProizvodID.Text & "' " _
-& "," & Me.txtBroj.Text & " " _
+            UpitInsertUpdatePREDATNICA = "INSERT INTO PREDATNICA (BROJ, RBR, ID_PROIZVODA, JM, KOLICINA, DATUM) VALUES " _
+& "(" & "N'" & Me.txtBroj.Text & "' " _
 & "," & Me.txtRBR.Text & " " _
-& "," & "N'" & Me.ddlSirovinaID.Text & "' " _
+& "," & "N'" & Me.ddlProizvodID.Text & "' " _
 & "," & "N'" & Me.lblJM.Text & "' " _
-& "," & "N'" & Me.txtKolicina.Text & "') "
+& "," & "N'" & Me.txtKolicina.Text & "' " _
+& "," & Datum & ") "
 
         End If
 
-        Dim ret As Boolean = b.UpisPromenaBrisanje(UpitInsertUpdateSASTAVNICA, BORZALConnectionString)
+        Dim ret As Boolean = b.UpisPromenaBrisanje(UpitInsertUpdatePREDATNICA, BORZALConnectionString)
         Return ret
     End Function
 
-    Private Function ProveraPostojanjaZapisaSASTAVNICA(ByVal Broj As String, ByVal rbr As Integer) As Integer
-        Dim SASTAVNICASelect As String = ""
-        Dim dsSASTAVNICASelect As New DataSet
+    Private Function ProveraPostojanjaZapisaPREDATNICA(ByVal Broj As String, ByVal rbr As Integer) As Integer
+        Dim PREDATNICASelect As String = ""
+        Dim dsPREDATNICASelect As New DataSet
 
-        SASTAVNICASelect = "Select * FROM SASTAVNICA WHERE (Broj = '" & Broj & "') AND (rbr = '" & rbr & "')"
-        dsSASTAVNICASelect = b.DajDS_IzUpita_Lokal(SASTAVNICASelect, BORZALConnectionString)
+        PREDATNICASelect = "Select * FROM PREDATNICA WHERE (Broj = '" & Broj & "') AND (rbr = '" & rbr & "')"
+        dsPREDATNICASelect = b.DajDS_IzUpita_Lokal(PREDATNICASelect, BORZALConnectionString)
 
-        Dim ret As Integer = dsSASTAVNICASelect.Tables(0).Rows.Count
+        Dim ret As Integer = dsPREDATNICASelect.Tables(0).Rows.Count
         Return ret
     End Function
 
-    Private Sub IsprazniKontroleSastavnice()
+    Private Sub IsprazniKontrolePredatnice()
 
-        Session("broj_pretraga") = Nothing
-        Session("rbr_pretraga") = Nothing
+        Session("broj_PREDATNICA_pretraga") = Nothing
+        Session("rbr_PREDATCNIA_pretraga") = Nothing
 
         'Me.ddlProizvodID.SelectedIndex = "0"
         'Me.txtBroj.Text = ""
         'Me.txtRBR.Text = ""
-        Me.ddlSirovinaID.SelectedIndex = "0"
+        Me.ddlProizvodID.SelectedIndex = "0"
         Me.lblJM.Text = ""
         Me.txtKolicina.Text = ""
+        Me.txtDATUM.Text = ""
 
     End Sub
 #End Region
@@ -434,11 +425,11 @@ Partial Class Sastavnica
     Sub dajDefaultVrednosti()
 
 
-        'Dim dt As Date = Date.Today
+        Dim dt As Date = Date.Today
 
-        'If (Me.txtDATUMPRIJEMA.Text = Nothing) Then
-        '    Me.txtDATUMPRIJEMA.Text = dt.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)
-        'End If
+        If (Me.txtDATUM.Text = Nothing) Then
+            Me.txtDATUM.Text = dt.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)
+        End If
 
         ''''If (Me.txtZbruto.Text = Nothing) Then
         ''''    Me.txtZbruto.Text = "0"

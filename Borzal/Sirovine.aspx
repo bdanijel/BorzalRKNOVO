@@ -1,51 +1,56 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Sirovine.aspx.vb" Inherits="Sirovine" %>
+<%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 
-<asp:Content ID="cHead" ContentPlaceHolderID="cphHead" Runat="Server">
+<asp:Content ID="cHead" ContentPlaceHolderID="cphHead" runat="Server">
 </asp:Content>
-<asp:Content ID="cPOLista" ContentPlaceHolderID="cphPOLista" Runat="Server">
-    <%--<li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-file-text2 position-left"></i>Упутства<span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right">
-            <li><a href="Content/doc/Uputstva/MetodoloskoUputstvo.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Методолошко упутство</a></li>
-            <li><a href="Content/doc/Uputstva/KorisnickoUputstvo.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Упутство за коришћење апликације</a></li>
-            <li><a href="Content/doc/Uputstva/OdgovoriNaNPP.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Одговори на најчешће постављена питања</a></li>
-        </ul>
-    </li>--%>
+<asp:Content ID="cPOLista" ContentPlaceHolderID="cphPOLista" runat="Server">
+    <%--<li ><a class="text-semibold" href="javascript:window.print()"><span id="PDF" runat="server" class="NonPrintable"><i class="icon-file-pdf position-left text-size-16"></i>Штампај</span></a></li>--%>
 </asp:Content>
-<asp:Content ID="cBody" ContentPlaceHolderID="cphBody" Runat="Server">
-    <div id="loader-wrapper">
-        <div id="loader"></div>
-        <div class="loader-section section-left"></div>
-        <div class="loader-section section-right"></div>
-    </div>
-    <asp:ScriptManager ID="smIzborMB" runat="server"></asp:ScriptManager>
-    <!-- CONTENT -->
-    <div class="Home content">
-         <asp:UpdatePanel ID="upFilterTabela" runat="server">
-            <ContentTemplate>
-                  <!-- ZAGLAVLJE OBRASCA -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <h6 class="m-10 content-group text-semibold"><i class="icon-box position-left text-primary-800"></i>SIROVINE</b> </h6>
+<asp:Content ID="cBody" ContentPlaceHolderID="cphBody" runat="Server">
+    <asp:ScriptManager ID="smZarade" runat="server"></asp:ScriptManager>
+    <div class="content SPRLJ mt--20">
+        <div id="rowUvod" class="row mt--20">
+            <div class="col-md-12">
+                <div id="POLista" class="panel panel-collapse collapse">
+                    <div class="table-responsive form-group form-group-xs no-margin-bottom">
+                        <table class="table table-bordered table-xxs no-border-top">
+                            <thead>
+                                <tr>
+                                    <th>Име и презиме</th>
+                                    <th>eMail</th>
+                                    <th>Телефон</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tListaAdmin" runat="server"></tbody>
+                        </table>
                     </div>
                 </div>
-                <!-- /ZAGLAVLJE OBRASCA -->
+            </div>
+        </div>
+        <asp:UpdatePanel ID="upDELOVODNIKID" runat="server">
+            <ContentTemplate>
 
+ <%-- BRISATI SAMO ZA PRIKAZ GREŠAKA U SQL!!!--%>
+               
+<%-- /BRISATI SAMO ZA PRIKAZ GREŠAKA U SQL!!!--%>
 
-                <asp:label ID="lblPoruka1" runat="server"></asp:label>
-                <asp:label ID="lblPoruka2" runat="server"></asp:label>
-                <asp:label ID="lblPoruka3" runat="server"></asp:label>
-                
-                    
+                 <!-- ZAGLAVLJE OBRASCA -->
+                 <div class="row">
+                    <div class="col-md-12">
+                        <h6 class="m-10 content-group text-semibold"><i class="icon-box position-left text-primary-800"></i>UNOS SIROVINA</b> </h6>
+                    </div>
+                </div>
+                 <!-- /ZAGLAVLJE OBRASCA -->
+
+                <!-- OSNOVNI PODACI -->
+                <div class="row">
                     <div class="col-md-12">
                         <div class="panel mb-10">
                             <div class="panel-heading pt-5 pb-5 alpha-GreyPurple img-bg">
-                                <h6 class="panel-title text-semibold"><span class="text-size-base">Naziv sirovine</span></h6>
+                                <h6 class="panel-title text-semibold"><span class="text-size-base">Основни подаци</span></h6>
                             </div>
                             <div class="panel-body pt-15 pb-10">
-                                <!-- SIROVINA - Naziv -->
+                              <!-- SIROVINA - Naziv -->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
                                         <div class="row">
@@ -62,7 +67,7 @@
                                 </div>
                                 <!-- /SIROVINA - Naziv -->
  <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
-                                         <!-- SIROVINA - JM -->
+                                                                <!-- SIROVINA - JM -->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
                                         <div class="row">
@@ -78,21 +83,44 @@
                                     </div>
                                 </div>
                                 <!-- /SIROVINA - JM -->
-
-
-                                                          </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <!-- /OSNOVNI PODACI -->
 
-                          <asp:TextBox ID="txtID" runat="server" CssClass="form-control input-xs" visible="false"></asp:TextBox>
+                <asp:TextBox ID="txtID" runat="server" CssClass="form-control input-xs" visible="false"></asp:TextBox>
 
-                        <div class="row">
-                             <div class="col-md-12">
-                                <div class="input-group-btn text-center">
-                                    <asp:LinkButton ID="btnPotvrdiSIROVINA" runat="server" OnClick="btnPotvrdiSIROVINA_Click" CssClass="btn btn-info btn-xs bg-info-700" style="left: 0px; top: 6px; margin-bottom:40px">POTVRDI <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
-                                     </div>
+                  <!-- PORUKA_GR -->
+               <%-- spisak gresaka --%>
+                <div id="PorukaGR" runat="server" class="row" visible="true">
+                    <div class="col-md-12">
+                        <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-danger-800 text-danger-800 no-margin-bottom">
+                            <h6 id="lblPorukaGR" runat="server" ></h6>                            
+                        </div>
+                    </div>
+                </div>
+
+
+                <%-- DUGMIĆI --%>
+                <!-- POTVRDI -->
+                <div class="row">
+                    <div class="col-md-12 pt-10">
+                        <%-- <div class="row">
+                            <div class="auto-style4">
+                                <div class="alert alert-warning alert-styled-left alert-arrow-left alert-component border-info-700">
+                                    <span class="alert-heading no-margin-bottom text-info-800">По завршеном попуњавању података о зарадама и часовима рада за ову локалну јединицу, обавезно кликните на дугме <b>ПОТВРДИ</b>. Уколико има неправилности, појавиће се одговарајућа порука и списак грешака које треба исправити. Уколико је све у реду добићете поруку да сте успешно доставили податке и могућност да одштампате упитник. </span>
+                                </div>
                             </div>
-                   </div>
+                        </div>--%>
+                        <div class="row mb-10">
+                            <div class="col-md-12">
+                                <div class="input-group-btn text-center">
+                                    <asp:LinkButton ID="btnPotvrdiSIROVINE" runat="server" OnClick="btnPotvrdiSIROVINE_Click" CssClass="btn btn-info btn-xs bg-info-700" Style="left: 0px; top: 6px;margin-bottom:40px">POTVRDI <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <div id="rowPorukaNeuspesno" runat="server" class="row" visible="False">
@@ -114,80 +142,27 @@
                         </div>
                     </div>
 
- <%-- spisak gresaka --%>
-                <div id="PorukaGR" runat="server" class="row" visible="false">
-                    <div class="col-md-12">
-                        <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-danger-800 text-danger-800 no-margin-bottom">
-                            <h6 id="lblPorukaGR" runat="server" ></h6>                            
-                        </div>
-                    </div>
-                </div>
-                   
-                </div>
-                <h6 class="m-10 content-group text-semibold"><i class="icon-fas fa-dolly-flatbed position-left text-primary-800"></i><span id="MBListaTitle" runat="server"></span></h6>
-                <div id="filterTable" class="row no-border">
-                    
-                <div class="row">
-                    <div class="col-md-12">
-                        <h6 class="font-family-Roboto text-semibold validation-error-label" id="MBListaError" runat="server"></h6>
-                        <div class="panel no-border">
-                            <div class="table-responsive">                        
-                                <asp:GridView ID="gvSIROVINA" runat="server" CssClass="table table-bordered table-xxs"
-                                            AllowSorting="True" AutoGenerateColumns="False" AllowPaging="True"
-                                            DataSourceID="odsSIROVINA"
-                                            PagerStyle-CssClass="pagination-nm"
-                                            DataKeyNames="ID, NAZIV, JM" BorderWidth="0px" HeaderStyle-CssClass="alpha-grey img-bg" PagerSettings-Mode="NumericFirstLast" PagerStyle-Wrap="False">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="ID" HeaderStyle-Width="120" SortExpression="ID">
-                                            <ItemTemplate>
-                                        <asp:LinkButton ID="btnSIROVINAIzmena" runat="server" CommandName="SIROVINAIzmena" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' Text='<%# Bind("ID") %>' CausesValidation="False"></asp:LinkButton>
-                                                 </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:BoundField DataField="NAZIV" HeaderText="NAZIV SIROVINE" SortExpression="NAZIV" />
-                                         <asp:BoundField DataField="JM" HeaderText="JEDINICA MERE" SortExpression="JM" />
-                                        <asp:TemplateField HeaderText="EXCEL" HeaderStyle-Width="30" SortExpression="MB">
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="btnExcelExport" runat="server" CommandName="ExcelExport" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' CausesValidation="False"><i class="icon-file-excel text-slate"></i></asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                </asp:GridView>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </ContentTemplate>
-        </asp:UpdatePanel>
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-            <ContentTemplate>
-                <div id="divExcel" class="row">
-                    <div class="col-md-12">
-                        <div class="panel no-border"><div class="SPRLJ table-responsive">                        
-                                <asp:GridView ID="gvExcel" runat="server" CssClass="table table-bordered table-xxs"
-                                            AllowSorting="False" AutoGenerateColumns="False" AllowPaging="False"
-                                            DataKeyNames="ID" BorderWidth="0px" HeaderStyle-CssClass="alpha-grey img-bg">
-                                    <AlternatingRowStyle CssClass="bg-slate-50 img-bg" />
-                                    <Columns>
-                                        <asp:BoundField DataField="ID" HeaderText="ID" />
-                                        <asp:BoundField DataField="NAZIV" HeaderText="NAZIV" />
-                                        <asp:BoundField DataField="JM" HeaderText="JM" />
-                                     </Columns>
-                                </asp:GridView>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </ContentTemplate>
-        </asp:UpdatePanel>
-    </div>
-    <!-- /CONTENT -->
 
-    <asp:ObjectDataSource ID="odsSIROVINA" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
-        <SelectParameters>
-            <asp:SessionParameter Name="Upit" DefaultValue="SELECT * FROM SIROVINA" SessionField="UpitSIROVINA" Type="String" />
-            <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
-        </SelectParameters>
-    </asp:ObjectDataSource>
+
+                    <div class="row mb-12">
+                        <div class="col-md-12">
+                            <div class="input-group-btn text-center">
+                                <asp:LinkButton ID="btnOdustaniLJ" OnClick="btnOdustaniLJ_Click" runat="server" CssClass="btn btn-xs btn-info bg-info-400" Style="left: 0px; top: 12px; margin-bottom: 20px"><i class="icon-table position-left"></i>VRATI SE NA LISTU SIROVINA</asp:LinkButton>
+                            </div>
+                        </div>
+                    </div>
+            </ContentTemplate>
+
+
+        </asp:UpdatePanel>
+
+    </div>
+    <!-- /POTVRDI -->
+
+    <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+
+
+    <%-- JS --%>
 
     <script src="Content/js/bootstrap/moment.min.js"></script>
     <script src="Content/js/bootstrap/bootstrap-datepicker.js"></script>
@@ -195,136 +170,123 @@
     <script src="Content/js/jquery/picker.date.js"></script>
 
 
-    <script type="text/javascript">        
-        function pageFunctions() {
-            setTimeout(function () {
-                $('body').addClass('loaded');
-            }, 1500);
-                $('body').addClass('loaded');
-            var inputOd = $("#cphBody_txtDATUMPRIJEMAOD").pickadate({
-                monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
-                monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
-                showMonthsShort: true,
-                weekdaysShort: ['Нед', 'Пон', 'Уто', 'Сре', 'Чет', 'Пет', 'Суб'],
-                today: 'Данас',
-                clear: 'Поништи',
-                close: 'Затвори',
-                format: 'dd.mm.yyyy.',
-                formatSubmit: 'yyyymmdd',
-                firstDay: 1,
-                labelMonthNext: 'Следећи месец',
-                labelMonthPrev: 'Претходни месец',
-                selectYears: 100,
-                max: true
-            });
-            var inputDoNeakt = $("#cphBody_txtDATUMPRIJEMADO").pickadate({
-                monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
-                monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
-                showMonthsShort: true,
-                weekdaysShort: ['Нед', 'Пон', 'Уто', 'Сре', 'Чет', 'Пет', 'Суб'],
-                today: 'Данас',
-                clear: 'Поништи',
-                close: 'Затвори',
-                format: 'dd.mm.yyyy.',
-                formatSubmit: 'yyyymmdd',
-                firstDay: 1,
-                labelMonthNext: 'Следећи месец',
-                labelMonthPrev: 'Претходни месец',
-                selectYears: 100,
-                max: true
-            });
-            var pickerOd = inputOd.pickadate('picker');
-            $('#OpenCalendarDATUMPRIJEMAOD').on('click', function (e) {
-                if (pickerOd.get('open')) {
-                    pickerOd.close()
-                } else {
-                    pickerOd.open()
-                }
-                e.stopPropagation()
-            });
-            var pickerDo = inputDoNeakt.pickadate('picker');
-            $('#OpenCalendarDATUMPRIJEMADO').on('click', function (e) {
-                if (pickerDo.get('open')) {
-                    pickerDo.close()
-                } else {
-                    pickerDo.open()
-                }
-                e.stopPropagation()
-            });
-            $('.select-search').select2();
-            $('.select-size-xs').select2();
-            $('.colored').select2({
-                containerCssClass: 'bg-inverse bg-greyNM-700'
-            });
-            $('.select-search').select2();
-            $('.select-size-xs').select2({
-                minimumInputLength: 3,
-                language: {
-                    inputTooShort: function (args) {
-                        return "Унесите најмање 3 карактера за претрагу";
-                    },
-                    errorLoading: function () {
-                        return 'Преузимање података није успело.';
-                    },
-                    loadingMore: function () {
-                        return 'Преузимање података…';
-                    },
-                    noResults: function () {
-                        return 'Нема резултата претраге...';
-                    },
-                    searching: function () {
-                        return 'Претрага…';
-                    },
-                    language: "sr"
-                }
-            });
-            $('.godine').select2({
-                language: {
-                    inputTooShort: function (args) {
-                        return "Унесите најмање 3 карактера за претрагу";
-                    },
-                    errorLoading: function () {
-                        return 'Преузимање података није успело.';
-                    },
-                    loadingMore: function () {
-                        return 'Преузимање података…';
-                    },
-                    noResults: function () {
-                        return 'Нема резултата претраге...';
-                    },
-                    searching: function () {
-                        return 'Претрага…';
-                    },
-                    language: "sr"
-                }
-            });
-            $('.btn-loading').click(function () {
-                var btn = $(this);
-                btn.button('loading')
-                setTimeout(function () {
-                    btn.button('Reset')
-                }, 3000)
-            });
-        }
+
+    <script type="text/javascript">
+      function pageFunctions() {
+          var inputOd = $("#cphBody_txtDATUMPRIJEMA").pickadate({
+              monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
+              monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
+              showMonthsShort: true,
+              weekdaysShort: ['Нед', 'Пон', 'Уто', 'Сре', 'Чет', 'Пет', 'Суб'],
+              today: 'Данас',
+              clear: 'Поништи',
+              close: 'Затвори',
+              format: 'dd.mm.yyyy.',
+              formatSubmit: 'yyyymmdd',
+              firstDay: 1,
+              labelMonthNext: 'Следећи месец',
+              labelMonthPrev: 'Претходни месец',
+              selectYears: 100,
+              max: true
+          });
+          var inputDoNeakt = $("#cphBody_txtDatumRazvoda").pickadate({
+              monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
+              monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
+              showMonthsShort: true,
+              weekdaysShort: ['Нед', 'Пон', 'Уто', 'Сре', 'Чет', 'Пет', 'Суб'],
+              today: 'Данас',
+              clear: 'Поништи',
+              close: 'Затвори',
+              format: 'dd.mm.yyyy.',
+              formatSubmit: 'yyyymmdd',
+              firstDay: 1,
+              labelMonthNext: 'Следећи месец',
+              labelMonthPrev: 'Претходни месец',
+              selectYears: 100,
+              max: true
+          });
+          var pickerOd = inputOd.pickadate('picker');
+          $('#OpenCalendarPRIJEM').on('click', function (e) {
+              if (pickerOd.get('open')) {
+                  pickerOd.close()
+              } else {
+                  pickerOd.open()
+              }
+              e.stopPropagation()
+          });
+          var pickerDo = inputDoNeakt.pickadate('picker');
+          $('#OpenCalendarRAZVOD').on('click', function (e) {
+              if (pickerDo.get('open')) {
+                  pickerDo.close()
+              } else {
+                  pickerDo.open()
+              }
+              e.stopPropagation()
+          });
+          $('.select-search').select2();
+          $('.select-size-xs').select2();
+          $('.colored').select2({
+              containerCssClass: 'bg-inverse bg-greyNM-700'
+          });
+
+          $('.btn-loading').click(function () {
+              var btn = $(this);
+              btn.button('loading')
+              setTimeout(function () {
+                  btn.button('Reset')
+              }, 3000)
+          });
+      }
         $(document).ready(pageFunctions);
 
-<%--        function setMB(a) {
-            var aid = a.id
-            document.getElementById("<%=txtMB.ClientID %>").value = aid;
-            SPRLJ_ADM_Form.submit();
-        };--%>
-        setTimeout(function () {
-            $('body').addClass('loaded');
-        }, 1500);
+        $(document).keypress(function (e) {
+            if (e.which == 13 && e.target.tagName != 'textarea') {
+                var txt = $(e.target);
+                var allOther = $("input[type=text]:not(:disabled, [readonly='readonly'])");
+                var index = jQuery.inArray(txt[0], allOther);
+                var next = $(allOther[index + 1]);
+                if (next) next.focus();
+                //debugger;
+                //Need to set focus to next active text field here.
+                return false;
+            }
+        });
+        function Broj(e, decimal) {
+            var key;
+            var keychar;
 
+            if (window.event) {
+                key = window.event.keyCode;
+            }
+            else if (e) {
+                key = e.which;
+            }
+            else {
+                return true;
+            }
+            keychar = String.fromCharCode(key);
 
+            if ((key == null) || (key == 0) || (key == 8) || (key == 9) || (key == 13) || (key == 27)) {
+                return true;
+            }
+            else if ((("0123456789").indexOf(keychar) > -1)) {
+                return true;
+            }
+                //else if (decimal && (keychar == ".")) {
+                //    return true;
+                //}
+            else
+                return false;
+        }
+       
         history.pushState(null, null, 'Sirovine.aspx');
         window.addEventListener('popstate', function (event) {
             history.pushState(null, null, 'Sirovine.aspx');
         });
+
     </script>
-    <script type="text/javascript">
+     <script type="text/javascript">
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(pageFunctions);
-     </script>
+    </script>
 </asp:Content>
 

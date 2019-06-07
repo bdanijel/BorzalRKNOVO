@@ -42,7 +42,7 @@
                 </div>
                  <!-- /ZAGLAVLJE OBRASCA -->
 
- <!-- OSNOVNI PODACI -->
+                <!-- OSNOVNI PODACI -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel mb-10">
@@ -50,27 +50,6 @@
                                 <h6 class="panel-title text-semibold"><span class="text-size-base">Основни подаци</span></h6>
                             </div>
                             <div class="panel-body pt-15 pb-10">
-                                <!-- ID_PROIZVOD-->
-                                <div class="form-horizontal">
-                                    <div class="form-group form-group-xs no-margin-bottom">
-                                        <div class="row">
-                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span5" runat="server">Proizvod:</span></label>
-                                            <%--<div class="col-md-10 text-left">--%>
-                                            <%-- <div class="input-group">--%>
-                                            <div class="col-md-4">
-                                                <asp:DropDownList ID="ddlProizvodID" runat="server" CssClass="col-md-4 select-size-xs" AutoPostBack="true"></asp:DropDownList>
-
-                                            </div>
-                                            
-                                            <%-- </div>--%>
-                                            <span class="validation-error-label" id="ValidProizvodPoruka" runat="server"></span>
-                                            <%--   </div>--%>
-                                            <label id="ValidProizvod" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span8" runat="server"></span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /ID_PROIZVOD -->
-                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
                                 <!-- BROJ -->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
@@ -99,15 +78,36 @@
                                             <div class="col-md-1 text-left">
                                                 <div class="input-group">
                                                     <asp:TextBox ID="txtRBR" runat="server" CssClass="form-control input-xs" onkeypress="return Broj(event, false);" placeholder="R.br." AutoPostBack="true" Enabled="false"></asp:TextBox>
-                                            </div>
+                                                </div>
                                                 <span class="validation-valid-label" id="ValidRBRPoruka" runat="server"></span>
                                             </div>
                                             <label id="ValidRBR" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span6" runat="server"></span></label>
-                                           </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /RBR-->
- <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- ID_PROIZVOD-->
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-xs no-margin-bottom">
+                                        <div class="row">
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span5" runat="server">Proizvod:</span></label>
+                                            <%--<div class="col-md-10 text-left">--%>
+                                            <%-- <div class="input-group">--%>
+                                            <div class="col-md-4">
+                                                <asp:DropDownList ID="ddlProizvodID" runat="server" CssClass="col-md-4 select-size-xs" AutoPostBack="true"></asp:DropDownList>
+
+                                            </div>
+
+                                            <%-- </div>--%>
+                                            <span class="validation-error-label" id="ValidProizvodPoruka" runat="server"></span>
+                                            <%--   </div>--%>
+                                            <label id="ValidProizvod" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span8" runat="server"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /ID_PROIZVOD -->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
                                 <!-- ID_SIROVINA-->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
@@ -151,7 +151,7 @@
                                             <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span9" runat="server">Količina:</span></label>
                                             <div class="col-md-3 text-left">
                                                 <div class="input-group">
-                                                    <asp:TextBox ID="txtKolicina" runat="server" CssClass="form-control input-xs" placeholder="Količina"></asp:TextBox>
+                                                    <asp:TextBox ID="txtKolicina" runat="server" CssClass="form-control input-xs" placeholder="Količina" AutoPostBack="true"></asp:TextBox>
                                             </div>
                                                 <span class="validation-error-label" id="ValidKolicinaPoruka" runat="server"></span>
                                             </div>

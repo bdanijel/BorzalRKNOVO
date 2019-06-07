@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Proizvod.aspx.vb" Inherits="Proizvod" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Predatnica.aspx.vb" Inherits="Predatnica" %>
 <%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 
 <asp:Content ID="cHead" ContentPlaceHolderID="cphHead" runat="Server">
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <asp:UpdatePanel ID="upDELOVODNIKID" runat="server">
+        <asp:UpdatePanel ID="upPREDATNICAID" runat="server">
             <ContentTemplate>
 
  <%-- BRISATI SAMO ZA PRIKAZ GREŠAKA U SQL!!!--%>
@@ -37,7 +37,7 @@
                  <!-- ZAGLAVLJE OBRASCA -->
                  <div class="row">
                     <div class="col-md-12">
-                        <h6 class="m-10 content-group text-semibold"><i class="icon-box position-left text-primary-800"></i>UNOS PROIZVODA</b> </h6>
+                        <h6 class="m-10 content-group text-semibold"><i class="icon-folder-open position-left text-primary-800"></i>UNOS PREDATNICE</b> </h6>
                     </div>
                 </div>
                  <!-- /ZAGLAVLJE OBRASCA -->
@@ -47,34 +47,126 @@
                     <div class="col-md-12">
                         <div class="panel mb-10">
                             <div class="panel-heading pt-5 pb-5 alpha-GreyPurple img-bg">
-                                <h6 class="panel-title text-semibold"><span class="text-size-base">Основни подаци</span></h6>
+                                <h6 class="panel-title text-semibold"><span class="text-size-base">Osnovni podaci</span></h6>
                             </div>
                             <div class="panel-body pt-15 pb-10">
-                                <!-- PROIZVOD - Naziv -->
+                                <!-- BROJ -->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
                                         <div class="row">
-                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span14" runat="server">Naziv proizvoda:</span></label>
-                                            <div class="col-md-8 text-left">
-                                                <div class="input-group col-md-8">
-                                                    <asp:TextBox ID="txtNaziv" runat="server" CssClass="form-control input-xs" placeholder="Naziv proizvoda"></asp:TextBox>
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span2" runat="server">Broj:</span></label>
+                                            <div class="col-md-3 text-left">
+                                                <div class="input-group col-md-3">
+                                                    <asp:TextBox ID="txtBroj" runat="server" CssClass="form-control input-xs" onkeypress="return Broj(event, false);" placeholder="Broj" AutoPostBack="True"></asp:TextBox>
                                                 </div>
-                                                <span class="validation-error-label" id="ValidTekstPoruka" runat="server"></span>
+                                                <span class="validation-valid-label" id="ValidBrojPoruka" runat="server"></span>
                                             </div>
-                                            <label id="ValidTekst" runat="server" class="col-md-1 control-label text-size-base text-semibold no-padding-right"><span id="Span16" runat="server"></span></label>
+                                            <label id="ValidBroj" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span4" runat="server"></span></label>
+                                            <div>
+                                                <asp:LinkButton ID="btnNoviBroj" runat="server" OnClick="NoviBroj_Click" CssClass="btn btn-primary btn-xs bg-primary-700" Style="left: 0px; top: 0px">NOVI BROJ<i class="glyphicon glyphicon-paperclip position-right"></i></asp:LinkButton>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /PROIZVOD - Naziv -->
+                                <!-- /BROJ-->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- RBR-->
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-xs no-margin-bottom">
+                                        <div class="row">
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span3" runat="server">Redni broj:</span></label>
+                                            <div class="col-md-1 text-left">
+                                                <div class="input-group">
+                                                    <asp:TextBox ID="txtRBR" runat="server" CssClass="form-control input-xs" onkeypress="return Broj(event, false);" placeholder="R.br." AutoPostBack="true" Enabled="false"></asp:TextBox>
+                                                </div>
+                                                <span class="validation-valid-label" id="ValidRBRPoruka" runat="server"></span>
+                                            </div>
+                                            <label id="ValidRBR" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span6" runat="server"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /RBR-->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- ID_PROIZVOD-->
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-xs no-margin-bottom">
+                                        <div class="row">
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span5" runat="server">Proizvod:</span></label>
+                                            <%--<div class="col-md-10 text-left">--%>
+                                            <%-- <div class="input-group">--%>
+                                            <div class="col-md-4">
+                                                <asp:DropDownList ID="ddlProizvodID" runat="server" CssClass="col-md-4 select-size-xs" AutoPostBack="true"></asp:DropDownList>
+                                            </div>
+                                            <%-- </div>--%>
+                                            <span class="validation-error-label" id="ValidProizvodPoruka" runat="server"></span>
+                                            <%--   </div>--%>
+                                            <label id="ValidProizvod" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span8" runat="server"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /ID_PROIZVOD -->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- JM -->
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-xs no-margin-bottom">
+                                        <div class="row">
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span7" runat="server">Jedinica mere:</span></label>
+                                            <div class="col-md-3 text-left">
+                                                <div class="input-group">
+                                                    <asp:Label ID="lblJM" runat="server" CssClass="form-control input-xs" placeholder="JM"></asp:Label>
+                                                </div>
+                                                <span class="validation-error-label" id="ValidJMPoruka" runat="server"></span>
+                                            </div>
+                                            <label id="ValidJM" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span10" runat="server"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /JM-->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- Kolicina -->
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-xs no-margin-bottom">
+                                        <div class="row">
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span9" runat="server">Količina:</span></label>
+                                            <div class="col-md-3 text-left">
+                                                <div class="input-group">
+                                                    <asp:TextBox ID="txtKolicina" runat="server" CssClass="form-control input-xs" placeholder="Količina" AutoPostBack="true"></asp:TextBox>
+                                                </div>
+                                                <span class="validation-error-label" id="ValidKolicinaPoruka" runat="server"></span>
+                                            </div>
+                                            <label id="ValidKolicina" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span13" runat="server"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Kolicina -->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- Datum -->
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-xs no-margin-bottom">
+                                        <div class="row">
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="ValidDATREG" runat="server">Datum:</span></label>
+                                            <div class="col-md-3 text-left">
+                                                <div class="input-group">
+                                                    <asp:TextBox ID="txtDATUM" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Datum" AutoPostBack="True"></asp:TextBox>
+                                                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
+                                                    <span class="input-group-btn">
+                                                        <button id="OpenCalendarDATUM" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button>
+                                                    </span>
+                                                </div>
+                                                <span class="validation-error-label" id="ValidDATUMPoruka" runat="server"></span>
+                                            </div>
+                                            <label id="ValidDATUM" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span11" runat="server"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Datum -->
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- /OSNOVNI PODACI -->
 
-                <asp:TextBox ID="txtID" runat="server" CssClass="form-control input-xs" visible="false"></asp:TextBox>
-
-                  <!-- PORUKA_GR -->
+                <!-- PORUKA_GR -->
                <%-- spisak gresaka --%>
                 <div id="PorukaGR" runat="server" class="row" visible="true">
                     <div class="col-md-12">
@@ -99,7 +191,7 @@
                         <div class="row mb-10">
                             <div class="col-md-12">
                                 <div class="input-group-btn text-center">
-                                    <asp:LinkButton ID="btnPotvrdiPROIZVOD" runat="server" OnClick="btnPotvrdiPROIZVOD_Click" CssClass="btn btn-info btn-xs bg-info-700" Style="left: 0px; top: 6px;margin-bottom:40px">POTVRDI <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
+                                    <asp:LinkButton ID="btnPotvrdiPREDATNICA" runat="server" OnClick="btnPotvrdiPREDATNICA_Click" CssClass="btn btn-info btn-xs bg-info-700" Style="left: 0px; top: 6px">POTVRDI <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
                                 </div>
                             </div>
                         </div>
@@ -130,7 +222,7 @@
                     <div class="row mb-12">
                         <div class="col-md-12">
                             <div class="input-group-btn text-center">
-                                <asp:LinkButton ID="btnOdustaniLJ" OnClick="btnOdustaniLJ_Click" runat="server" CssClass="btn btn-xs btn-info bg-info-400" Style="left: 0px; top: 12px; margin-bottom: 20px"><i class="icon-table position-left"></i>VRATI SE NA LISTU PROIZVODA</asp:LinkButton>
+                                <asp:LinkButton ID="btnOdustaniLJ" OnClick="btnOdustaniLJ_Click" runat="server" CssClass="btn btn-xs btn-info bg-info-400" Style="left: 0px; top: 12px; margin-bottom: 20px"><i class="icon-table position-left"></i>VRATI SE NA LISTU SASTAVNICA</asp:LinkButton>
                             </div>
                         </div>
                     </div>
@@ -156,7 +248,7 @@
 
     <script type="text/javascript">
       function pageFunctions() {
-          var inputOd = $("#cphBody_txtDATUMPRIJEMA").pickadate({
+          var inputOd = $("#cphBody_txtDATUM").pickadate({
               monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
               monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
               showMonthsShort: true,
@@ -262,9 +354,9 @@
                 return false;
         }
        
-        history.pushState(null, null, 'Proizvod.aspx');
+        history.pushState(null, null, 'Predatnica.aspx');
         window.addEventListener('popstate', function (event) {
-            history.pushState(null, null, 'Proizvod.aspx');
+            history.pushState(null, null, 'Predatnica.aspx');
         });
 
     </script>
