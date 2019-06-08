@@ -47,7 +47,7 @@
                     <div class="col-md-12">
                         <div class="panel mb-10">
                             <div class="panel-heading pt-5 pb-5 alpha-GreyPurple img-bg">
-                                <h6 class="panel-title text-semibold"><span class="text-size-base">Основни подаци</span></h6>
+                                <h6 class="panel-title text-semibold"><span class="text-size-base">Osnovni podaci</span></h6>
                             </div>
                             <div class="panel-body pt-15 pb-10">
                               <!-- SIROVINA - Naziv -->

@@ -245,17 +245,17 @@ Partial Class Predatnica
     End Sub
     Protected Sub txtKolicina_TextChanged(sender As Object, e As EventArgs) Handles txtKolicina.TextChanged
         Dim a As String
-        Dim b As Decimal
+        'Dim b As Decimal
 
         a = Trim(txtKolicina.Text)
         Dim c As String = Replace(a, ",", ".")
 
-        If Decimal.TryParse(c, b) Then
-            c = b.ToString("##.00")
-            txtKolicina.Text = c
-        Else
-            txtKolicina.Text = ""
-        End If
+        'If Decimal.TryParse(c, b) Then
+        '    c = b.ToString("##.00000")
+        txtKolicina.Text = c
+        'Else
+        '    txtKolicina.Text = ""
+        'End If
     End Sub
 
 #End Region
@@ -269,7 +269,7 @@ Partial Class Predatnica
         Dim datum As Date
         Dim ID_PROIZVODA As Integer
 
-        UpitPredatnica = "SELECT ID, BROJ, RBR, ID_PROIZVODA, JM, KOLICINA, DATUM from Predatnica  where (BROJ = '" & Broj & "') and (rbr = '" & rbr & "')"
+        UpitPredatnica = "SELECT ID, BROJ, RBR, ID_PROIZVODA, JM, KOLICINA, dbo.ufnSrediDatumPrikaz(DATUM) as DATUM from Predatnica  where (BROJ = '" & Broj & "') and (rbr = '" & rbr & "')"
 
         dsPredatnica = b.DajDS_IzUpita_Lokal(UpitPredatnica, BORZALConnectionString)
 
@@ -337,6 +337,17 @@ Partial Class Predatnica
                     End If
                     Me.txtKolicina.Text = KOLICINA
 
+
+                    ''datum
+
+
+
+                    If Not IsDBNull(dsPredatnica.Tables(0).Rows(0).Item("datum")) Or dsPredatnica.Tables(0).Rows(0).Item("datum").ToString() <> "" Then
+                        datum = dsPredatnica.Tables(0).Rows(0).Item("datum").ToString()
+                    Else
+                        datum = ""
+                    End If
+                    Me.txtDATUM.Text = datum
 
                 Next
             End If
@@ -407,7 +418,7 @@ Partial Class Predatnica
     Private Sub IsprazniKontrolePredatnice()
 
         Session("broj_PREDATNICA_pretraga") = Nothing
-        Session("rbr_PREDATCNIA_pretraga") = Nothing
+        Session("rbr_PREDATNICA_pretraga") = Nothing
 
         'Me.ddlProizvodID.SelectedIndex = "0"
         'Me.txtBroj.Text = ""
@@ -501,14 +512,27 @@ Partial Class Predatnica
 
         If Me.ddlProizvodID.SelectedIndex = "0" Then
 
-            Me.ValidKolicina.Attributes.Add(klasa, InvalidKlasa)
-            Me.txtKolicina.BorderColor = Drawing.Color.Red
-            Me.txtKolicina.ToolTip = "Obavezno polje!"
+            'Me.ValidKolicina.Attributes.Add(klasa, InvalidKlasa)
+            Me.ddlProizvodID.BorderColor = Drawing.Color.Red
+            Me.ddlProizvodID.ToolTip = "Obavezno polje!"
 
             ret = ret + 1
             SetPorukaNeuspesnoVisible()
         Else
-            Me.txtKolicina.BorderColor = Drawing.Color.Empty
+            Me.ddlProizvodID.BorderColor = Drawing.Color.Empty
+
+        End If
+
+        If Me.txtDATUM.Text = Nothing Then
+
+            Me.ValidDATUM.Attributes.Add(klasa, InvalidKlasa)
+            Me.txtDATUM.BorderColor = Drawing.Color.Red
+            Me.txtDATUM.ToolTip = "Obavezno polje!"
+
+            ret = ret + 1
+            SetPorukaNeuspesnoVisible()
+        Else
+            Me.txtDATUM.BorderColor = Drawing.Color.Empty
 
         End If
 

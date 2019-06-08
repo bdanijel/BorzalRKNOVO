@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Sastavnica.aspx.vb" Inherits="Sastavnica" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Trebovanje.aspx.vb" Inherits="Trebovanje" %>
 <%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 
 <asp:Content ID="cHead" ContentPlaceHolderID="cphHead" runat="Server">
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <asp:UpdatePanel ID="upDELOVODNIKID" runat="server">
+        <asp:UpdatePanel ID="upPREDATNICAID" runat="server">
             <ContentTemplate>
 
  <%-- BRISATI SAMO ZA PRIKAZ GREŠAKA U SQL!!!--%>
@@ -37,7 +37,7 @@
                  <!-- ZAGLAVLJE OBRASCA -->
                  <div class="row">
                     <div class="col-md-12">
-                        <h6 class="m-10 content-group text-semibold"><i class="icon-folder-open position-left text-primary-800"></i>UNOS SASTAVNICE</b> </h6>
+                        <h6 class="m-10 content-group text-semibold"><i class="icon-folder-open position-left text-primary-800"></i>UNOS TREBOVANJ</b> </h6>
                     </div>
                 </div>
                  <!-- /ZAGLAVLJE OBRASCA -->
@@ -87,32 +87,11 @@
                                 </div>
                                 <!-- /RBR-->
                                 <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
-                                <!-- ID_PROIZVOD-->
+                                <!-- ID_SIROVINE-->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
                                         <div class="row">
-                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span5" runat="server">Proizvod:</span></label>
-                                            <%--<div class="col-md-10 text-left">--%>
-                                            <%-- <div class="input-group">--%>
-                                            <div class="col-md-4">
-                                                <asp:DropDownList ID="ddlProizvodID" runat="server" CssClass="col-md-4 select-size-xs" AutoPostBack="true"></asp:DropDownList>
-
-                                            </div>
-
-                                            <%-- </div>--%>
-                                            <span class="validation-error-label" id="ValidProizvodPoruka" runat="server"></span>
-                                            <%--   </div>--%>
-                                            <label id="ValidProizvod" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span8" runat="server"></span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /ID_PROIZVOD -->
-                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
-                                <!-- ID_SIROVINA-->
-                                <div class="form-horizontal">
-                                    <div class="form-group form-group-xs no-margin-bottom">
-                                        <div class="row">
-                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span12" runat="server">Sirovina:</span></label>
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span5" runat="server">Sirovina:</span></label>
                                             <%--<div class="col-md-10 text-left">--%>
                                             <%-- <div class="input-group">--%>
                                             <div class="col-md-4">
@@ -121,12 +100,12 @@
                                             <%-- </div>--%>
                                             <span class="validation-error-label" id="ValidSirovinaPoruka" runat="server"></span>
                                             <%--   </div>--%>
-                                            <label id="ValidSirovina" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span32" runat="server"></span></label>
+                                            <label id="ValidSirovina" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span8" runat="server"></span></label>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /ID_SIROVINA -->
-    <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- /ID_SIROVINE -->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
                                 <!-- JM -->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
@@ -134,17 +113,17 @@
                                             <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span7" runat="server">Jedinica mere:</span></label>
                                             <div class="col-md-3 text-left">
                                                 <div class="input-group">
-                                                    <asp:label ID="lblJM" runat="server" CssClass="form-control input-xs" placeholder="JM" ></asp:label>
-                                            </div>
+                                                    <asp:Label ID="lblJM" runat="server" CssClass="form-control input-xs" placeholder="JM"></asp:Label>
+                                                </div>
                                                 <span class="validation-error-label" id="ValidJMPoruka" runat="server"></span>
                                             </div>
                                             <label id="ValidJM" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span10" runat="server"></span></label>
-                                           </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /JM-->
-    <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
-                                      <!-- Kolicina -->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- Kolicina -->
                                 <div class="form-horizontal">
                                     <div class="form-group form-group-xs no-margin-bottom">
                                         <div class="row">
@@ -152,21 +131,42 @@
                                             <div class="col-md-3 text-left">
                                                 <div class="input-group">
                                                     <asp:TextBox ID="txtKolicina" runat="server" CssClass="form-control input-xs" placeholder="Količina" AutoPostBack="true"></asp:TextBox>
-                                            </div>
+                                                </div>
                                                 <span class="validation-error-label" id="ValidKolicinaPoruka" runat="server"></span>
                                             </div>
                                             <label id="ValidKolicina" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span13" runat="server"></span></label>
-                                           </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /Kolicina -->
+                                <div class="content-divider text-muted form-group no-margin-top no-margin-bottom"><span></span></div>
+                                <!-- Datum -->
+                                <div class="form-horizontal">
+                                    <div class="form-group form-group-xs no-margin-bottom">
+                                        <div class="row">
+                                            <label class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="ValidDATREG" runat="server">Datum:</span></label>
+                                            <div class="col-md-3 text-left">
+                                                <div class="input-group">
+                                                    <asp:TextBox ID="txtDATUM" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Datum" AutoPostBack="True"></asp:TextBox>
+                                                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
+                                                    <span class="input-group-btn">
+                                                        <button id="OpenCalendarDATUM" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button>
+                                                    </span>
+                                                </div>
+                                                <span class="validation-error-label" id="ValidDATUMPoruka" runat="server"></span>
+                                            </div>
+                                            <label id="ValidDATUM" runat="server" class="col-md-3 control-label text-size-base text-semibold no-padding-right"><span id="Span11" runat="server"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Datum -->
                             </div>
-                            </div>
-                            </div>
+                        </div>
                     </div>
-    <!-- /OSNOVNI PODACI -->     
+                </div>
+                <!-- /OSNOVNI PODACI -->
 
-                  <!-- PORUKA_GR -->
+                <!-- PORUKA_GR -->
                <%-- spisak gresaka --%>
                 <div id="PorukaGR" runat="server" class="row" visible="true">
                     <div class="col-md-12">
@@ -191,7 +191,7 @@
                         <div class="row mb-10">
                             <div class="col-md-12">
                                 <div class="input-group-btn text-center">
-                                    <asp:LinkButton ID="btnPotvrdiSASTAVNICA" runat="server" OnClick="btnPotvrdiSASTAVNICA_Click" CssClass="btn btn-info btn-xs bg-info-700" Style="left: 0px; top: 6px; margin-bottom:40px">POTVRDI <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
+                                    <asp:LinkButton ID="btnPotvrdiTREBOVANJE" runat="server" OnClick="btnPotvrdiTREBOVANJE_Click" CssClass="btn btn-info btn-xs bg-info-700" Style="left: 0px; top: 6px">POTVRDI <i class="icon-checkmark3 position-right"></i></asp:LinkButton><br />
                                 </div>
                             </div>
                         </div>
@@ -248,7 +248,7 @@
 
     <script type="text/javascript">
       function pageFunctions() {
-          var inputOd = $("#cphBody_txtDATUMPRIJEMA").pickadate({
+          var inputOd = $("#cphBody_txtDATUM").pickadate({
               monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
               monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
               showMonthsShort: true,
@@ -354,9 +354,9 @@
                 return false;
         }
        
-        history.pushState(null, null, 'Sastavnica.aspx');
+        history.pushState(null, null, 'Trebovanje.aspx');
         window.addEventListener('popstate', function (event) {
-            history.pushState(null, null, 'Sastavnica.aspx');
+            history.pushState(null, null, 'Trebovanje.aspx');
         });
 
     </script>
