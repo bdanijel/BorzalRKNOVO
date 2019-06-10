@@ -37,7 +37,7 @@
                  <!-- ZAGLAVLJE OBRASCA -->
                  <div class="row">
                     <div class="col-md-12">
-                        <h6 class="m-10 content-group text-semibold"><i class="icon-folder-open position-left text-primary-800"></i>UNOS TREBOVANJ</b> </h6>
+                        <h6 class="m-10 content-group text-semibold"><i class="icon-folder-open position-left text-primary-800"></i>UNOS TREBOVANJA</b> </h6>
                     </div>
                 </div>
                  <!-- /ZAGLAVLJE OBRASCA -->
