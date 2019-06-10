@@ -216,7 +216,7 @@ Partial Class Trebovanje
         Dim SledeciRbr As String = Nothing
         Dim dsSledeciRbr As New DataSet
 
-        UpitSledeciRBR = "SELECT max(rbr)+1 as MaxRbr from Sastavnica where Broj = '" & Me.txtBroj.Text & "'"
+        UpitSledeciRBR = "SELECT max(rbr)+1 as MaxRbr from Trebovanje where Broj = '" & Me.txtBroj.Text & "'"
 
         dsSledeciRbr = b.DajDS_IzUpita_Lokal(UpitSledeciRBR, BORZALConnectionString)
 
@@ -365,13 +365,16 @@ Partial Class Trebovanje
     Protected Function InsertUpdateTREBOVANJE() As Boolean
 
         Dim UpitInsertUpdateTREBOVANJE As String = ""
-        Dim Datum As String
+        Dim Datum As Date
 
 
         'DATUMI
         If Me.txtDATUM.Text <> "" Then
-            Datum = "'" & b.DajDatumIzStringa(Trim(Me.txtDATUM.Text())) & "'"
+            'Datum = "'" & b.DajDatumIzStringa(Trim(Me.txtDATUM.Text())) & "'"
+            Datum = Convert.ToDateTime(Me.txtDATUM.Text)
+            Me.txtDATUM.Text = Datum.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
         Else
+
             Datum = "NULL"
         End If
 
@@ -385,7 +388,7 @@ Partial Class Trebovanje
 & "ID_SIROVINE = " & "N'" & Me.ddlSirovinaID.Text & "'," _
 & "JM = " & "N'" & Me.lblJM.Text & "'," _
 & "Kolicina = " & "N'" & Me.txtKolicina.Text & "' " _
-& "Datum = " & Datum _
+& "Datum = " & "N'" & Me.txtDATUM.Text & "'" _
 & "  WHERE (Broj = " & Me.txtBroj.Text & ") And (rbr = " & Me.txtRBR.Text & ")"
         Else
 
@@ -397,7 +400,7 @@ Partial Class Trebovanje
 & "," & "N'" & Me.ddlSirovinaID.Text & "' " _
 & "," & "N'" & Me.lblJM.Text & "' " _
 & "," & "N'" & Me.txtKolicina.Text & "' " _
-& "," & Datum & ") "
+& "," & "N'" & Me.txtDATUM.Text & "') "
 
         End If
 
@@ -440,7 +443,7 @@ Partial Class Trebovanje
         Dim dt As Date = Date.Today
 
         If (Me.txtDATUM.Text = Nothing) Then
-            Me.txtDATUM.Text = dt.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)
+            Me.txtDATUM.Text = dt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
         End If
 
         ''''If (Me.txtZbruto.Text = Nothing) Then
