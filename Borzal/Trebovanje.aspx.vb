@@ -365,14 +365,15 @@ Partial Class Trebovanje
     Protected Function InsertUpdateTREBOVANJE() As Boolean
 
         Dim UpitInsertUpdateTREBOVANJE As String = ""
-        Dim Datum As Date
+        Dim Datum As String
 
 
         'DATUMI
         If Me.txtDATUM.Text <> "" Then
-            'Datum = "'" & b.DajDatumIzStringa(Trim(Me.txtDATUM.Text())) & "'"
-            Datum = Convert.ToDateTime(Me.txtDATUM.Text)
-            Me.txtDATUM.Text = Datum.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+            Datum = "'" & b.DajDatumIzStringa(Trim(Me.txtDATUM.Text())) & "'"
+            'Datum = Convert.ToDateTime(Me.txtDATUM.Text)
+            'Me.txtDATUM.Text = Datum.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+            'datum2 = Convert.ToDateTime(Datum)
         Else
 
             Datum = "NULL"
@@ -388,10 +389,11 @@ Partial Class Trebovanje
 & "ID_SIROVINE = " & "N'" & Me.ddlSirovinaID.Text & "'," _
 & "JM = " & "N'" & Me.lblJM.Text & "'," _
 & "Kolicina = " & "N'" & Me.txtKolicina.Text & "' " _
-& "Datum = " & "N'" & Me.txtDATUM.Text & "'" _
+& "Datum = " & Datum _
 & "  WHERE (Broj = " & Me.txtBroj.Text & ") And (rbr = " & Me.txtRBR.Text & ")"
         Else
 
+            '& "," & "N'" & Me.txtDATUM.Text & "') "
 
 
             UpitInsertUpdateTREBOVANJE = "INSERT INTO TREBOVANJE (BROJ, RBR, ID_SIROVINE, JM, KOLICINA, DATUM) VALUES " _
@@ -400,7 +402,7 @@ Partial Class Trebovanje
 & "," & "N'" & Me.ddlSirovinaID.Text & "' " _
 & "," & "N'" & Me.lblJM.Text & "' " _
 & "," & "N'" & Me.txtKolicina.Text & "' " _
-& "," & "N'" & Me.txtDATUM.Text & "') "
+& "," & Datum & ") "
 
         End If
 

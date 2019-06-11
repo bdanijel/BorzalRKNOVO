@@ -17,24 +17,25 @@
             <asp:Label ID="lblPoruka3" runat="server"></asp:Label>
 </div>
         <div class="row">
-                           <div id="divGODINA" class="col-md-4 form-group"><asp:DropDownList ID="DDLGODINA" runat="server" CssClass="col-md-4 select-size-xs" AutoPostBack="true"></asp:DropDownList></div>
-                       </div>
-         <div class="row">
-                             <div class="col-md-3 text-left">
-                                 <div class="input-group">
-                                                    <asp:TextBox ID="txtDATUMPRIJEMAOD" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Датум од..." AutoPostBack="True"></asp:TextBox>
-                                                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
-                                                    <span class="input-group-btn"><button id="OpenCalendarDATUMPRIJEMAOD" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button></span>
-                                                </div>
-                                 </div>
-                             <div class="col-md-3 text-left">
-                                 <div id="divDatumPrijemaDO" class="input-group" visible="false">
-                                                    <asp:TextBox ID="txtDATUMPRIJEMADO" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Датум до..." AutoPostBack="True" Visible="false"></asp:TextBox>
-                                                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
-                                                    <span class="input-group-btn"><button id="OpenCalendarDATUMPRIJEMADO" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button></span>
-                                                </div>
-                                 </div>
-                     </div>
+            <div class="col-md-3 text-left">
+                <div class="input-group">
+                    <asp:TextBox ID="txtDATUMPRIJEMAOD" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Датум од..." AutoPostBack="True"></asp:TextBox>
+                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
+                    <span class="input-group-btn">
+                        <button id="OpenCalendarDATUMPRIJEMAOD" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 text-left">
+                <div id="divDatumPrijemaDO" class="input-group" visible="false">
+                    <asp:TextBox ID="txtDATUMPRIJEMADO" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Датум до..." AutoPostBack="True" Visible="false"></asp:TextBox>
+                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
+                    <span class="input-group-btn">
+                        <button id="OpenCalendarDATUMPRIJEMADO" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
         <div class="row">
 <%--            <div class="auto-style1">
                 <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-primary-800 text-primary-800">

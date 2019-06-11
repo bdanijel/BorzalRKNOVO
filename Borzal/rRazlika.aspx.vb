@@ -1,4 +1,5 @@
 ﻿Imports System.Data
+Imports System.Globalization
 Imports System.IO
 Imports Microsoft.Reporting.WebForms
 
@@ -42,7 +43,7 @@ Partial Class rRazlika
         Return PO
     End Function
     Private Sub PopuniTabeluMB()
-        Dim SelectSQL, WhereSQL As String
+        Dim SelectSQL As String
         Dim UpitMB As String = ""
 
         SessionUpit()
@@ -81,11 +82,11 @@ Partial Class rRazlika
         Dim DatumPrijemaDO As String = ""
 
         If txtDATUMPRIJEMAOD.Text <> "" Then
-            DatumPrijemaOD = b.DajDatumIzStringa(Trim(Me.txtDATUMPRIJEMAOD.Text()))
+            DatumPrijemaOD = b.DajDatumIzStringa(Trim(Me.txtDATUMPRIJEMAOD.Text())).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
         End If
 
         If txtDATUMPRIJEMADO.Text <> "" Then
-            DatumPrijemaDO = b.DajDatumIzStringa(Trim(Me.txtDATUMPRIJEMADO.Text()))
+            DatumPrijemaDO = b.DajDatumIzStringa(Trim(Me.txtDATUMPRIJEMADO.Text())).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
         End If
 
 
@@ -189,9 +190,6 @@ Partial Class rRazlika
 
 #End Region
 #Region "TXT-COMBO-CHK CHANGE"
-    Protected Sub DDLGODINA_SelectedIndexChanged(sender As Object, e As EventArgs) Handles DDLGODINA.SelectedIndexChanged
-        PopuniTabeluMB()
-    End Sub
     Private Sub txtDATUMPRIJEMAOD_TextChanged(sender As Object, e As EventArgs) Handles txtDATUMPRIJEMAOD.TextChanged
         If Me.txtDATUMPRIJEMADO.Visible = "false" Then
             Me.txtDATUMPRIJEMADO.Visible = "True"

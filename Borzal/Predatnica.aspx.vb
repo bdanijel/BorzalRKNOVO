@@ -364,14 +364,15 @@ Partial Class Predatnica
     Protected Function InsertUpdatePREDATNICA() As Boolean
 
         Dim UpitInsertUpdatePREDATNICA As String = ""
-        Dim Datum As Date
+        Dim Datum As String
 
 
         'DATUMI
         If Me.txtDATUM.Text <> "" Then
-            'Datum = "'" & b.DajDatumIzStringa(Trim(Me.txtDATUM.Text())) & "'"
-            Datum = Convert.ToDateTime(Me.txtDATUM.Text)
-            Me.txtDATUM.Text = Datum.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+            Datum = "'" & b.DajDatumIzStringa(Trim(Me.txtDATUM.Text())).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) & "'"
+            'Datum = Convert.ToDateTime(Me.txtDATUM.Text)
+            'Me.txtDATUM.Text = Datum.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+            'datum2 = Convert.ToDateTime(Datum)
         Else
 
             Datum = "NULL"
@@ -388,7 +389,7 @@ Partial Class Predatnica
 & "ID_PROIZVODA = " & "N'" & Me.ddlProizvodID.Text & "'," _
 & "JM = " & "N'" & Me.lblJM.Text & "'," _
 & "Kolicina = " & "N'" & Me.txtKolicina.Text & "' " _
-& "Datum = " & "N'" & Me.txtDATUM.Text & "'" _
+& "Datum = " & Datum _
 & "  WHERE (Broj = " & Me.txtBroj.Text & ") And (rbr = " & Me.txtRBR.Text & ")"
         Else
 
@@ -400,7 +401,7 @@ Partial Class Predatnica
 & "," & "N'" & Me.ddlProizvodID.Text & "' " _
 & "," & "N'" & Me.lblJM.Text & "' " _
 & "," & "N'" & Me.txtKolicina.Text & "' " _
-& "," & "N'" & Me.txtDATUM.Text & "') "
+& "," & Datum & ") "
 
         End If
 

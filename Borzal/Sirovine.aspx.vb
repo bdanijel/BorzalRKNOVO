@@ -202,12 +202,12 @@ Partial Class Sirovine
         Dim UpitInsertUpdateSIROVINE As String = ""
 
 
-        If ProveraPostojanjaZapisaSIROVINE(Convert.ToInt32(Me.txtID.Text), Me.txtNaziv.Text) = 1 Then
+        If ProveraPostojanjaZapisaSIROVINE(Convert.ToInt32(Me.txtID.Text)) = 1 Then
 
 
             UpitInsertUpdateSIROVINE = "UPDATE SIROVINE " _
 & " Set NAZIV = " & "N'" & Trim(Me.txtNaziv.Text) & "', " _
-& " Set JM = " & "N'" & Trim(Me.txtJM.Text) & "' " _
+& " JM = " & "N'" & Trim(Me.txtJM.Text) & "' " _
 & "  WHERE (ID = " & Me.txtID.Text & ")"
         Else
 
@@ -223,7 +223,7 @@ Partial Class Sirovine
         Return ret
     End Function
 
-    Private Function ProveraPostojanjaZapisaSIROVINE(ByVal ID As Integer, ByVal NAZIV As String) As Integer
+    Private Function ProveraPostojanjaZapisaSIROVINE(ByVal ID As Integer) As Integer
         Dim SIROVINASelect As String = ""
         Dim dsSIROVINASelect As New DataSet
 
