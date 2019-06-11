@@ -52,10 +52,10 @@ Partial Class Trebovanje
             PopuniCOMBO()
             SetPorukaSpisakGresakaInvisible()
             SetPorukaUspesnoInvisible()
-            If Session("broj_TREBOVANJE_pretraga") = Nothing Then
+            If Session("ID_TREBOVANJE_pretraga") = Nothing Then
 
             Else
-                Me.PodaciTrebovanje(Me.txtBroj.Text(), Convert.ToInt32(Me.txtRBR.Text()))
+                Me.PodaciTrebovanje(Session("ID_TREBOVANJE_pretraga"))
 
             End If
 
@@ -118,9 +118,7 @@ Partial Class Trebovanje
     End Sub
     Protected Sub NoviBroj_Click(sender As Object, e As EventArgs) Handles btnNoviBroj.Click
 
-        Session("broj_TREBOVANJE_pretraga") = Nothing
-        Session("rbr_TREBOVANJE_pretraga") = Nothing
-
+        Session("ID_TREBOVANJE_pretraga") = Nothing
 
         Me.txtBroj.Enabled = True
         Me.txtRBR.Enabled = True
@@ -261,15 +259,14 @@ Partial Class Trebovanje
 #End Region
 
 #Region "SELECT"
-    Protected Sub PodaciTrebovanje(ByVal Broj As String, ByVal rbr As Integer)
+    Protected Sub PodaciTrebovanje(ByVal ID As Integer)
         Dim UpitTrebovanje As String = ""
         Dim dsTrebovanje As New DataSet
 
-        Dim JM, KOLICINA As String
-        Dim datum As Date
-        Dim ID_PROIZVODA As Integer
+        Dim JM, KOLICINA, DATUM As String
+        Dim ID_PROIZVODA, BROJ, RBR As Integer
 
-        UpitTrebovanje = "SELECT ID, BROJ, RBR, ID_PROIZVODA, JM, KOLICINA, dbo.ufnSrediDatumPrikaz(DATUM) as DATUM from Trebovanje  where (BROJ = '" & Broj & "') and (rbr = '" & rbr & "')"
+        UpitTrebovanje = "SELECT ID, BROJ, RBR, ID_SIROVINE, JM, KOLICINA, dbo.ufnSrediDatumPrikaz(DATUM) as DATUM from Trebovanje where (ID = '" & ID & "')"
 
         dsTrebovanje = b.DajDS_IzUpita_Lokal(UpitTrebovanje, BORZALConnectionString)
 
@@ -388,7 +385,7 @@ Partial Class Trebovanje
 & "RBR = " & "N'" & Me.txtRBR.Text & "'," _
 & "ID_SIROVINE = " & "N'" & Me.ddlSirovinaID.Text & "'," _
 & "JM = " & "N'" & Me.lblJM.Text & "'," _
-& "Kolicina = " & "N'" & Me.txtKolicina.Text & "' " _
+& "Kolicina = " & "N'" & Me.txtKolicina.Text & "', " _
 & "Datum = " & Datum _
 & "  WHERE (Broj = " & Me.txtBroj.Text & ") And (rbr = " & Me.txtRBR.Text & ")"
         Else

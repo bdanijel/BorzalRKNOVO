@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Sirovine_Pretraga.aspx.vb" Inherits="Sirovine_Pretraga" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="Predatnica_Pretraga.aspx.vb" Inherits="Predatnica_Pretraga" %>
 
 <asp:Content ID="cHead" ContentPlaceHolderID="cphHead" Runat="Server">
 </asp:Content>
@@ -32,7 +32,7 @@
                 <div id="filterTable" class="row no-border">
                     <div class="col-md-12">
                         <div class="row">
-                            <div id="divNAZIV" class="col-md-4 form-group"><asp:DropDownList ID="DDLNAZIV" runat="server" CssClass="col-md-4 opstine select-size-xs" AutoPostBack="true"></asp:DropDownList></div>
+                            <div id="divBROJ" class="col-md-4 form-group"><asp:DropDownList ID="DDLBROJ" runat="server" CssClass="col-md-4 opstine godine" AutoPostBack="true"></asp:DropDownList></div>
                              <div class="col-md-1">
                                  <div class="input-group">
                                 <button type="button" id="Reset" runat="server" onserverclick="ResetClick" data-loading-text="PONIŠTI IZBOR <i class='icon-sync spinner text-white position-right'></i>" class="btn btn-info btn-xs btn-loading text-size-mini">PONIŠTI IZBOR <i class="icon-sync position-right"></i></button>
@@ -53,12 +53,21 @@
                                             DataKeyNames="ID" BorderWidth="0px" HeaderStyle-CssClass="alpha-grey img-bg" PagerSettings-Mode="NumericFirstLast" PagerStyle-Wrap="False">
                                     <Columns>
                                          <asp:BoundField DataField="ID" HeaderText="ID" />
-                                        <asp:TemplateField HeaderText="NAZIV SIROVINE" HeaderStyle-Width="250" SortExpression="NAZIV">
+                                        <asp:TemplateField HeaderText="BROJ" HeaderStyle-Width="50" SortExpression="BROJ">
                                              <ItemTemplate>
-                                                <asp:LinkButton ID="btnMBIzmena" runat="server" CommandName="MBIzmena" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' Text='<%# Bind("NAZIV") %>' CausesValidation="False"></asp:LinkButton>
+                                                <asp:LinkButton ID="btnMBIzmena" runat="server" CommandName="MBIzmena" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' Text='<%# Bind("BROJ") %>' CausesValidation="False"></asp:LinkButton>
                                              </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="JM" HeaderText="JM" />
+                                        <asp:BoundField DataField="RBR" HeaderText="RBR" SortExpression="RBR" />
+                                         <asp:BoundField DataField="NAZIV" HeaderText="NAZIV" SortExpression="NAZIV" />
+                                         <asp:BoundField DataField="JM" HeaderText="JM" SortExpression="JM" />
+                                          <asp:BoundField DataField="KOLICINA" HeaderText="KOLICINA" SortExpression="KOLICINA" />
+                                          <asp:TemplateField HeaderText ="DATUM" SortExpression="DATUM">
+                                             <ItemTemplate>
+                                                <asp:Label ID="lblDatum" runat="server" 
+                                                    Text='<%# Eval("DATUM", "{0:dd.MM.yyyy.}") %>' />
+                                                </ItemTemplate>
+                                        </asp:TemplateField>
                                          <asp:TemplateField HeaderText="EXCEL" HeaderStyle-Width="30" SortExpression="MB">
                                             <ItemTemplate>
                                                 <asp:LinkButton ID="btnExcelExport" runat="server" CommandName="ExcelExport" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' CausesValidation="False"><i class="icon-file-excel text-slate"></i></asp:LinkButton>
@@ -83,8 +92,12 @@
                                     <AlternatingRowStyle CssClass="bg-slate-50 img-bg" />
                                     <Columns>
                                         <asp:BoundField DataField="ID" HeaderText="ID" />
-                                        <asp:BoundField DataField="NAZIV" HeaderText="NAZIV" />
+                                        <asp:BoundField DataField="BROJ" HeaderText="BROJ" />
+                                        <asp:BoundField DataField="RBR" HeaderText="RBR" />
+                                        <asp:BoundField DataField="ID_PROIZVODA" HeaderText="ID_PROIZVODA" />
                                         <asp:BoundField DataField="JM" HeaderText="JM" />
+                                        <asp:BoundField DataField="KOLICINA" HeaderText="KOLICINA" />
+                                        <asp:BoundField DataField="DATUM" HeaderText="DATUM" />
                                      </Columns>
                                 </asp:GridView>
                             </div>
@@ -98,7 +111,7 @@
 
     <asp:ObjectDataSource ID="odsMB" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
         <SelectParameters>
-            <asp:SessionParameter Name="Upit" DefaultValue="SELECT * FROM SIROVINE" SessionField="UpitMB" Type="String" />
+            <asp:SessionParameter Name="Upit" DefaultValue="SELECT * FROM vPredatnica order by broj, rbr" SessionField="UpitMB" Type="String" />
             <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
         </SelectParameters>
     </asp:ObjectDataSource>
@@ -232,9 +245,9 @@
         }, 1500);
 
 
-        history.pushState(null, null, 'Proizvod_Pretraga.aspx');
+        history.pushState(null, null, 'Predatnica_Pretraga.aspx');
         window.addEventListener('popstate', function (event) {
-            history.pushState(null, null, 'Proizvod_Pretraga.aspx');
+            history.pushState(null, null, 'Predatnica_Pretraga.aspx');
         });
     </script>
     <script type="text/javascript">

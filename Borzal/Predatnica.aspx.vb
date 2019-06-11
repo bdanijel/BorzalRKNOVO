@@ -52,10 +52,10 @@ Partial Class Predatnica
             PopuniCOMBO()
             SetPorukaSpisakGresakaInvisible()
             SetPorukaUspesnoInvisible()
-            If Session("broj_PREDATNICA_pretraga") = Nothing Then
+            If Session("ID_PREDATNICA_pretraga") = Nothing Then
 
             Else
-                Me.PodaciPredatnica(Me.txtBroj.Text(), Convert.ToInt32(Me.txtRBR.Text()))
+                Me.PodaciPredatnica(Session("ID_PREDATNICA_pretraga"))
 
             End If
 
@@ -118,9 +118,7 @@ Partial Class Predatnica
     End Sub
     Protected Sub NoviBroj_Click(sender As Object, e As EventArgs) Handles btnNoviBroj.Click
 
-        Session("broj_pretraga") = Nothing
-        Session("rbr_pretraga") = Nothing
-
+        Session("ID_PREDATNICA_pretraga") = Nothing
 
         Me.txtBroj.Enabled = True
         Me.txtRBR.Enabled = True
@@ -191,12 +189,6 @@ Partial Class Predatnica
 
     Protected Sub txtBroj_TextChanged(sender As Object, e As EventArgs) Handles txtBroj.TextChanged
 
-        ' AKO NE RADI BRIŠI, radi bez ovoga
-        Session("rbr") = Nothing
-        Session("rbr_pretraga") = Nothing
-        Session("podbroj") = Nothing
-        Session("podbroj_pretraga") = Nothing
-
         DajSledeciRBR()
 
     End Sub
@@ -261,15 +253,14 @@ Partial Class Predatnica
 #End Region
 
 #Region "SELECT"
-    Protected Sub PodaciPredatnica(ByVal Broj As String, ByVal rbr As Integer)
+    Protected Sub PodaciPredatnica(ByVal ID As Integer)
         Dim UpitPredatnica As String = ""
         Dim dsPredatnica As New DataSet
 
-        Dim JM, KOLICINA As String
-        Dim datum As Date
-        Dim ID_PROIZVODA As Integer
+        Dim JM, KOLICINA, datum As String
+        Dim ID_PROIZVODA, BROJ, RBR As Integer
 
-        UpitPredatnica = "SELECT ID, BROJ, RBR, ID_PROIZVODA, JM, KOLICINA, dbo.ufnSrediDatumPrikaz(DATUM) as DATUM from Predatnica  where (BROJ = '" & Broj & "') and (rbr = '" & rbr & "')"
+        UpitPredatnica = "SELECT ID, BROJ, RBR, ID_PROIZVODA, JM, KOLICINA, dbo.ufnSrediDatumPrikaz(DATUM) as DATUM from Predatnica  where (ID = '" & ID & "')"
 
         dsPredatnica = b.DajDS_IzUpita_Lokal(UpitPredatnica, BORZALConnectionString)
 
@@ -388,7 +379,7 @@ Partial Class Predatnica
 & "RBR = " & "N'" & Me.txtRBR.Text & "'," _
 & "ID_PROIZVODA = " & "N'" & Me.ddlProizvodID.Text & "'," _
 & "JM = " & "N'" & Me.lblJM.Text & "'," _
-& "Kolicina = " & "N'" & Me.txtKolicina.Text & "' " _
+& "Kolicina = " & "N'" & Me.txtKolicina.Text & "', " _
 & "Datum = " & Datum _
 & "  WHERE (Broj = " & Me.txtBroj.Text & ") And (rbr = " & Me.txtRBR.Text & ")"
         Else
