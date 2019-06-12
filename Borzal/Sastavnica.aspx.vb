@@ -48,14 +48,15 @@ Partial Class Sastavnica
 
 
 
+
         If Not Page.IsPostBack Then
             PopuniCOMBO()
             SetPorukaSpisakGresakaInvisible()
             SetPorukaUspesnoInvisible()
-            If Session("broj_pretraga") = Nothing Then
+            If Session("BROJ_SASTAVNICA_pretraga") = Nothing Then
 
             Else
-                Me.PodaciSastavnica(Me.txtBroj.Text(), Convert.ToInt32(Me.txtRBR.Text()))
+                Me.PodaciSastavnica(Session("BROJ_SASTAVNICA_pretraga"), Session("RBR_SASTAVNICA_pretraga"))
 
             End If
 
@@ -249,6 +250,7 @@ Partial Class Sastavnica
 
         txtRBR.Enabled = False
         txtBroj.Enabled = False
+        ddlProizvodID.Enabled = False
 
     End Sub
     Protected Sub txtKolicina_TextChanged(sender As Object, e As EventArgs) Handles txtKolicina.TextChanged
