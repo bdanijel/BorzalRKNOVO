@@ -276,9 +276,9 @@ Partial Class Predatnica
                     Else
                         Broj = ""
                     End If
-                    Me.txtBroj.Text = Broj
+                    Me.txtBroj.Text = BROJ
 
-
+                    Me.txtBroj.Enabled = False
 
                     ''Rbr
 
@@ -289,9 +289,9 @@ Partial Class Predatnica
                     Else
                         rbr = ""
                     End If
-                    Me.txtRBR.Text = rbr
+                    Me.txtRBR.Text = RBR
 
-
+                    Me.txtRBR.Enabled = False
 
                     ''ID_PROIZVODA
 

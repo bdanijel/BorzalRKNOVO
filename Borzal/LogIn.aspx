@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge, Chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BORZAL - Логовање</title>
+    <title>BORZAL - Logovanje</title>
     
     <!-- core CSS files -->
     <link href="Content/font/icomoon/styles.css" rel="stylesheet" />
@@ -41,11 +41,11 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-mobile">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="Content/doc/Uputstva/UputstvoZaLogovanje.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Упутство за логовање</a></li>
+                <%--<li><a href="Content/doc/Uputstva/UputstvoZaLogovanje.pdf" target="_blank"><i class="icon text-size-18 icon-file-pdf position-left"></i>Uputstvo za logovanje</a></li>--%>
                 <li>
 					<a href="mailTo:lejinad5@gmail.com">
 						<i class="icon-envelope"></i>
-						<span class="visible-xs-inline-block position-right">Контактирај администратора</span>
+						<span class="visible-xs-inline-block position-right">Kontaktiraj administratora</span>
 					</a>						
 				</li>
             </ul>
@@ -70,17 +70,17 @@
                         <div class="panel panel-body login-form">
                             <div class="text-center">
                                 <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
-                                <h5 id="Logovanje" runat="server" class="content-group">Логовање <small class="display-block">У поља испод унесите Ваше податке</small></h5>
+                                <h5 id="Logovanje" runat="server" class="content-group">Logovanje <small class="display-block">U polja ispod unesite Vaše podatke</small></h5>
                             </div>
 
                             <div class="form-group has-feedback has-feedback-left">
-                                <input type="text" id="Nalog" runat="server" class="form-control" placeholder="Кориснички налог" name="Nalog" />
+                                <input type="text" id="Nalog" runat="server" class="form-control" placeholder="Korisnički nalog" name="Nalog" />
                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
                             </div>
                             <div class="form-group has-feedback has-feedback-left">
-                                <input type="password" id="Lozinka" runat="server" class="form-control" placeholder="Лозинка" name="Lozinka" />
+                                <input type="password" id="Lozinka" runat="server" class="form-control" placeholder="Lozinka" name="Lozinka" />
                                 <div class="form-control-feedback">
                                     <i class="icon-lock2 text-muted"></i>
                                 </div>
@@ -90,7 +90,7 @@
                                 <span id="PorukaNeuspesno" runat="server" class="validation-error-label"></span>
                             </div>
                             <div class="form-group">
-                                <button id="LoginButton" runat="server" onserverclick="LoginButton_Click" class="btn btn-xs bg-primary-800 btn-block">ЛОГУЈТЕ СЕ <i class="icon-circle-right2 position-right"></i></button>
+                                <button id="LoginButton" runat="server" onserverclick="LoginButton_Click" class="btn btn-xs bg-primary-800 btn-block">LOGUJTE SE <i class="icon-circle-right2 position-right"></i></button>
 <%--                                <asp:LinkButton ID="LoginButton" runat="server" OnClick="LoginButton_Click"  CssClass="btn btn-xs btn-primary bg-primary-800 btn-block">ЛОГУЈТЕ СЕ<i class="icon-circle-right2 position-right"></i></asp:LinkButton>--%>
                             </div>
                          </div>
@@ -101,19 +101,19 @@
                             <div class="col-md-4 col-md-push-4">
                                 <!-- Info alert -->
                                 <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-primary-800 text-primary-800">
-                                    <h6 class="alert-heading">Ако имате проблема при логовању обратите се администратору кликом на <i class="icon-envelope"></i> у горњем десном углу екрана.</h6>
+                                    <h6 class="alert-heading">Ako imate problema pri logovanju obratite se administratoru klikom na <i class="icon-envelope"></i> u gornjem desnom uglu ekrana.</h6>
                                 </div>
                                 <!-- /info alert -->
                             </div>
                         </div>
                         <!-- footer -->
                         <div class="footer text-slate text-center">
-                            <div class="logoRZS">
-                                <a href="http://www.stat.gov.rs/" target="_blank">
+                           <%-- <div class="logoRZS">
+                                <a href="LogIn.aspx">
                                     <span class="text-size-24 nmicon-RZSLogo position-left">
                                         <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span></span>
                                 </a>
-                            </div>
+                            </div>--%>
                             <div class="copyright">Borzal &copy; <%: DateTime.Now.Year %>  - robno knjigovodstvo</div>
                         </div>
                         <!-- /footer -->

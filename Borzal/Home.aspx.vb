@@ -10,7 +10,7 @@ Partial Class Home
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         Page.MaintainScrollPositionOnPostBack = True
 
-        PopuniTabeluMB()
+        'PopuniTabeluMB()
 
     End Sub
 
@@ -21,8 +21,8 @@ Partial Class Home
         UpitMB = "SELECT id,broj,rbr,naziv,jm,kolicina,datum FROM vTrebovanje ORDER BY broj,rbr"
         odsMB = b.DajDS_IzUpita_Lokal(UpitMB, BORZALConnectionString)
 
-        Me.gvMB.EmptyDataText = "Без података"
-        Me.gvMB.DataBind()
+        'Me.gvMB.EmptyDataText = "Без података"
+        'Me.gvMB.DataBind()
 
     End Sub
 End Class

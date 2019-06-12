@@ -282,9 +282,9 @@ Partial Class Trebovanje
                     Else
                         Broj = ""
                     End If
-                    Me.txtBroj.Text = Broj
+                    Me.txtBroj.Text = BROJ
 
-
+                    Me.txtBroj.Enabled = False
 
                     ''Rbr
 
@@ -295,9 +295,9 @@ Partial Class Trebovanje
                     Else
                         rbr = ""
                     End If
-                    Me.txtRBR.Text = rbr
+                    Me.txtRBR.Text = RBR
 
-
+                    Me.txtRBR.Enabled = False
 
                     ''ID_PROIZVODA
 

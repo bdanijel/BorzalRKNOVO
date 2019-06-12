@@ -35,7 +35,7 @@ Partial Class Trebovanje_Pretraga
     Private Sub PopuniTabeluMB()
         Dim SelectSQL, WhereSQL As String
         Dim UpitMB As String = ""
-        MBListaTitle.InnerHtml = "Spisak predatnica"
+        MBListaTitle.InnerHtml = "Spisak trebovanja"
 
         SessionUpit()
         SelectSQL = Session("UpitMB")
@@ -56,7 +56,7 @@ Partial Class Trebovanje_Pretraga
     Protected Sub SessionUpit()
         Dim SelectSQL As String
 
-        SelectSQL = "SELECT ID, cast(BROJ as INT) AS BROJ, RBR, NAZIV, JM, KOLICINA, DATUM FROM vTrebovanje "
+        SelectSQL = "SELECT ID, BROJ, RBR, NAZIV, JM, KOLICINA, DATUM FROM vTrebovanje "
 
 
         Session("UpitMB") = SelectSQL

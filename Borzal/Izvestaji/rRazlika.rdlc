@@ -430,7 +430,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>TrebovanjeUkupnoSUMAR</rd:DefaultName>
@@ -459,11 +461,14 @@
                                   <Value>=Fields!UtrosenoUkupnoSUMAR.Value</Value>
                                   <Style>
                                     <FontFamily>Tahoma</FontFamily>
+                                    <Format>0.00;(0.00)</Format>
                                     <Color>#4d4d4d</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>UtrosenoUkupnoSUMAR</rd:DefaultName>
@@ -496,7 +501,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Razlika</rd:DefaultName>

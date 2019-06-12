@@ -306,7 +306,7 @@ Partial Class Sastavnica
                     End If
                     Me.txtBroj.Text = Broj
 
-
+                    Me.txtBroj.Enabled = False
 
                     ''Rbr
 
@@ -319,7 +319,7 @@ Partial Class Sastavnica
                     End If
                     Me.txtRBR.Text = rbr
 
-
+                    Me.txtRBR.Enabled = False
 
                     ''ID_SIROVINA
 

@@ -25,7 +25,7 @@
     <div class="Home content">
          <asp:UpdatePanel ID="upFilterTabela" runat="server">
             <ContentTemplate>
-                <h6 class="m-10 content-group text-semibold"><i class="icon-office position-left text-primary-800"></i><span id="MBListaTitle" runat="server"></span></h6>
+                <h6 class="m-10 content-group text-semibold"><i class="icon-box position-left text-primary-800"></i><span id="MBListaTitle" runat="server"></span></h6>
                 <div id="filterTable" class="row no-border">
                     <div class="col-md-12">
                         <div class="row">

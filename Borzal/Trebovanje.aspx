@@ -222,7 +222,7 @@
                     <div class="row mb-12">
                         <div class="col-md-12">
                             <div class="input-group-btn text-center">
-                                <asp:LinkButton ID="btnOdustaniLJ" OnClick="btnOdustaniLJ_Click" runat="server" CssClass="btn btn-xs btn-info bg-info-400" Style="left: 0px; top: 12px; margin-bottom: 20px"><i class="icon-table position-left"></i>VRATI SE NA LISTU SASTAVNICA</asp:LinkButton>
+                                <asp:LinkButton ID="btnOdustaniLJ" OnClick="btnOdustaniLJ_Click" runat="server" CssClass="btn btn-xs btn-info bg-info-400" Style="left: 0px; top: 12px; margin-bottom: 20px"><i class="icon-table position-left"></i>VRATI SE NA SPISAK TREBOVANJA</asp:LinkButton>
                             </div>
                         </div>
                     </div>
