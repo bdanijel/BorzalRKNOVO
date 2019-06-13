@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="rRazlika.aspx.vb" Inherits="rRazlika" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="rProizvod.aspx.vb" Inherits="rProizvod" %>
 
 <%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 
@@ -17,26 +17,6 @@
             <asp:Label ID="lblPoruka3" runat="server"></asp:Label>
 </div>
         <div class="row">
-            <div class="col-md-3 text-left">
-                <div class="input-group">
-                    <asp:TextBox ID="txtDATUMPRIJEMAOD" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Датум од..." AutoPostBack="True"></asp:TextBox>
-                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
-                    <span class="input-group-btn">
-                        <button id="OpenCalendarDATUMPRIJEMAOD" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-3 text-left">
-                <div id="divDatumPrijemaDO" class="input-group" visible="false">
-                    <asp:TextBox ID="txtDATUMPRIJEMADO" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Датум до..." AutoPostBack="True" Visible="false"></asp:TextBox>
-                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
-                    <span class="input-group-btn">
-                        <button id="OpenCalendarDATUMPRIJEMADO" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
 <%--            <div class="auto-style1">
                 <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-primary-800 text-primary-800">
                     <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
@@ -48,24 +28,23 @@
             <asp:ScriptManager ID="ScriptManager1" runat="server">
             </asp:ScriptManager>
              <br />
-            <asp:ObjectDataSource ID="dsRazlika" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
+            <asp:ObjectDataSource ID="dsProizvod" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
                 <SelectParameters>
-                    <asp:SessionParameter Name="Upit" DefaultValue="with TrebovanjeSumarDATUM as (SELECT dbo.sirovine.ID, dbo.sirovine.NAZIV, SUM(dbo.trebovanje.KOLICINA) AS TrebovanoUkupno, dbo.sirovine.JM, dbo.trebovanje.DATUM FROM  dbo.sirovine INNER JOIN dbo.trebovanje ON dbo.sirovine.ID = dbo.trebovanje.ID_SIROVINE GROUP BY dbo.sirovine.ID, dbo.sirovine.NAZIV, dbo.sirovine.JM, dbo.trebovanje.DATUM having trebovanje.DATUM >= '01.01.2019' and trebovanje.DATUM <= '01.01.2020'), TrebovanjeSumar as (select id,naziv,  JM, sum(TrebovanoUkupno) as TrebovanjeUkupnoSUMAR FROM TrebovanjeSumarDATUM group by id,naziv,jm), UtrosenoSumarDATUM as (SELECT ID, NAZIV, JM, SUM(Utroseno) AS UtrosenoUkupno, DATUM FROM dbo.vUtrosenoDATUM GROUP BY ID, NAZIV, JM, DATUM HAVING DATUM >= '01.01.2019' and DATUM <= '01.01.2020'), UtrosenoSumar as (select ID,naziv,jm,SUM(UtrosenoUkupno) as UtrosenoUkupnoSUMAR FROM UtrosenoSumarDATUM group by ID, NAZIV,jm) select TrebovanjeSumar.id, TrebovanjeSumar.naziv, TrebovanjeSumar.jm, TrebovanjeUkupnoSUMAR,UtrosenoUkupnoSUMAR, (TrebovanjeUkupnoSUMAR - UtrosenoUkupnoSUMAR) as Razlika FROM TrebovanjeSumar join UtrosenoSumar on TrebovanjeSumar.ID=UtrosenoSumar.ID"  SessionField="UpitRazlika" Type="String" />
+                    <asp:SessionParameter Name="Upit" DefaultValue="SELECT ID, NAZIV FROM PROIZVOD"  SessionField="UpitProizvod" Type="String" />
                     <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
                 </SelectParameters>
             </asp:ObjectDataSource>
                <rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="100%" Height="100%" AsyncRendering="False" SizeToReportContent="True"  ClientIDMode="AutoID">
-                <LocalReport ReportPath="Izvestaji\rRazlika.rdlc">
+                <LocalReport ReportPath="Izvestaji\rProizvod.rdlc">
                     <DataSources>
-                        <rsweb:ReportDataSource DataSourceId="dsRazlika" Name="DataSet1" />
+                        <rsweb:ReportDataSource DataSourceId="dsProizvod" Name="DataSet1" />
                     </DataSources>
                 </LocalReport>
             </rsweb:ReportViewer>
                  </div>
          </div>
         </div>
-        <asp:TextBox ID="txtID_Korisnika" runat="server" CssClass="hidden"></asp:TextBox>
-        <asp:TextBox ID="txtGodina" runat="server" CssClass="hidden"></asp:TextBox>
+
 
 <script src="Content/js/bootstrap/moment.min.js"></script>
     <script src="Content/js/bootstrap/bootstrap-datepicker.js"></script>
@@ -80,34 +59,34 @@
             }, 1500);
                 $('body').addClass('loaded');
             var inputOd = $("#cphBody_txtDATUMPRIJEMAOD").pickadate({
-                monthsFull: ['Januar', 'februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar'],
-                monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
+                monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
+                monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
                 showMonthsShort: true,
-                weekdaysShort: ['Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub'],
-                today: 'Danas',
-                clear: 'Poništi',
-                close: 'Zatvori',
+                weekdaysShort: ['Нед', 'Пон', 'Уто', 'Сре', 'Чет', 'Пет', 'Суб'],
+                today: 'Данас',
+                clear: 'Поништи',
+                close: 'Затвори',
                 format: 'dd.mm.yyyy.',
                 formatSubmit: 'yyyymmdd',
                 firstDay: 1,
-                labelMonthNext: 'Sledeći mesec',
-                labelMonthPrev: 'Prethodni mesec',
+                labelMonthNext: 'Следећи месец',
+                labelMonthPrev: 'Претходни месец',
                 selectYears: 100,
                 max: true
             });
             var inputDoNeakt = $("#cphBody_txtDATUMPRIJEMADO").pickadate({
-                monthsFull: ['Januar', 'februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar'],
-                monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
+                monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
+                monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
                 showMonthsShort: true,
-                weekdaysShort: ['Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub'],
-                today: 'Danas',
-                clear: 'Poništi',
-                close: 'Zatvori',
+                weekdaysShort: ['Нед', 'Пон', 'Уто', 'Сре', 'Чет', 'Пет', 'Суб'],
+                today: 'Данас',
+                clear: 'Поништи',
+                close: 'Затвори',
                 format: 'dd.mm.yyyy.',
                 formatSubmit: 'yyyymmdd',
                 firstDay: 1,
-                labelMonthNext: 'Sledeći mesec',
-                labelMonthPrev: 'Prethodni mesec',
+                labelMonthNext: 'Следећи месец',
+                labelMonthPrev: 'Претходни месец',
                 selectYears: 100,
                 max: true
             });
@@ -195,9 +174,9 @@
         }, 1500);
 
 
-        history.pushState(null, null, 'rRazlika.aspx');
+        history.pushState(null, null, 'rProizvod.aspx');
         window.addEventListener('popstate', function (event) {
-            history.pushState(null, null, 'rRazlika.aspx');
+            history.pushState(null, null, 'rProizvod.aspx');
         });
     </script>
     <script type="text/javascript">
