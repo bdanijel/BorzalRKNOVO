@@ -17,7 +17,7 @@ Partial Class zADM_BORZAL_Master
 
         If Not Page.IsPostBack Then
             danas = Date.Now
-            Dat = Dani(danas.DayOfWeek)
+            Dat = DaniL(danas.DayOfWeek)
             Me.DanNaziv.InnerHtml = Dat
             'MeniLabele()
 
