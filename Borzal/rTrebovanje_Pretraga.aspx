@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="rPredatnica.aspx.vb" Inherits="rPredatnica" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="rTrebovanje_Pretraga.aspx.vb" Inherits="rTrebovanje_Pretraga" %>
 
 <%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 
@@ -16,6 +16,19 @@
             <asp:Label ID="lblPoruka2" runat="server"></asp:Label>
             <asp:Label ID="lblPoruka3" runat="server"></asp:Label>
 </div>
+         <asp:ScriptManager ID="smIzborMB" runat="server">
+            </asp:ScriptManager>
+        <asp:UpdatePanel ID="upFilterTabela" runat="server">
+            <ContentTemplate>
+         <div id="filterTable" class="row no-border">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div id="divBROJ" class="col-md-4 form-group"><asp:DropDownList ID="DDLBROJ" runat="server" CssClass="col-md-4 opstine godine" AutoPostBack="true"></asp:DropDownList></div>
+                        </div>
+                      </div>
+                   </div>
+                    </ContentTemplate>
+        </asp:UpdatePanel>
         <div class="row">
 <%--            <div class="auto-style1">
                 <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-primary-800 text-primary-800">
@@ -25,19 +38,18 @@
                     <h6 class="alert-heading text-default no-margin-bottom">у четвртак, 18.10.2018. у 14 часова.</h6>
                 </div>
             </div>--%>
-            <asp:ScriptManager ID="ScriptManager1" runat="server">
-            </asp:ScriptManager>
+           
              <br />
-            <asp:ObjectDataSource ID="dsPredatnica" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
+            <asp:ObjectDataSource ID="dsTrebovanjePretraga" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
                 <SelectParameters>
-                    <asp:SessionParameter Name="Upit" DefaultValue="SELECT *,DATALENGTH(BROJ) as broj2 FROM vPREDATNICA ORDER BY datum,BROJ2,BROJ,RBR"  SessionField="UpitPredatnica" Type="String" />
+                    <asp:SessionParameter Name="Upit" DefaultValue="SELECT *,DATALENGTH(BROJ) as broj2 FROM vTREBOVANJE ORDER BY BROJ2,BROJ, RBR"  SessionField="UpitTrebovanjePretraga" Type="String" />
                     <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
                 </SelectParameters>
             </asp:ObjectDataSource>
                <rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="100%" Height="100%" AsyncRendering="False" SizeToReportContent="True"  ClientIDMode="AutoID">
-                <LocalReport ReportPath="Izvestaji\rPredatnica.rdlc">
+                <LocalReport ReportPath="Izvestaji\rTrebovanje_Pretraga.rdlc">
                     <DataSources>
-                        <rsweb:ReportDataSource DataSourceId="dsPredatnica" Name="dsPredatnica" />
+                        <rsweb:ReportDataSource DataSourceId="dsTrebovanjePretraga" Name="dsTrebovanjePretraga" />
                     </DataSources>
                 </LocalReport>
             </rsweb:ReportViewer>
@@ -174,9 +186,9 @@
         }, 1500);
 
 
-        history.pushState(null, null, 'rPredatnica.aspx');
+        history.pushState(null, null, 'rTrebovanje_Pretraga.aspx');
         window.addEventListener('popstate', function (event) {
-            history.pushState(null, null, 'rPredatnica.aspx');
+            history.pushState(null, null, 'rTrebovanje_Pretraga.aspx');
         });
     </script>
     <script type="text/javascript">

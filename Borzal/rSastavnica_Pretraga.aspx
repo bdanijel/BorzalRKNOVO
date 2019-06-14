@@ -24,11 +24,6 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div id="divBROJ" class="col-md-4 form-group"><asp:DropDownList ID="DDLBROJ" runat="server" CssClass="col-md-4 opstine godine" AutoPostBack="true"></asp:DropDownList></div>
-                             <div class="col-md-1">
-                                 <div class="input-group">
-                                <button type="button" id="Reset" runat="server" onserverclick="ResetClick" data-loading-text="PONIŠTI IZBOR <i class='icon-sync spinner text-white position-right'></i>" class="btn btn-info btn-xs btn-loading text-size-mini">PONIŠTI IZBOR <i class="icon-sync position-right"></i></button>
-                            </div>
-                                  </div>
                         </div>
                       </div>
                    </div>

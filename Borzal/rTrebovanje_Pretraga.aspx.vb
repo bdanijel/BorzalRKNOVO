@@ -3,7 +3,7 @@ Imports System.Globalization
 Imports System.IO
 Imports Microsoft.Reporting.WebForms
 
-Partial Class rPredatnica
+Partial Class rTrebovanje_Pretraga
     Inherits System.Web.UI.Page
     Dim b As New ADM_MM()
     Dim BORZALConnectionString As String = b.ConnString_BORZAL
@@ -31,7 +31,7 @@ Partial Class rPredatnica
 
 
         If Not Page.IsPostBack Then
-            'PopuniCOMBO()
+            PopuniCOMBO()
             PopuniTabeluMB()
         End If
 
@@ -42,21 +42,26 @@ Partial Class rPredatnica
         PO = b.DajScalarSTR_IzUpita_LOKAL(UpitPO, BORZALConnectionString)
         Return PO
     End Function
+    Protected Sub ResetClick(Source As Object, E As EventArgs)
+        PopuniCOMBO()
+        SessionUpit()
+    End Sub
     Private Sub PopuniTabeluMB()
-        Dim SelectSQL As String
+        Dim SelectSQL, WhereSQL As String
         Dim UpitMB As String = ""
 
         SessionUpit()
-        SelectSQL = Session("UpitPredatnica")
-        'UslovWHERE()
+        SelectSQL = Session("UpitTrebovanjePretraga")
+        UslovWHERE()
 
-        'If Session("WhereSQL") = DBNull.Value.ToString() Or Trim(Session("WhereSQL")) = "" Then
-        '    Session("WhereSQL") = ""
-        'End If
-        'WhereSQL = Session("WhereSQL")
+        If Session("WhereSQL") = DBNull.Value.ToString() Or Trim(Session("WhereSQL")) = "" Then
+            Session("WhereSQL") = ""
+        End If
+        WhereSQL = Session("WhereSQL")
 
 
-        Session("UpitPredatnica") = SelectSQL
+
+        Session("UpitTrebovanjePretraga") = SelectSQL + WhereSQL + " ORDER BY BROJ2,BROJ, RBR"
 
         ReportViewer1.LocalReport.Refresh()
 
@@ -67,14 +72,25 @@ Partial Class rPredatnica
         Dim DatumPrijemaOD As String = ""
         Dim DatumPrijemaDO As String = ""
 
-        SelectSQL = "SELECT *,DATALENGTH(BROJ) as broj2 FROM vPREDATNICA ORDER BY datum,BROJ2,BROJ,RBR"
+        SelectSQL = "SELECT *,DATALENGTH(BROJ) as broj2 FROM vTREBOVANJE"
 
-        Session("UpitPredatnica") = SelectSQL
+        Session("UpitTrebovanjePretraga") = SelectSQL
     End Sub
     Protected Sub UslovWHERE()
         Dim WhereSQL As String = ""
         Dim DatumPrijemaOD As String = ""
         Dim DatumPrijemaDO As String = ""
+
+        Dim BROJ As String = Trim(Me.DDLBROJ.SelectedValue.ToString())
+
+        'BROJ DDL
+        If BROJ <> "" And BROJ <> "0" Then
+            If WhereSQL = "" Then
+                WhereSQL = "(BROJ = '" & BROJ & "')"
+            Else
+                WhereSQL = WhereSQL & " AND (BROJ = '" & BROJ & "')"
+            End If
+        End If
 
         Session("WhereSQL") = ""
 
@@ -88,8 +104,10 @@ Partial Class rPredatnica
 #Region "COMBO PRETRAGA"
     Private Sub PopuniCOMBO()
 
-        'Dim UpitGODINA As String = "SELECT DISTINCT GODINA FROM vDELOVODNIK WHERE (PODOD3 = '" & "1" & "') ORDER BY GODINA desc"
-        'PopuniDDL_1KOLONA(DDLGODINA, UpitGODINA, "GODINA")
+
+        Dim UpitBROJ As String = "SELECT DISTINCT BROJ, DATALENGTH(BROJ) as broj2 FROM vTREBOVANJE ORDER BY BROJ2,broj"
+        PopuniDDL_1KOLONA(DDLBROJ, UpitBROJ, "BROJ")
+        DDLBROJ.Items.Insert(0, New ListItem("- - Izaberite broj trebovanja - -", "0"))
 
 
         'txtDATUMPRIJEMADO.Text = ""
@@ -110,6 +128,11 @@ Partial Class rPredatnica
         ddl.DataSource = dsDDL
         ddl.DataValueField = Sifra
         ddl.DataBind()
+    End Sub
+
+    Private Sub DDLBROJ_TextChanged(sender As Object, e As EventArgs) Handles DDLBROJ.TextChanged
+        ReportViewer1.Visible = True
+        PopuniTabeluMB()
     End Sub
 
 #End Region

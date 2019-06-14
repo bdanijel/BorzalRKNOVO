@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="rPredatnica.aspx.vb" Inherits="rPredatnica" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/zADM_BORZAL_Master.master" AutoEventWireup="false" CodeFile="rPredatnica_Pretraga.aspx.vb" Inherits="rPredatnica_Pretraga" %>
 
 <%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 
@@ -17,6 +17,35 @@
             <asp:Label ID="lblPoruka3" runat="server"></asp:Label>
 </div>
         <div class="row">
+            <div class="col-md-3 text-left" style="margin-bottom:20px">
+                <div class="input-group">
+                    <asp:TextBox ID="txtDATUMPRIJEMAOD" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Датум од..." AutoPostBack="True"></asp:TextBox>
+                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
+                    <span class="input-group-btn">
+                        <button id="OpenCalendarDATUMPRIJEMAOD" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 text-left" style="margin-bottom:20px">
+                <div id="divDatumPrijemaDO" class="input-group" visible="false">
+                    <asp:TextBox ID="txtDATUMPRIJEMADO" runat="server" CssClass="form-control no-shadow pickadate" placeholder="Датум до..." AutoPostBack="True" Visible="false"></asp:TextBox>
+                    <%--<span class="input-group-addon"><i class="icon-calendar3"></i></span>--%>
+                    <span class="input-group-btn">
+                        <button id="OpenCalendarDATUMPRIJEMADO" class="btn btn-default pt-5 pb-5" type="button"><i class="icon-calendar3"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+         <div class="row">
+                            <div id="divBROJ" class="col-md-4 form-group"><asp:DropDownList ID="DDLBROJ" runat="server" CssClass="col-md-4 opstine godine" AutoPostBack="true"></asp:DropDownList></div>
+                            <div id="divNAZIV" class="col-md-4 form-group"><asp:DropDownList ID="DDLNAZIV" runat="server" CssClass="col-md-4 opstine godine" AutoPostBack="true"></asp:DropDownList></div>
+              <div class="col-md-1">
+                                 <div class="input-group">
+                                <button type="button" id="Reset" runat="server" onserverclick="ResetClick" data-loading-text="ПОНИШТИ ИЗБОР <i class='icon-sync spinner text-white position-right'></i>" class="btn btn-info btn-xs btn-loading text-size-mini">ПОНИШТИ ИЗБОР <i class="icon-sync position-right"></i></button>
+                            </div>
+                                  </div>
+                        </div>
+        <div class="row">
 <%--            <div class="auto-style1">
                 <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-primary-800 text-primary-800">
                     <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
@@ -30,7 +59,7 @@
              <br />
             <asp:ObjectDataSource ID="dsPredatnica" runat="server" SelectMethod="DajDS_IzUpita_lokal" TypeName="ADM_MM">
                 <SelectParameters>
-                    <asp:SessionParameter Name="Upit" DefaultValue="SELECT *,DATALENGTH(BROJ) as broj2 FROM vPREDATNICA ORDER BY datum,BROJ2,BROJ,RBR"  SessionField="UpitPredatnica" Type="String" />
+                    <asp:SessionParameter Name="Upit" DefaultValue="SELECT * FROM vPREDATNICA"  SessionField="UpitPredatnicaPretraga" Type="String" />
                     <asp:Parameter Name="konekcija" Type="String" DefaultValue="<%$ ConnectionStrings:BORZALConnectionString %>" />
                 </SelectParameters>
             </asp:ObjectDataSource>
@@ -44,7 +73,8 @@
                  </div>
          </div>
         </div>
-
+        <asp:TextBox ID="txtID_Korisnika" runat="server" CssClass="hidden"></asp:TextBox>
+        <asp:TextBox ID="txtGodina" runat="server" CssClass="hidden"></asp:TextBox>
 
 <script src="Content/js/bootstrap/moment.min.js"></script>
     <script src="Content/js/bootstrap/bootstrap-datepicker.js"></script>
@@ -59,34 +89,34 @@
             }, 1500);
                 $('body').addClass('loaded');
             var inputOd = $("#cphBody_txtDATUMPRIJEMAOD").pickadate({
-                monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
-                monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
+                monthsFull: ['Januar', 'februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar'],
+                monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
                 showMonthsShort: true,
-                weekdaysShort: ['Нед', 'Пон', 'Уто', 'Сре', 'Чет', 'Пет', 'Суб'],
-                today: 'Данас',
-                clear: 'Поништи',
-                close: 'Затвори',
+                weekdaysShort: ['Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub'],
+                today: 'Danas',
+                clear: 'Poništi',
+                close: 'Zatvori',
                 format: 'dd.mm.yyyy.',
                 formatSubmit: 'yyyymmdd',
                 firstDay: 1,
-                labelMonthNext: 'Следећи месец',
-                labelMonthPrev: 'Претходни месец',
+                labelMonthNext: 'Sledeći mesec',
+                labelMonthPrev: 'Prethodni mesec',
                 selectYears: 100,
                 max: true
             });
             var inputDoNeakt = $("#cphBody_txtDATUMPRIJEMADO").pickadate({
-                monthsFull: ['Јануар', 'Фебруар', 'Март', 'Април', 'Мај', 'Јун', 'Јул', 'Август', 'Септембар', 'Октобар', 'Новембар', 'Децембар'],
-                monthsShort: ['Јан', 'Феб', 'Мар', 'Апр', 'Мај', 'Јун', 'Јул', 'Авг', 'Сеп', 'Окт', 'Нов', 'Дец'],
+                monthsFull: ['Januar', 'februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar'],
+                monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
                 showMonthsShort: true,
-                weekdaysShort: ['Нед', 'Пон', 'Уто', 'Сре', 'Чет', 'Пет', 'Суб'],
-                today: 'Данас',
-                clear: 'Поништи',
-                close: 'Затвори',
+                weekdaysShort: ['Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub'],
+                today: 'Danas',
+                clear: 'Poništi',
+                close: 'Zatvori',
                 format: 'dd.mm.yyyy.',
                 formatSubmit: 'yyyymmdd',
                 firstDay: 1,
-                labelMonthNext: 'Следећи месец',
-                labelMonthPrev: 'Претходни месец',
+                labelMonthNext: 'Sledeći mesec',
+                labelMonthPrev: 'Prethodni mesec',
                 selectYears: 100,
                 max: true
             });
@@ -174,9 +204,9 @@
         }, 1500);
 
 
-        history.pushState(null, null, 'rPredatnica.aspx');
+        history.pushState(null, null, 'rPredatnica_Pretraga.aspx');
         window.addEventListener('popstate', function (event) {
-            history.pushState(null, null, 'rPredatnica.aspx');
+            history.pushState(null, null, 'rPredatnica_Pretraga.aspx');
         });
     </script>
     <script type="text/javascript">
