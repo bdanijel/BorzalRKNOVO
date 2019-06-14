@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Drawing
 Imports System.Diagnostics
+Imports System.Globalization
 
 Partial Class Predatnica_Pretraga
     Inherits System.Web.UI.Page
@@ -64,17 +65,49 @@ Partial Class Predatnica_Pretraga
     End Sub
     Protected Sub UslovWHERE()
         Dim WhereSQL As String = ""
+        Dim DatumPrijemaOD As String = ""
+        Dim DatumPrijemaDO As String = ""
 
         Dim BROJ As String = Trim(Me.DDLBROJ.SelectedValue.ToString())
+        Dim NAZIV As String = Trim(Me.DDLNAZIV.SelectedValue.ToString())
+
+
+        If txtDATUMPRIJEMAOD.Text <> "" Then
+            DatumPrijemaOD = b.DajDatumIzStringa(Trim(Me.txtDATUMPRIJEMAOD.Text())).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+        End If
+
+        If txtDATUMPRIJEMADO.Text <> "" Then
+            DatumPrijemaDO = b.DajDatumIzStringa(Trim(Me.txtDATUMPRIJEMADO.Text())).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+        End If
+
+
 
         Session("WhereSQL") = ""
+
+        'DATUM
+        If DatumPrijemaOD <> "" And DatumPrijemaOD <> "0" And DatumPrijemaDO <> "" And DatumPrijemaDO <> "0" Then
+            If WhereSQL = "" Then
+                WhereSQL = "(DATUM >=  N'" & DatumPrijemaOD & "') AND (DATUM <= N'" & DatumPrijemaDO & "')"
+            Else
+                WhereSQL = WhereSQL & " AND (DATUM >=  N'" & DatumPrijemaOD & "') AND (DATUM <= N'" & DatumPrijemaDO & "')"
+            End If
+        End If
 
         'BROJ DDL
         If BROJ <> "" And BROJ <> "0" Then
             If WhereSQL = "" Then
-                WhereSQL = "(BROJ = '" & BROJ & "')"
+                WhereSQL = "(BROJ = N'" & BROJ & "')"
             Else
-                WhereSQL = WhereSQL & " AND (BROJ = '" & BROJ & "')"
+                WhereSQL = WhereSQL & " AND (BROJ = N'" & BROJ & "')"
+            End If
+        End If
+
+        'NAZIV DDL
+        If NAZIV <> "" And NAZIV <> "0" Then
+            If WhereSQL = "" Then
+                WhereSQL = "(NAZIV = N'" & NAZIV & "')"
+            Else
+                WhereSQL = WhereSQL & " AND (NAZIV = N'" & NAZIV & "')"
             End If
         End If
 
@@ -185,6 +218,10 @@ Partial Class Predatnica_Pretraga
         PopuniDDL_1KOLONA(DDLBROJ, UpitBROJ, "BROJ")
         DDLBROJ.Items.Insert(0, New ListItem("- - Izaberite broj predatnice - -", "0"))
 
+        Dim UpitNAZIV As String = "SELECT DISTINCT NAZIV FROM vPREDATNICA ORDER BY NAZIV"
+        PopuniDDL_1KOLONA(DDLNAZIV, UpitNAZIV, "NAZIV")
+        DDLNAZIV.Items.Insert(0, New ListItem("- - Izaberite naziv proizvoda - -", "0"))
+
     End Sub
     Private Sub PopuniDDL(ddl As DropDownList, Upit As String, Tekst As String, Sifra As String)
         Dim dsDDL As DataSet = b.DajDS_IzUpita_Lokal(Upit, BORZALConnectionString)
@@ -202,6 +239,18 @@ Partial Class Predatnica_Pretraga
     End Sub
 
     Protected Sub DDLBROJ_SelectedIndexChanged(sender As Object, e As EventArgs) Handles DDLBROJ.SelectedIndexChanged
+        Me.PopuniTabeluMB()
+    End Sub
+    Private Sub DDLNAZIV_TextChanged(sender As Object, e As EventArgs) Handles DDLNAZIV.TextChanged
+        PopuniTabeluMB()
+    End Sub
+    Private Sub txtDATUMPRIJEMAOD_TextChanged(sender As Object, e As EventArgs) Handles txtDATUMPRIJEMAOD.TextChanged
+        If Me.txtDATUMPRIJEMADO.Visible = "false" Then
+            Me.txtDATUMPRIJEMADO.Visible = "True"
+        End If
+        Me.PopuniTabeluMB()
+    End Sub
+    Private Sub txtDATUMPRIJEMADO_TextChanged(sender As Object, e As EventArgs) Handles txtDATUMPRIJEMADO.TextChanged
         Me.PopuniTabeluMB()
     End Sub
 #End Region
