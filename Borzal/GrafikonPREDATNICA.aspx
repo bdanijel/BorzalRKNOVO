@@ -42,10 +42,12 @@
             });
         }
     </script>
+     <div id="Pocetna" class="content pt-20">
     <h6 class="m-10 content-group text-semibold"><i class="glyphicon glyphicon-stats position-left text-primary-800"></i>PRVIH PET PROIZVODA IZ PREDATNICE - GRAFIKON</b> </h6>
-    <div id="chart_div" style="width: 900px; height: 500px; margin-bottom: 40px">
+    <div id="chart_div" class="row" style="width: 900px; height: 500px; margin-bottom: 40px">
     </div>
     <h6 class="m-10 content-group text-semibold"><i class="icon-file-spreadsheet position-left text-primary-800"></i>PRVIH PET PROIZVODA IZ PREDATNICE - TABELA</b> </h6>
-    <div id="table_div" style="width: 900px; height: 500px;">
+    <div id="table_div" class="row" style="width: 900px; height: 500px;">
     </div>
+         </div>
 </asp:Content>

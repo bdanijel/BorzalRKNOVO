@@ -2,17 +2,25 @@
 Imports System.Web.Services
 Imports System.Configuration
 Imports System.Data.SqlClient
+Imports System.IO
+Imports System.Globalization
 Partial Class GrafikonPREDATNICA
     Inherits System.Web.UI.Page
     Dim b As New ADM_MM()
     Dim BORZALConnectionString As String = b.ConnString_BORZAL
     Dim ImaAdminPrava As Integer = 0
-    Dim ImaSpoljniKorisnikPrava As Integer = 0
+    Dim ImaPrava As Integer = 0
 
 
 
     Private Sub Poruka_Load(sender As Object, e As EventArgs) Handles Me.Load
         Page.MaintainScrollPositionOnPostBack = True
+
+        ImaPrava = b.ProveraKorisnikPosao(Session("ID_Korisnika"), Path.GetFileName(Request.PhysicalPath))
+
+        If ImaPrava = 0 Then
+            Response.Redirect(ResolveClientUrl("~/Default.aspx"), True)
+        End If
 
 
     End Sub
