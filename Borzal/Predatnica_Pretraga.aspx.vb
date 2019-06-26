@@ -207,6 +207,22 @@ Partial Class Predatnica_Pretraga
             'Dim GODINA As String = Me.gvMB.DataKeys(index).Value
             EXCEL_Grid(ID)
 
+        ElseIf e.CommandName = "Brisanje" Then
+            index = Convert.ToInt32(e.CommandArgument)
+            row = gvMB.Rows(index)
+            Me.gvMB.SelectedIndex = index
+
+            Dim ID As String = Me.gvMB.DataKeys(index).Value
+            'Dim rbr As String = Me.gvMB.DataKeys(index).Values(1)
+            'Dim podbroj As String = Me.gvMB.DataKeys(index).Values(2)
+            'Dim podod3 As Integer = Me.gvMB.DataKeys(index).Values(3)
+
+            'Dim GODINA As String = Me.gvMB.DataKeys(index).Value
+
+
+
+
+
         End If
     End Sub
 #End Region

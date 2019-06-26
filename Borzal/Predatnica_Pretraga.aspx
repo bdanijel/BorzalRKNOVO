@@ -94,6 +94,11 @@
                                                 <asp:LinkButton ID="btnExcelExport" runat="server" CommandName="ExcelExport" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' CausesValidation="False"><i class="icon-file-excel text-slate"></i></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                           <asp:TemplateField HeaderText="BRIŠI" HeaderStyle-Width="30" SortExpression="MB">
+                                            <ItemTemplate>
+                                                <asp:LinkButton ID="btnBrisanje" runat="server" CommandName="Brisanje" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' CausesValidation="False"><i class="icon-cross text-slate"></i></asp:LinkButton>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                     </Columns>
                                 </asp:GridView>
                             </div>
