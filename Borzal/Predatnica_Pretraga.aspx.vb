@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Drawing
 Imports System.Diagnostics
 Imports System.Globalization
+Imports System.Data.SqlClient
 
 Partial Class Predatnica_Pretraga
     Inherits System.Web.UI.Page
@@ -11,6 +12,7 @@ Partial Class Predatnica_Pretraga
     'MOŽDA NEĆE TREBATI                                                                                                        
     Dim ImaAdminPrava As Integer = 0
     Dim ImaPrava As Integer = 0
+    Dim klasa As String = "class"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Page.MaintainScrollPositionOnPostBack = True
@@ -204,7 +206,7 @@ Partial Class Predatnica_Pretraga
             'Dim podbroj As String = Me.gvMB.DataKeys(index).Values(2)
             'Dim podod3 As Integer = Me.gvMB.DataKeys(index).Values(3)
 
-            'Dim GODINA As String = Me.gvMB.DataKeys(index).Value
+
             EXCEL_Grid(ID)
 
         ElseIf e.CommandName = "Brisanje" Then
@@ -217,11 +219,31 @@ Partial Class Predatnica_Pretraga
             'Dim podbroj As String = Me.gvMB.DataKeys(index).Values(2)
             'Dim podod3 As Integer = Me.gvMB.DataKeys(index).Values(3)
 
-            'Dim GODINA As String = Me.gvMB.DataKeys(index).Value
 
+            Dim poruka As String
+            Dim connection As New SqlConnection(BORZALConnectionString)
+            Dim deleteStatement As String = "DELETE FROM predatnica where ID = @ID"
+            Dim deleteCommand As New SqlCommand(deleteStatement, connection)
+            deleteCommand.Parameters.AddWithValue("@ID", ID)
+            Try
+                connection.Open()
+                Dim count As Integer = deleteCommand.ExecuteNonQuery
+                If count > 0 Then
+                    poruka = "Predatnica je izbrisana!"
+                    Me.PopuniTabeluMB()
+                    Me.PorukaInfoUspesno.InnerText = poruka
+                    SetPorukaUspesnoVisible()
+                Else
+                    poruka = "Došlo je do greške u brisanju predatnice!"
+                    Me.PorukaInfoNeuspesno.InnerText = poruka
+                    SetPorukaNeuspesnoVisible()
+                End If
 
-
-
+            Catch ex As Exception
+                Throw ex
+            Finally
+                connection.Close()
+            End Try
 
         End If
     End Sub
@@ -411,5 +433,26 @@ Partial Class Predatnica_Pretraga
         Next
     End Sub
 
+#End Region
+
+#Region "PORUKE"
+    Public Sub SetPorukaNeuspesnoInvisible()
+        Me.PorukaInfoNeuspesno.InnerText = ""
+        Me.rowPorukaNeuspesno.Attributes.Add(klasa, "row hidden")
+        Me.rowPorukaNeuspesno.Visible = False
+    End Sub
+    Public Sub SetPorukaNeuspesnoVisible()
+        Me.rowPorukaNeuspesno.Attributes.Add(klasa, "row mt-10")
+        Me.rowPorukaNeuspesno.Visible = True
+    End Sub
+    Public Sub SetPorukaUspesnoInvisible()
+        Me.PorukaInfoUspesno.InnerText = ""
+        Me.rowPorukaUspesno.Attributes.Add(klasa, "row hidden")
+        Me.rowPorukaUspesno.Visible = False
+    End Sub
+    Public Sub SetPorukaUspesnoVisible()
+        Me.rowPorukaUspesno.Attributes.Add(klasa, "row mt-10")
+        Me.rowPorukaUspesno.Visible = True
+    End Sub
 #End Region
 End Class

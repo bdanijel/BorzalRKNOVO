@@ -53,9 +53,9 @@
             <div class="col-md-8 col-md-push-2">
                 <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-primary-800 text-primary-800">
                     <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
-                    <h6 class="alert-heading text-default no-margin-bottom pb-20">Poštovani,</h6>
-                    <h6 class="alert-heading text-default no-margin-bottom">Ukoliko imate nekih pitanja, možete se obratiti se klikom na <i class="icon-envelope"></i></h6>
-                    <h6 class="alert-heading text-default no-margin-bottom">koji se nalazi u gornjem desnom uglu ekrana.</h6>
+                    <h6 class="alert-heading text-default no-margin-bottom pb-20">27.06.2019.god.</h6>
+                    <h6 class="alert-heading text-default no-margin-bottom">Ubačena je opcija za brisanje, onda se nalazi kod pretrage.</h6>
+                    <h6 class="alert-heading text-default no-margin-bottom">Brisanje je omogućeno za trebovanje, predatnicu i sastavnicu.</h6>
                 </div>
             </div>
         </div>

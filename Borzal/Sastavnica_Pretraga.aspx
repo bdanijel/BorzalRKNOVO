@@ -59,9 +59,14 @@
                                         <asp:BoundField DataField="Naziv sirovine" HeaderText="NAZIV SIROVINE" SortExpression="Naziv sirovine" />
                                          <asp:BoundField DataField="JM" HeaderText="JM" SortExpression="JM" />
                                           <asp:BoundField DataField="KOLICINA" HeaderText="KOLICINA" SortExpression="KOLICINA" />
-                                         <asp:TemplateField HeaderText="EXCEL" HeaderStyle-Width="30" SortExpression="MB">
+                                         <asp:TemplateField HeaderText="EXCEL" HeaderStyle-Width="30">
                                             <ItemTemplate>
                                                 <asp:LinkButton ID="btnExcelExport" runat="server" CommandName="ExcelExport" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' CausesValidation="False"><i class="icon-file-excel text-slate"></i></asp:LinkButton>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                           <asp:TemplateField HeaderText="BRIŠI" HeaderStyle-Width="30">
+                                            <ItemTemplate>
+                                                <asp:LinkButton ID="btnBrisanje" runat="server" CommandName="Brisanje" CommandArgument='<%# DataBinder.Eval(Container, "RowIndex") %>' CausesValidation="False"><i class="icon-cross text-slate"></i></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -94,6 +99,26 @@
                         </div>
                     </div>
                 </div>
+
+                  <div id="rowPorukaNeuspesno" runat="server" class="row" visible="False">
+                    <div class="col-md-6 col-md-push-3">
+                        <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-danger-800 text-danger-800">
+                            <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
+                            <h6 id="PorukaInfoNeuspesno" runat="server" class="alert-heading text-semibold no-margin-bottom"></h6>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="rowPorukaUspesno" class="row" runat="server" visible="False">
+                    <div class="col-md-6 col-md-push-3">
+                        <div class="alert alert-info alert-styled-left alert-arrow-left alert-component border-green-700 text-green-700">
+                            <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
+                            <h6 id="PorukaInfoUspesno" runat="server" class="alert-heading text-semibold no-margin-bottom"></h6>
+                        </div>
+                    </div>
+                </div>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>

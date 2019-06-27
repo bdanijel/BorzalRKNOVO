@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Drawing
 Imports System.Diagnostics
+Imports System.Data.SqlClient
 
 Partial Class Trebovanje_Pretraga
     Inherits System.Web.UI.Page
@@ -10,6 +11,7 @@ Partial Class Trebovanje_Pretraga
     'MOŽDA NEĆE TREBATI                                                                                                        
     Dim ImaAdminPrava As Integer = 0
     Dim ImaPrava As Integer = 0
+    Dim klasa As String = "class"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Page.MaintainScrollPositionOnPostBack = True
@@ -173,6 +175,42 @@ Partial Class Trebovanje_Pretraga
 
             'Dim GODINA As String = Me.gvMB.DataKeys(index).Value
             EXCEL_Grid(ID)
+        ElseIf e.CommandName = "Brisanje" Then
+            index = Convert.ToInt32(e.CommandArgument)
+            row = gvMB.Rows(index)
+            Me.gvMB.SelectedIndex = index
+
+            Dim ID As String = Me.gvMB.DataKeys(index).Value
+            'Dim rbr As String = Me.gvMB.DataKeys(index).Values(1)
+            'Dim podbroj As String = Me.gvMB.DataKeys(index).Values(2)
+            'Dim podod3 As Integer = Me.gvMB.DataKeys(index).Values(3)
+
+
+            Dim poruka As String
+            Dim connection As New SqlConnection(BORZALConnectionString)
+            Dim deleteStatement As String = "DELETE FROM trebovanje where ID = @ID"
+            Dim deleteCommand As New SqlCommand(deleteStatement, connection)
+            deleteCommand.Parameters.AddWithValue("@ID", ID)
+            Try
+                connection.Open()
+                Dim count As Integer = deleteCommand.ExecuteNonQuery
+                If count > 0 Then
+                    poruka = "Trebovanje je izbrisano!"
+                    Me.PopuniTabeluMB()
+                    Me.PorukaInfoUspesno.InnerText = poruka
+                    SetPorukaUspesnoVisible()
+                Else
+                    poruka = "Došlo je do greške u brisanju trebovanja!"
+                    Me.PorukaInfoNeuspesno.InnerText = poruka
+                    SetPorukaNeuspesnoVisible()
+                End If
+
+            Catch ex As Exception
+                Throw ex
+            Finally
+                connection.Close()
+            End Try
+
 
         End If
     End Sub
@@ -347,4 +385,26 @@ Partial Class Trebovanje_Pretraga
     End Sub
 
 #End Region
+
+#Region "PORUKE"
+    Public Sub SetPorukaNeuspesnoInvisible()
+        Me.PorukaInfoNeuspesno.InnerText = ""
+        Me.rowPorukaNeuspesno.Attributes.Add(klasa, "row hidden")
+        Me.rowPorukaNeuspesno.Visible = False
+    End Sub
+    Public Sub SetPorukaNeuspesnoVisible()
+        Me.rowPorukaNeuspesno.Attributes.Add(klasa, "row mt-10")
+        Me.rowPorukaNeuspesno.Visible = True
+    End Sub
+    Public Sub SetPorukaUspesnoInvisible()
+        Me.PorukaInfoUspesno.InnerText = ""
+        Me.rowPorukaUspesno.Attributes.Add(klasa, "row hidden")
+        Me.rowPorukaUspesno.Visible = False
+    End Sub
+    Public Sub SetPorukaUspesnoVisible()
+        Me.rowPorukaUspesno.Attributes.Add(klasa, "row mt-10")
+        Me.rowPorukaUspesno.Visible = True
+    End Sub
+#End Region
+
 End Class
